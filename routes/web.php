@@ -23,22 +23,29 @@ Route::get('/', function () {
 });
 
 Route::get('895enrg9345fg34g43g3/passport-keys', function () {
-    Artisan::call('passport:keys');
+    Artisan::call('passport:keys', [
+            '--force' => true
+        ]
+    );
     dd(Artisan::output());
 });
 
 
 Route::get('/895enrg9345fg34g43g3/migrate-refresh', function () {
-    Artisan::call('migrate:refresh');
+    Artisan::call('migrate:refresh', [
+        '--force' => true
+    ]);
     dd(Artisan::output());
 });
 
 Route::get('/895enrg9345fg34g43g3/migrate', function () {
-    Artisan::call('migrate');
+    Artisan::call('migrate', [
+        '--force' => true
+    ]);
     dd(Artisan::output());
 });
 
 Route::get('/895enrg9345fg34g43g3/migrate-rollback', function () {
-    Artisan::call('migrate:rollback', ['--step' => 1]);
+    Artisan::call('migrate:rollback', ['--step' => 1, '--force' => true]);
     dd(Artisan::output());
 });

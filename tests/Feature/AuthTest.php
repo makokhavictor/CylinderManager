@@ -148,15 +148,24 @@ class AuthTest extends TestCase
         Artisan::call('passport:install');
         $user = User::factory()->make();
 
-        $this->postJson('api/oauth/register', [
+        $response = $this->postJson('api/oauth/register', [
             'email' => $user->email,
             'phone' => $user->phone,
             'firstName' => $user->first_name,
             'lastName' => $user->last_name,
             'password' => 'password',
             'passwordConfirmation' => 'password'
-        ])->assertCreated()
-            ->assertJsonStructure([
+        ]);
+        echo json_encode([
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'firstName' => $user->first_name,
+            'lastName' => $user->last_name,
+            'password' => 'password',
+            'passwordConfirmation' => 'password'
+        ]);
+        $response->assertCreated();
+        $response->assertJsonStructure([
                 'data' => [
                     'user' => ['id', 'firstName', 'lastName', 'email', 'phone'],
                     'token' => ['access_token', 'expires_in']
