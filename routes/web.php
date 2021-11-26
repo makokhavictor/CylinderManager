@@ -16,7 +16,10 @@ use Spatie\Permission\Models\Permission;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if(Permission::count() > 0) {
+        return view('welcome', ['db' => 'online']);
+    }
+    return view('welcome', ['db' => 'offline']);
 });
 
 Route::get('895enrg9345fg34g43g3/passport-keys', function () {
@@ -24,12 +27,6 @@ Route::get('895enrg9345fg34g43g3/passport-keys', function () {
     dd(Artisan::output());
 });
 
-Route::get('/895enrg9345fg34g43g3', function () {
-    if(Permission::count() > 0) {
-        return view('welcome', ['db' => 'online']);
-    }
-    return view('welcome', ['db' => 'offline']);
-});
 
 Route::get('/895enrg9345fg34g43g3/migrate-refresh', function () {
     Artisan::call('migrate:refresh');
