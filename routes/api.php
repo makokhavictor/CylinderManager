@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DealerController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserResource;
@@ -34,6 +35,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('oauth/revoke', [AuthController::class, 'destroy']);
     Route::post('oauth/password-change', [AuthController::class, 'passwordChange']);
     Route::get('roles', [RoleController::class, 'index']);
+
+    Route::resources([
+        'dealers' => DealerController::class
+    ]);
 });
 
 Route::middleware('guest:api')->group(function () {

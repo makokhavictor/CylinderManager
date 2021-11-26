@@ -62,7 +62,7 @@ class AuthController extends Controller
     }
 
     private function updatePassword($user, $request) {
-        $user->password = bcrypt($request->get('oldPassword'));
+        $user->password = bcrypt($request->get('password'));
         $user->save();
         return response()->json([
             'headers' => [
