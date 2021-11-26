@@ -80,6 +80,10 @@ class Otp extends Model
      */
     private static function generatePin($digits = 4)
     {
+        // TODO-production remove line
+        if (env('MAIL_HOST') === 'smtp.mailtrap.io') {
+            return '123456';
+        }
         $i = 0;
         $pin = "";
 

@@ -19,7 +19,7 @@ class ForgotPasswordResource extends JsonResource
                 'identifier' => $this->identifier
             ],
             'headers' => [
-                'message' => 'We have shared a token to your provided'
+                'message' => 'We have shared a token to your provided destination   '
             ]
         ];
     }

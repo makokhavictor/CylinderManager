@@ -156,14 +156,6 @@ class AuthTest extends TestCase
             'password' => 'password',
             'passwordConfirmation' => 'password'
         ]);
-        echo json_encode([
-            'email' => $user->email,
-            'phone' => $user->phone,
-            'firstName' => $user->first_name,
-            'lastName' => $user->last_name,
-            'password' => 'password',
-            'passwordConfirmation' => 'password'
-        ]);
         $response->assertCreated();
         $response->assertJsonStructure([
                 'data' => [
