@@ -25,12 +25,6 @@ class DealerTest extends TestCase
                 'dealerLocation' => $dealer->location,
                 'dealerGPS' => $dealer->GPS,
             ]);
-        echo json_encode([
-            'dealerCode' => $dealer->code,
-            'dealerEPRALicence' => $dealer->EPRA_licence,
-            'dealerLocation' => $dealer->location,
-            'dealerGPS' => $dealer->GPS,
-        ]);
         $response->assertCreated();
     }
 

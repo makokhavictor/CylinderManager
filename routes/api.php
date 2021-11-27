@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DealerController;
+use App\Http\Controllers\DepotController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserResource;
@@ -37,7 +38,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('roles', [RoleController::class, 'index']);
 
     Route::resources([
-        'dealers' => DealerController::class
+        'dealers' => DealerController::class,
+        'depots' => DepotController::class,
     ]);
 });
 

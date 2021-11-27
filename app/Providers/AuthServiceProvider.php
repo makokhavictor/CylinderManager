@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Depot;
+use App\Policies\DepotPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -14,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Depot::class => DepotPolicy::class,
     ];
 
     /**
