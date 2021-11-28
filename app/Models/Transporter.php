@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Transporter extends Model
 {
     use HasFactory;
+
+    public function transporterUsers() {
+        return $this->hasMany(TransporterUser::class);
+    }
 }

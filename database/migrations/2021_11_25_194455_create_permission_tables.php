@@ -126,14 +126,37 @@ class CreatePermissionTables extends Migration
         ]);
 
         DB::table($tableNames['permissions'])->insert([
+
             ['name' => 'create depot', 'guard_name' => 'api'],
             ['name' => 'update depot', 'guard_name' => 'api'],
             ['name' => 'delete depot', 'guard_name' => 'api'],
+
+
+            ['name' => 'create dealer', 'guard_name' => 'api'],
+            ['name' => 'update dealer', 'guard_name' => 'api'],
+            ['name' => 'delete dealer', 'guard_name' => 'api'],
+
+            ['name' => 'create transporter', 'guard_name' => 'api'],
+            ['name' => 'update transporter', 'guard_name' => 'api'],
+            ['name' => 'delete transporter', 'guard_name' => 'api'],
+
             ['name' => 'create depot user', 'guard_name' => 'api'],
             ['name' => 'update depot user', 'guard_name' => 'api'],
             ['name' => 'delete depot user', 'guard_name' => 'api'],
-            ['name' => 'scan qr code', 'guard_name' => 'api'],
+
+            ['name' => 'create transporter user', 'guard_name' => 'api'],
+            ['name' => 'update transporter user', 'guard_name' => 'api'],
+            ['name' => 'delete transporter user', 'guard_name' => 'api'],
+
+            ['name' => 'create dealer user', 'guard_name' => 'api'],
+            ['name' => 'update dealer user', 'guard_name' => 'api'],
+            ['name' => 'delete dealer user', 'guard_name' => 'api'],
+
             ['name' => 'create cylinder', 'guard_name' => 'api'],
+            ['name' => 'edit cylinder', 'guard_name' => 'api'],
+            ['name' => 'delete cylinder', 'guard_name' => 'api'],
+
+            ['name' => 'scan qr code', 'guard_name' => 'api'],
         ]);
 
         Role::where('name', 'Transporter')->first()->givePermissionTo(['scan qr code']);

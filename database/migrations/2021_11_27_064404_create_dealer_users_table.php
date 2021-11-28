@@ -15,6 +15,10 @@ class CreateDealerUsersTable extends Migration
     {
         Schema::create('dealer_users', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('dealer_id')->nullable();
+            $table->foreign('dealer_id')->references('id')->on('dealers');
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

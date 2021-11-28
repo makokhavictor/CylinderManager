@@ -69,7 +69,7 @@ class DepotTest extends TestCase
             'id',
             'depotCode',
             'depotName',
-            'depotEPRALicenseNo',
+            'depotEPRALicenceNo',
             'depotLocation',
         ]]]);
         $response->assertJsonFragment(['id' => $depot->id]);
@@ -92,7 +92,7 @@ class DepotTest extends TestCase
             'id',
             'depotCode',
             'depotName',
-            'depotEPRALicenseNo',
+            'depotEPRALicenceNo',
             'depotLocation',
         ]]);
         $response->assertJsonFragment(['id' => $depot->id]);
@@ -122,7 +122,7 @@ class DepotTest extends TestCase
             'data' => [
                 'id',
                 'depotCode',
-                'depotEPRALicenseNo',
+                'depotEPRALicenceNo',
                 'depotLocation',
                 'depotName'
             ],

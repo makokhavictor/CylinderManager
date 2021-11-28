@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DealerUser extends Model
+class TransporterUser extends Model
 {
     use HasFactory;
 
-    public function dealer() {
+    public function transporter() {
         return $this->belongsTo(Dealer::class);
     }
 

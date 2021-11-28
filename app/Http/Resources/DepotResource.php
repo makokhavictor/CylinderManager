@@ -18,7 +18,7 @@ class DepotResource extends JsonResource
             'id' =>$this->id,
             'depotCode' =>$this->code,
             'depotName' =>$this->name,
-            'depotEPRALicenseNo' =>$this->EPRA_license_no,
+            'depotEPRALicenceNo' =>$this->EPRA_license_no,
             'depotLocation' =>$this->location,
         ];
     }

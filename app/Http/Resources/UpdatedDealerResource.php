@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DealerResource extends JsonResource
+class UpdatedDealerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,10 @@ class DealerResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'dealerName' => $this->name,
-            'dealerCode' => $this->code,
-            'dealerEPRALicenceNo' => $this->EPRA_licence_no,
-            'dealerLocation' => $this->location,
-            'dealerGPS' => $this->GPS
+            'data' => DealerResource::make($this),
+            'headers' => [
+                'message' => 'Dealer created successfully'
+            ]
         ];
     }
 }

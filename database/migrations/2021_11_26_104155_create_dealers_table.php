@@ -16,7 +16,7 @@ class CreateDealersTable extends Migration
         Schema::create('dealers', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->string('EPRA_licence');
+            $table->string('EPRA_licence_no');
             $table->string('location');
             $table->string('GPS');
             $table->timestamps();

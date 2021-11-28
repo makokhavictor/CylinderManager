@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\DealerUser;
 use App\Models\User;
 use App\Models\Dealer;
 use Tests\TestCase;
@@ -14,18 +15,27 @@ class DealerTest extends TestCase
      * @test
      * @return void
      */
-    public function authenticated_user_can_register_as_a_dealer()
+    public function authenticated_user_with_permission_can_create_dealer()
     {
         $dealer = Dealer::factory()->make();
         $user = User::find(User::factory()->create()->id);
+        DealerUser::factory()
+            ->state(['dealer_id' => null, 'user_id' => $user->id])
+            ->create();
+        $user->givePermissionTo('create dealer');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/dealers', [
+                'dealerName' => $dealer->name,
                 'dealerCode' => $dealer->code,
-                'dealerEPRALicence' => $dealer->EPRA_licence,
+                'dealerEPRALicenceNo' => $dealer->EPRA_licence_no,
                 'dealerLocation' => $dealer->location,
                 'dealerGPS' => $dealer->GPS,
             ]);
         $response->assertCreated();
+        $response->assertJsonStructure([
+            'data' => ['id', 'dealerName'],
+            'headers' => ['message']
+        ]);
     }
 
     /**
@@ -38,11 +48,12 @@ class DealerTest extends TestCase
     {
         $dealer = Dealer::factory()->make();
         $user = User::find(User::factory()->create()->id);
+        $user->givePermissionTo('create dealer');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/dealers', [
+                'dealerName' => $dealer->name,
                 'dealerCode' => $dealer->code,
-                'dealerLocation' => $dealer->EPRA_License,
-                'dealerGPS' => $dealer->gps,
+                'dealerLocation' => $dealer->location,
             ]);
         $response->assertUnprocessable();
     }
@@ -63,12 +74,11 @@ class DealerTest extends TestCase
         $response->assertJsonStructure(['data' => [[
             'id',
             'dealerCode',
-            'dealerEPRALicense',
+            'dealerName',
+            'dealerEPRALicenceNo',
             'dealerLocation',
-            'dealerGPS',
         ]]]);
         $response->assertJsonFragment(['id' => $dealer->id]);
-        $response->assertJsonFragment(['dealerCode' => $dealer->code]);
     }
 
     /**
@@ -87,12 +97,12 @@ class DealerTest extends TestCase
         $response->assertJsonStructure(['data' => [
             'id',
             'dealerCode',
-            'dealerEPRALicense',
+            'dealerName',
+            'dealerEPRALicenceNo',
             'dealerLocation',
-            'dealerGPS',
         ]]);
         $response->assertJsonFragment(['id' => $dealer->id]);
-        $response->assertJsonFragment(['dealerCode' => $dealer->code]);
+        $response->assertJsonFragment(['dealerName' => $dealer->name]);
     }
 
     /**
@@ -108,25 +118,26 @@ class DealerTest extends TestCase
         $user = User::find(User::factory()->create()->id);
         $response = $this->actingAs($user, 'api')
             ->patchJson("/api/dealers/$dealer->id", [
-                'code' => $dealerEdit->code,
-                'dealerEPRALicense' => $dealerEdit->EPRA_License,
-                'dealerLocation' => $dealerEdit->EPRA_License,
-                'dealerGPS' => $dealerEdit->gps,
+                'dealerCode' => $dealerEdit->code,
+                'dealerName' => $dealerEdit->name,
+                'dealerEPRALicenceNo' => $dealerEdit->EPRA_licence_no,
+                'dealerLocation' => $dealerEdit->location,
+                'dealerGPS' => $dealerEdit->GPS,
             ]);
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
                 'id',
                 'dealerCode',
-                'dealerEPRALicense',
+                'dealerEPRALicenceNo',
                 'dealerLocation',
-                'dealerGPS',
+                'dealerName'
             ],
             'headers' => [
                 'message'
             ]
         ]);
-        $this->assertTrue(Dealer::find($dealer->id)->code === $dealerEdit->code, 'Dealer not updated after patch request');
+        $this->assertTrue(Dealer::find($dealer->id)->code === "$dealerEdit->code", 'Dealer not updated after patch request');
 
     }
 
@@ -149,7 +160,7 @@ class DealerTest extends TestCase
                 'message'
             ]
         ]);
-        $this->assertTrue(Dealer::find($dealer->id)->code === null, 'Dealer not deleted after delete request');
+        $this->assertTrue(Dealer::find($dealer->id) === null, 'Dealer not deleted after delete request');
 
     }
 

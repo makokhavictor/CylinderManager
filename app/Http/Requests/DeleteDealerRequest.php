@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDealerRequest extends FormRequest
+class DeleteDealerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class UpdateDealerRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return User::find(auth()->id())->can('delete dealer');
     }
 
     /**
@@ -24,10 +25,6 @@ class UpdateDealerRequest extends FormRequest
     public function rules()
     {
         return [
-            'dealerCode' => 'required',
-            'dealerEPRALicenceNo' => 'required',
-            'dealerLocation' => 'required',
-            'dealerGPS' => 'required'
         ];
     }
 }

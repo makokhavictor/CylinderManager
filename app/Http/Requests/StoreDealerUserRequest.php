@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreDealerUserRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreDealerUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return User::find(auth()->id())->can('create dealer user');
     }
 
     /**

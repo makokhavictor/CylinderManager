@@ -6,6 +6,7 @@ use App\Mail\PasswordResetMail;
 use App\Models\DepotUser;
 use App\Models\Otp;
 use App\Models\Transporter;
+use App\Models\TransporterUser;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
@@ -74,14 +75,14 @@ class AuthTest extends TestCase
      * @group auth
      * @test
      */
-    public function buyer_users_can_get_their_buyer_id()
+    public function transporter_users_can_get_their_transporter_id()
     {
-        $transporter = Transporter::factory()->create();
-        $user = User::find($transporter->user_id);
+        $transporterUser = TransporterUser::factory()->create();
+        $user = User::find($transporterUser->user_id);
         $user->assignRole('Transporter');
         $this->actingAs($user, 'api')
             ->get('api/oauth/user')
-            ->assertJsonFragment(['transporterId' => $transporter->id])
+            ->assertJsonFragment(['transporterUserId' => $transporterUser->id])
             ->assertJsonFragment(['roles' => ['Transporter']]);
     }
 

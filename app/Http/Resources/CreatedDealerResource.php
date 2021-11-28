@@ -19,8 +19,10 @@ class CreatedDealerResource extends JsonResource
         return [
             'data' => [
                 'id' => $this->id,
-                'permissions' => User::find($this->user_id)->getAllPermissions()->pluck('name'),
-                'roles' => User::find($this->user_id)->roles()->pluck('name')
+                'dealerName' => $this->name,
+                'dealerEPRALicenceNo' =>$this->EPRA_licence_no,
+                'dealerLocation' =>$this->location,
+                'dealerGPS' =>$this->GPS
             ],
             'headers' => [
                 'message' => 'Successfully created dealer'

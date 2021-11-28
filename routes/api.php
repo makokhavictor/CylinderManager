@@ -4,6 +4,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\DepotUserController;
+use App\Http\Controllers\RegisterDealerUserController;
+use App\Http\Controllers\RegisterDepotUserController;
+use App\Http\Controllers\RegisterTransporterUserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserResource;
@@ -32,7 +35,7 @@ Route::middleware('api')->group(function() {
 
 Route::middleware('auth:api')->group(function () {
     Route::get('oauth/user', function () {
-        return new UserResource(auth()->user());
+        return UserResource::make(auth()->user());
     });
     Route::get('oauth/revoke', [AuthController::class, 'destroy']);
     Route::post('oauth/password-change', [AuthController::class, 'passwordChange']);
@@ -43,6 +46,9 @@ Route::middleware('auth:api')->group(function () {
         'depots/{depot}/users' => DepotUserController::class,
         'depots' => DepotController::class,
     ]);
+    Route::post('depot-users', [RegisterDepotUserController::class, 'store']);
+    Route::post('dealer-users', [RegisterDealerUserController::class, 'store']);
+    Route::post('transporter-users', [RegisterTransporterUserController::class, 'store']);
 });
 
 Route::middleware('guest:api')->group(function () {
