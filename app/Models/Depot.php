@@ -12,4 +12,8 @@ class Depot extends Model
     protected $fillable = [
         'name', 'code', 'EPRA_licence_no', 'location'
     ];
+
+    public function depotUsers() {
+        return $this->hasMany(DepotUser::class);
+    }
 }

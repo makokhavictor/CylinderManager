@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Depot;
 use App\Models\DepotUser;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -24,6 +25,7 @@ class DepotUserFactory extends Factory
     {
         return [
             'user_id' => User::factory()->create()->id,
+            'depot_id' => Depot::factory()->create()->id
         ];
     }
 }

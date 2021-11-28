@@ -129,6 +129,9 @@ class CreatePermissionTables extends Migration
             ['name' => 'create depot', 'guard_name' => 'api'],
             ['name' => 'update depot', 'guard_name' => 'api'],
             ['name' => 'delete depot', 'guard_name' => 'api'],
+            ['name' => 'create depot user', 'guard_name' => 'api'],
+            ['name' => 'update depot user', 'guard_name' => 'api'],
+            ['name' => 'delete depot user', 'guard_name' => 'api'],
             ['name' => 'scan qr code', 'guard_name' => 'api'],
             ['name' => 'create cylinder', 'guard_name' => 'api'],
         ]);

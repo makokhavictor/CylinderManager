@@ -9,7 +9,7 @@ trait HasDealer
 {
     public function dealer(): HasOne
     {
-        return $this->hasOne(DepotUser::class);
+        return $this->hasOne(DealerUser::class);
     }
 
     public function getDealerIdAttribute()

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DepotUserStoreRequest extends FormRequest
+class DepotUserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class DepotUserStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return User::find(auth()->id())->can('create depot user');
+        return User::find(auth()->id())->can('update depot user');
     }
 
     /**
@@ -25,11 +25,7 @@ class DepotUserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'unique:users,username',
-            'firstName' => 'required',
-            'lastName' => 'required',
-            'phone' => 'unique:users,phone',
-            'email' => 'nullable|email|required_without:phone|unique:users,email',
+            'email' => 'email',
         ];
     }
 }
