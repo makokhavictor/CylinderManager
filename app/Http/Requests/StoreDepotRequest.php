@@ -28,6 +28,8 @@ class StoreDepotRequest extends FormRequest
             'depotCode' => 'required',
             'depotEPRALicenceNo' => 'required',
             'depotLocation' => 'required',
+            'brandIds' => 'required|array|min:1',
+            "brandIds.*"  => "required|distinct|exists:brands,id",
         ];
     }
 }

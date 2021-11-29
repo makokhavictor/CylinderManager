@@ -16,12 +16,7 @@ class CreatedDepotResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => [
-                'id' => $this->id,
-                'depotName' => $this->name,
-                'depotEPRALicenceNo' =>$this->EPRA_licence_no,
-                'depotLocation' =>$this->location
-            ],
+            'data' => DepotResource::make($this),
             'headers' => [
                 'message' => 'Depot created successfully'
             ]

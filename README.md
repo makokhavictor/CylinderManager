@@ -107,7 +107,7 @@ Sample Response
         "phoneVerified":false,
         "phoneVerifiedAt":null,
         "profilePictureLink":null,
-        "roles":["Depot admin"],
+        "roles":["Depot Admin"],
         "permissions":["create depot user"]
     },
     "headers":{
@@ -117,3 +117,35 @@ Sample Response
 
 
 ```
+
+### Brands
+
+`POST /api/brands`
+
+Creates a new brand
+
+Parameters
+---
+
+|Parameter|required|Description|
+|---------|-------|-------|
+|brandName|required||
+
+`GET /api/brands`
+
+`GET /api/brands/{brandId}`
+
+`PATCH /api/brands/{brandId}`
+
+Updates brand details
+
+Parameters
+---
+
+|Parameter|required|Description|
+|---------|-------|-------|
+|brandName|required||
+
+`DELETE /api/brands/{brandId}`
+
+Deletes brand

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Brand;
 use App\Models\User;
 use App\Models\Depot;
 use Tests\TestCase;
@@ -16,6 +17,7 @@ class DepotTest extends TestCase
      */
     public function authenticated_user_with_permission_can_create_depot()
     {
+        $brand = Brand::factory()->create();
         $depot = Depot::factory()->make();
         $user = User::find(User::factory()->create()->id);
         $user->givePermissionTo('create depot');
@@ -25,10 +27,11 @@ class DepotTest extends TestCase
                 'depotCode' => $depot->code,
                 'depotEPRALicenceNo' => $depot->EPRA_licence_no,
                 'depotLocation' => $depot->location,
+                'brandIds' => [$brand->id]
             ]);
         $response->assertCreated();
         $response->assertJsonStructure([
-            'data' => ['id', 'depotName'],
+            'data' => ['id', 'depotName', 'brands' => [['id', 'brandName']]],
             'headers' => ['message']
         ]);
     }
@@ -47,6 +50,26 @@ class DepotTest extends TestCase
             ->postJson('/api/depots', [
                 'depotName' => $depot->name,
                 'depotCode' => $depot->code,
+                'depotLocation' => $depot->location,
+            ]);
+        $response->assertUnprocessable();
+    }
+
+    /**
+     * POST api/depots
+     *
+     * @test
+     * @return void
+     */
+    public function if_brand_ids_not_provided_returns_unprocessable()
+    {
+        $depot = Depot::factory()->make();
+        $user = User::find(User::factory()->create()->id);
+        $response = $this->actingAs($user, 'api')
+            ->postJson('/api/depots', [
+                'depotName' => $depot->name,
+                'depotCode' => $depot->code,
+                'depotEPRALicenceNo' => $depot->EPRA_licence_no,
                 'depotLocation' => $depot->location,
             ]);
         $response->assertUnprocessable();

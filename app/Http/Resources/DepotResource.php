@@ -20,6 +20,7 @@ class DepotResource extends JsonResource
             'depotName' =>$this->name,
             'depotEPRALicenceNo' =>$this->EPRA_license_no,
             'depotLocation' =>$this->location,
+            'brands' => BrandResource::collection($this->brands)
         ];
     }
 }
