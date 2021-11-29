@@ -121,6 +121,9 @@ class CreatePermissionTables extends Migration
             ->forget(config('permission.cache.key'));
 
         DB::table($tableNames['roles'])->insert([
+            ['name' => 'Transporter Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
+            ['name' => 'Depot Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
+            ['name' => 'Dealer Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
             ['name' => 'Transporter', 'guard_name' => 'api', 'is_self_registrable' => true],
             ['name' => 'Depot User', 'guard_name' => 'api', 'is_self_registrable' => true]
         ]);
@@ -153,13 +156,26 @@ class CreatePermissionTables extends Migration
             ['name' => 'delete dealer user', 'guard_name' => 'api'],
 
             ['name' => 'create cylinder', 'guard_name' => 'api'],
-            ['name' => 'edit cylinder', 'guard_name' => 'api'],
+            ['name' => 'update cylinder', 'guard_name' => 'api'],
             ['name' => 'delete cylinder', 'guard_name' => 'api'],
+
+            ['name' => 'create brand', 'guard_name' => 'api'],
+            ['name' => 'update brand', 'guard_name' => 'api'],
+            ['name' => 'delete brand', 'guard_name' => 'api'],
 
             ['name' => 'scan qr code', 'guard_name' => 'api'],
         ]);
 
-        Role::where('name', 'Transporter')->first()->givePermissionTo(['scan qr code']);
+        Role::where('name', 'Transporter Admin')->first()->givePermissionTo([
+            'create transporter user', 'update transporter user', 'delete transporter user',
+        ]);
+        Role::where('name', 'Depot Admin')->first()->givePermissionTo([
+            'create depot user', 'update depot user', 'delete depot user',
+        ]);
+        Role::where('name', 'Dealer Admin')->first()->givePermissionTo([
+            'create dealer user', 'update dealer user', 'delete dealer user',
+        ]);
+        Role::where('name', 'Depot User')->first()->givePermissionTo(['create cylinder', 'scan qr code']);
         Role::where('name', 'Depot User')->first()->givePermissionTo(['create cylinder', 'scan qr code']);
     }
 

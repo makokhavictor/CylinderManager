@@ -1,66 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About Cylinder Manager
 
-## About Laravel
+Manages Cylinder from depots to transporters to dealers and vice versa
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## API
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Authentication and registration
 
-## Learning Laravel
+`POST /api/oauth/register`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Before an organisation can use the app, the organisation admin creates an account. 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Parameters
+---
 
-## Laravel Sponsors
+| Parameter |Required? | Description |
+| ---------------|----------------|----------|
+| firstName |required| |
+| lastName |required| |
+| username | optional | |
+| phone |optional| |
+| email | optional |Required if phone is empty |
+| password |required| |
+| confirmationPassword |required| |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Sample Request Data
 
-### Premium Partners
+```json
+{
+    "username": "",
+    "email": "sawan.bernice@example.com",
+    "phone": "283-858-1830",
+    "firstName": "Jazlyn",
+    "lastName": "Hand",
+    "password": "password",
+    "passwordConfirmation": "password"
+}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+Sample Response
+---
 
-## Contributing
+```json
+{
+    "data": {
+        "user": {
+            "id": 2,
+            "firstName": "Jazlyn",
+            "lastName": "Hand",
+            "email": "sawan.bernice@example.com",
+            "phone": "283-858-1830",
+            "createdAt": "2021-11-26T06:56:53.000000Z",
+            "profileDescription": null,
+            "emailVerified": false,
+            "emailVerifiedAt": null,
+            "phoneVerified": false,
+            "phoneVerifiedAt": null,
+            "profilePictureLink": null,
+            "roles": [],
+            "permissions": []
+        },
+        "token": {
+            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiN2MwZWU1NjE0ZmFjMjhlZTJjNmE2ZmI1NTM1MWI4ODQzNWI2ZjlmNTVjM2E5NTQ0MmE5ZjhjMzE0NzEyOGJmY2UwMDU5ZDJkNjg5ZDM2ZDEiLCJpYXQiOjE2Mzc5MDk4MTMuNDE3MjAxLCJuYmYiOjE2Mzc5MDk4MTMuNDE3MjA1LCJleHAiOjE2Njk0NDU4MTMuMzk4Njk0LCJzdWIiOiIyIiwic2NvcGVzIjpbIioiXX0.uAKUZQ-zCrRg5JZ-6nYxrpWl73WaiqqoC-EVsAmaQfnlZ5o28OTmgDAuIICxu0QzrBIVNTFUVjGrNRS-XoZn5BNoOidIMYCoLDVkfB40z0iGnU7uVKs-6e30hlRrCtpc9M0FmagdewYWIEqvwLbbdIGkxa69udme-S8KpQ-pC_f0ejWmhLaIB9-OFB4PoS1BwIV2JFsf10dD_uvFWvc7PKKaW1NLc14jOa6DSl24BPVZN8XyLEEUi2tAde-bJ4RW2k_8FIqVEyHozSVF52S38q-4NqZRgu94wvRDB6u4uhRipP67UrXBnw-JkdcIZlx0EFPg8nx8gcwSKkrsAXOECW0yTCGBKAahCyJ2xzWaIXowGNcCyZpM7OHPO_oDiHZz-DPj0sxMwnkelA69B-RA-bC-NdjLQcCuf5gKgACTm0q4EkWJ8YC0DER0NojaeHJIHnY_LPFQK74XvBoNnDI47VDC3yxnezrrRCOY-GGcjoFEG1sRs93WVl4HjFQosQweC2TAVrKfQHfoVBgHtkxfMqNMyc1i4tveP84VbN1GbyMCc_TXAOUilfff6_yfOcDUsRrZ-D9z8tf-b3nMGEx1rnEBSDpKQJkSauOdUqnzZ1-CZrJ6axcoxMcYJbuq6FD2u2wuImT1iBDnCPsUFG3c5HVlbppl-T1jhaospxpbkUY",
+            "expires_in": "2022-11-26T06:56:53.000000Z"
+        }
+    },
+    "header": {
+        "message": "You have been successfully registered"
+    }
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+`POST /api/depot-users`<br>
+`POST /api/transporter-users`<br>
+`POST /api/dealers-users`
 
-## Code of Conduct
+After the admin creates an account, they have to select whether to set themselves as a depot-users/transporter-user/dealer-user <br>
+This step gives the user administrative rights to 'create depot users' or 'create transporter users' or 'create dealer user' depending on the api call;<br>
+This user will then be able to create other users within that particular domain
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Parameters
 
-## Security Vulnerabilities
+`POST /api/depot-users`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Api | Parameter |Required? | Description |
+| ---------------|----------------|----------|---------|
+|  |required| |
 
-## License
+Sample Response
+---
+```json
+{
+    "data":{
+        "id":22,
+        "username":"lhauck",
+        "firstName":"Mandy",
+        "lastName":"Hirthe",
+        "email":"jamison64@example.com",
+        "phone":"(724) 306-4332",
+        "createdAt":"2021-11-28T17:11:04.000000Z",
+        "depotUserId":1,
+        "profileDescription":null,
+        "emailVerified":true,
+        "emailVerifiedAt":"2021-11-28T17:11:04.000000Z",
+        "phoneVerified":false,
+        "phoneVerifiedAt":null,
+        "profilePictureLink":null,
+        "roles":["Depot admin"],
+        "permissions":["create depot user"]
+    },
+    "headers":{
+        "message":"Successfully registered user as a depot user"
+    }
+}
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+```

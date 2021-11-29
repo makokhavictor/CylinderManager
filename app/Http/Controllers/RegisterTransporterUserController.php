@@ -10,7 +10,10 @@ class RegisterTransporterUserController extends Controller
 {
     public function store()
     {
-        User::find(auth()->id())->transporterUser()->create([]);
+        $user = User::find(auth()->id());
+        $user ->transporterUser()->create([]);
+        $user->assignRole('Transporter Admin');
+
         return response()->json([
             'data' => UserResource::make(User::find(auth()->id())),
             'headers' => [

@@ -21,6 +21,8 @@ class RegisterDepotUserTest extends TestCase
         $response = $this->actingAs($depotUser->user, 'api')
             ->postJson("/api/depot-users", []);
         $response->assertCreated();
+        $response->assertSee('Depot Admin');
+        $response->assertSee('create depot user');
         $response->assertJsonStructure([
             'data' => ['depotUserId'],
             'headers' => ['message']

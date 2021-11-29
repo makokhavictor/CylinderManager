@@ -20,6 +20,8 @@ class RegisterDealerUserTest extends TestCase
         $depotUser = DepotUser::factory()->make();
         $response = $this->actingAs($depotUser->user, 'api')
             ->postJson("/api/dealer-users", []);
+        $response->assertSee('Dealer Admin');
+        $response->assertSee('create dealer user');
         $response->assertCreated();
         $response->assertJsonStructure([
             'data' => ['dealerUserId'],

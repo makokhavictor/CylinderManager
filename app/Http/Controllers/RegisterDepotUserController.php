@@ -10,7 +10,10 @@ class RegisterDepotUserController extends Controller
 {
     public function store()
     {
-        User::find(auth()->id())->depotUser()->create([]);
+        $user = User::find(auth()->id());
+        $user ->depotUser()->create([]);
+        $user->assignRole('Depot Admin');
+
         return response()->json([
             'data' => UserResource::make(User::find(auth()->id())),
             'headers' => [

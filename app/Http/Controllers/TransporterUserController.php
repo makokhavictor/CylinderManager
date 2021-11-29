@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DealerUserDeleteRequest;
-use App\Http\Requests\DealerUserStoreRequest;
-use App\Http\Requests\DealerUserUpdateRequest;
-use App\Http\Resources\DealerUserCollection;
+use App\Http\Requests\TransporterUserDeleteRequest;
+use App\Http\Requests\TransporterUserStoreRequest;
+use App\Http\Requests\TransporterUserUpdateRequest;
+use App\Http\Resources\TransporterCollection;
+use App\Http\Resources\TransporterUserCollection;
+use App\Http\Resources\TransporterUserResource;
 use App\Http\Resources\UserResource;
-use App\Models\DealerUser;
-use App\Http\Requests\StoreDealerUserRequest;
-use App\Http\Requests\UpdateDealerUserRequest;
-use App\Models\Dealer;
+use App\Models\Transporter;
+use App\Models\TransporterUser;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class DealerUserController extends Controller
+class TransporterUserController extends Controller
 {
-    public function index(Dealer $dealer)
+    public function index(Transporter $transporter)
     {
-        return response()->json(DealerUserCollection::make($dealer->dealerUsers()->paginate()));
+        return response()->json(TransporterUserCollection::make($transporter->transporterUsers()->paginate()));
     }
 
-    public function show(Dealer $dealer, User $user)
+    public function show(Transporter $transporter, User $user)
     {
         return response()->json([
             'data' => UserResource::make($user)
         ]);
     }
 
-    public function store(DealerUserStoreRequest $request, Dealer $dealer)
+    public function store(TransporterUserStoreRequest $request, Transporter $transporter)
     {
         $password = Str::random(10);
         $user = User::create([
@@ -39,18 +40,18 @@ class DealerUserController extends Controller
             'last_name' => $request->get('lastName'),
             'password' => bcrypt($password)
         ]);
-        $dealer->dealerUsers()->create([
+        $transporter->transporterUsers()->create([
             'user_id' => $user->id
         ]);
         return response()->json([
             'data' => UserResource::make($user),
             'headers' => [
-                'message' => 'Successfully created dealer user'
+                'message' => 'Successfully created transporter user'
             ]
         ])->setStatusCode(201);
     }
 
-    public function update(DealerUserUpdateRequest $request, Dealer $dealer, User $user)
+    public function update(TransporterUserUpdateRequest $request, Transporter $transporter, User $user)
     {
         $fields = [
             'username' => 'username',
@@ -71,18 +72,18 @@ class DealerUserController extends Controller
         return response()->json([
             'data' => UserResource::make($user),
             'headers' => [
-                'message' => 'Successfully updated dealer user'
+                'message' => 'Successfully updated transporter user'
             ]
         ]);
     }
 
-    public function destroy(DealerUserDeleteRequest $request, Dealer $dealer, User $user) {
+    public function destroy(TransporterUserDeleteRequest $request, Transporter $transporter, User $user) {
 
-        $user->dealerUser()->delete();
+        $user->transporterUser()->delete();
         return response()->json([
             'data' => UserResource::make($user),
             'headers' => [
-                'message' => 'Successfully deleted dealer user'
+                'message' => 'Successfully deleted transporter user'
             ]
         ]);
     }

@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\DealerController;
+use App\Http\Controllers\DealerUserController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\DepotUserController;
 use App\Http\Controllers\RegisterDealerUserController;
 use App\Http\Controllers\RegisterDepotUserController;
 use App\Http\Controllers\RegisterTransporterUserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TransporterUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
@@ -42,9 +45,12 @@ Route::middleware('auth:api')->group(function () {
     Route::get('roles', [RoleController::class, 'index']);
 
     Route::resources([
-        'dealers' => DealerController::class,
         'depots/{depot}/users' => DepotUserController::class,
+        'transporters/{transporter}/users' => TransporterUserController::class,
+        'dealers/{dealer}/users' => DealerUserController::class,
+        'dealers' => DealerController::class,
         'depots' => DepotController::class,
+        'brands' => BrandController::class,
     ]);
     Route::post('depot-users', [RegisterDepotUserController::class, 'store']);
     Route::post('dealer-users', [RegisterDealerUserController::class, 'store']);

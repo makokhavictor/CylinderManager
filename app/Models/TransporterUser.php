@@ -9,8 +9,12 @@ class TransporterUser extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id'
+    ];
+
     public function transporter() {
-        return $this->belongsTo(Dealer::class);
+        return $this->belongsTo(Transporter::class);
     }
 
     public function user() {

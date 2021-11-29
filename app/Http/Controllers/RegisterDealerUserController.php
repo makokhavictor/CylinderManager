@@ -10,7 +10,10 @@ class RegisterDealerUserController extends Controller
 {
     public function store()
     {
-        User::find(auth()->id())->dealerUser()->create([]);
+        $user = User::find(auth()->id());
+        $user ->dealerUser()->create([]);
+        $user->assignRole('Dealer Admin');
+
         return response()->json([
             'data' => UserResource::make(User::find(auth()->id())),
             'headers' => [

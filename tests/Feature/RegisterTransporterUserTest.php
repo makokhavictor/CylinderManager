@@ -20,6 +20,8 @@ class RegisterTransporterUserTest extends TestCase
         $depotUser = DepotUser::factory()->make();
         $response = $this->actingAs($depotUser->user, 'api')
             ->postJson("/api/transporter-users", []);
+        $response->assertSee('Transporter Admin');
+        $response->assertSee('create transporter user');
         $response->assertCreated();
         $response->assertJsonStructure([
             'data' => ['transporterUserId'],
