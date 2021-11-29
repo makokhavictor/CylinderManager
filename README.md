@@ -1,8 +1,6 @@
-
 ## About Cylinder Manager
 
 Manages Cylinder from depots to transporters to dealers and vice versa
-
 
 ## API
 
@@ -10,7 +8,7 @@ Manages Cylinder from depots to transporters to dealers and vice versa
 
 `POST /api/oauth/register`
 
-Before an organisation can use the app, the organisation admin creates an account. 
+Before an organisation can use the app, the organisation admin creates an account.
 
 Parameters
 ---
@@ -76,8 +74,10 @@ Sample Response
 `POST /api/transporter-users`<br>
 `POST /api/dealers-users`
 
-After the admin creates an account, they have to select whether to set themselves as a depot-users/transporter-user/dealer-user <br>
-This step gives the user administrative rights to 'create depot users' or 'create transporter users' or 'create dealer user' depending on the api call;<br>
+After the admin creates an account, they have to select whether to set themselves as a
+depot-users/transporter-user/dealer-user <br>
+This step gives the user administrative rights to 'create depot users' or 'create transporter users' or 'create dealer
+user' depending on the api call;<br>
 This user will then be able to create other users within that particular domain
 
 Parameters
@@ -90,28 +90,33 @@ Parameters
 
 Sample Response
 ---
+
 ```json
 {
-    "data":{
-        "id":22,
-        "username":"lhauck",
-        "firstName":"Mandy",
-        "lastName":"Hirthe",
-        "email":"jamison64@example.com",
-        "phone":"(724) 306-4332",
-        "createdAt":"2021-11-28T17:11:04.000000Z",
-        "depotUserId":1,
-        "profileDescription":null,
-        "emailVerified":true,
-        "emailVerifiedAt":"2021-11-28T17:11:04.000000Z",
-        "phoneVerified":false,
-        "phoneVerifiedAt":null,
-        "profilePictureLink":null,
-        "roles":["Depot Admin"],
-        "permissions":["create depot user"]
+    "data": {
+        "id": 22,
+        "username": "lhauck",
+        "firstName": "Mandy",
+        "lastName": "Hirthe",
+        "email": "jamison64@example.com",
+        "phone": "(724) 306-4332",
+        "createdAt": "2021-11-28T17:11:04.000000Z",
+        "depotUserId": 1,
+        "profileDescription": null,
+        "emailVerified": true,
+        "emailVerifiedAt": "2021-11-28T17:11:04.000000Z",
+        "phoneVerified": false,
+        "phoneVerifiedAt": null,
+        "profilePictureLink": null,
+        "roles": [
+            "Depot Admin"
+        ],
+        "permissions": [
+            "create depot user"
+        ]
     },
-    "headers":{
-        "message":"Successfully registered user as a depot user"
+    "headers": {
+        "message": "Successfully registered user as a depot user"
     }
 }
 
@@ -149,3 +154,55 @@ Parameters
 `DELETE /api/brands/{brandId}`
 
 Deletes brand
+
+### Depots
+
+`POST api/depots`
+
+Creates depot
+
+Headers
+---
+- Authorization 
+
+Permission to perform action
+---
+
+'create depot'
+
+Sample request
+---
+```json
+{
+    "depotName": "Lake Carlotta",
+    "depotCode": 851088,
+    "depotEPRALicenceNo": 170025,
+    "depotLocation": "Breanneton",
+    "brandIds": [
+        87
+    ]
+}
+```
+
+Sample response
+---
+```json
+{
+    "data": {
+        "id": 206,
+        "depotCode": 851088,
+        "depotName": "Lake Carlotta",
+        "depotEPRALicenceNo": null,
+        "depotLocation": "Breanneton",
+        "brands": [
+            {
+                "id": 87,
+                "brandName": "Olson-Hoppe"
+            }
+        ]
+    },
+    "headers": {
+        "message": "Depot created successfully"
+    }
+}
+```
