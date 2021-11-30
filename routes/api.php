@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CanisterController;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\DealerUserController;
 use App\Http\Controllers\DepotController;
@@ -46,6 +47,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resources([
         'depots/{depot}/users' => DepotUserController::class,
+        'depots/{depot}/canisters' => CanisterController::class,
         'transporters/{transporter}/users' => TransporterUserController::class,
         'dealers/{dealer}/users' => DealerUserController::class,
         'dealers' => DealerController::class,

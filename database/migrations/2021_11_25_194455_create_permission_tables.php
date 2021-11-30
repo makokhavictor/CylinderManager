@@ -155,9 +155,9 @@ class CreatePermissionTables extends Migration
             ['name' => 'update dealer user', 'guard_name' => 'api'],
             ['name' => 'delete dealer user', 'guard_name' => 'api'],
 
-            ['name' => 'create cylinder', 'guard_name' => 'api'],
-            ['name' => 'update cylinder', 'guard_name' => 'api'],
-            ['name' => 'delete cylinder', 'guard_name' => 'api'],
+            ['name' => 'create canister', 'guard_name' => 'api'],
+            ['name' => 'update canister', 'guard_name' => 'api'],
+            ['name' => 'delete canister', 'guard_name' => 'api'],
 
             ['name' => 'create brand', 'guard_name' => 'api'],
             ['name' => 'update brand', 'guard_name' => 'api'],
@@ -175,8 +175,8 @@ class CreatePermissionTables extends Migration
         Role::where('name', 'Dealer Admin')->first()->givePermissionTo([
             'create dealer user', 'update dealer user', 'delete dealer user',
         ]);
-        Role::where('name', 'Depot User')->first()->givePermissionTo(['create cylinder', 'scan qr code']);
-        Role::where('name', 'Depot User')->first()->givePermissionTo(['create cylinder', 'scan qr code']);
+        Role::where('name', 'Depot User')->first()->givePermissionTo([
+            'create canister', 'update canister', 'delete canister', 'scan qr code']);
     }
 
     /**
