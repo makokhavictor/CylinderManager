@@ -163,7 +163,8 @@ Creates depot
 
 Headers
 ---
-- Authorization 
+
+- Authorization
 
 Permission to perform action
 ---
@@ -172,6 +173,7 @@ Permission to perform action
 
 Sample request
 ---
+
 ```json
 {
     "depotName": "Lake Carlotta",
@@ -186,6 +188,7 @@ Sample request
 
 Sample response
 ---
+
 ```json
 {
     "data": {
@@ -206,3 +209,62 @@ Sample response
     }
 }
 ```
+
+### Canisters
+
+`POST api/depots/:depotId/canisters`
+
+|Parameter|Required| Description|
+|-------|--------|---------|
+|canisterCode | required ||
+|canisterManuf | required ||
+|canisterManufDate | required ||
+|brandId | required ||
+|canisterRFID | required ||
+|canisterQR | required ||
+|canisterRecertification | required ||
+
+Sample Request Object
+---
+
+```json
+{
+    "canisterCode": 687981,
+    "canisterManuf": "Schimmel, Blanda and Schaden",
+    "canisterManufDate": "2020-09-06",
+    "brandId": 191,
+    "canisterRFID": 5355341,
+    "canisterQR": 948012,
+    "canisterRecertification": "1986-08-07"
+}
+```
+
+Sample Response
+---
+
+```json
+{
+    "data": {
+        "id": 143,
+        "canisterCode": 3319956,
+        "canisterRecertification": "2009-01-20",
+        "canisterManuf": "Dickens, Walter and Gulgowski",
+        "canisterManufDate": "1978-06-28",
+        "canisterQR": 5900731,
+        "canisterRFID": 8478401,
+        "brandId": 193,
+        "brandName": "Upton-Okuneva"
+    },
+    "headers": {
+        "message": "Successfully created canister"
+    }
+}
+```
+
+`GET api/depots/:depotId/canisters`
+
+`GET api/depots/:depotId/canisters/:canisterId`
+
+`PATCH api/depots/:depotId/canisters/:canisterId`
+
+`DELETE api/depots/:depotId/canisters/:canisterId`
