@@ -10,28 +10,27 @@ use App\Models\Brand;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use App\Http\Requests\DeleteBrandRequest;
+use Illuminate\Http\JsonResponse;
 
 class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return BrandCollection
      */
     public function index()
     {
         $brand = new Brand();
-        return response()->json(
-            BrandCollection::make($brand->paginate())
-        );
+        return BrandCollection::make($brand->paginate());
     }
 
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\StoreBrandRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param StoreBrandRequest $request
+     * @return JsonResponse
      */
     public function store(StoreBrandRequest $request)
     {
@@ -46,8 +45,8 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Brand $brand
-     * @return \Illuminate\Http\JsonResponse
+     * @param Brand $brand
+     * @return JsonResponse
      */
     public function show(Brand $brand)
     {
@@ -61,9 +60,9 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\UpdateBrandRequest $request
-     * @param \App\Models\Brand $brand
-     * @return \Illuminate\Http\JsonResponse
+     * @param UpdateBrandRequest $request
+     * @param Brand $brand
+     * @return JsonResponse
      */
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
@@ -76,8 +75,8 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Brand $brand
-     * @return \Illuminate\Http\JsonResponse
+     * @param Brand $brand
+     * @return JsonResponse
      */
     public function destroy(DeleteBrandRequest $request, Brand $brand)
     {

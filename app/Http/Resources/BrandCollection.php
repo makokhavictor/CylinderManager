@@ -15,7 +15,7 @@ class BrandCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => BrandResource::collection($this)
+            'data' => $this->collection
         ];
     }
 }
