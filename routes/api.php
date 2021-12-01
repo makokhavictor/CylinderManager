@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CanisterController;
+use App\Http\Controllers\CanisterLogController;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\DealerUserController;
 use App\Http\Controllers\DepotController;
@@ -57,6 +58,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('depot-users', [RegisterDepotUserController::class, 'store']);
     Route::post('dealer-users', [RegisterDealerUserController::class, 'store']);
     Route::post('transporter-users', [RegisterTransporterUserController::class, 'store']);
+    Route::post('canister-log', [CanisterLogController::class, 'store']);
+
 });
 
 Route::middleware('guest:api')->group(function () {

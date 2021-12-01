@@ -35,15 +35,16 @@ class CanisterController extends Controller
      */
     public function store(StoreCanisterRequest $request)
     {
-        $canister = Canister::create([
-            'code' => $request->canisterCode,
-            'manuf' => $request->canisterManuf,
-            'manuf_date' => $request->canisterManufDate,
-            'brand_id' => $request->brandId,
-            'RFID' => $request->canisterRFID,
-            'QR' => $request->canisterQR,
-            'recertification' => $request->canisterRecertification
-        ]);
+        $canister = Canister::firstOrcreate(
+            ['QR' => $request->canisterQR],
+            [
+                'code' => $request->canisterCode,
+                'manuf' => $request->canisterManuf,
+                'manuf_date' => $request->canisterManufDate,
+                'brand_id' => $request->brandId,
+                'RFID' => $request->canisterRFID,
+                'recertification' => $request->canisterRecertification
+            ]);
 
         return response()->json(CreatedCanisterResource::make($canister));
     }

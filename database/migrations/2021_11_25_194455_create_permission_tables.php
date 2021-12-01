@@ -159,6 +159,8 @@ class CreatePermissionTables extends Migration
             ['name' => 'update canister', 'guard_name' => 'api'],
             ['name' => 'delete canister', 'guard_name' => 'api'],
 
+            ['name' => 'create canister log', 'guard_name' => 'api'],
+
             ['name' => 'create brand', 'guard_name' => 'api'],
             ['name' => 'update brand', 'guard_name' => 'api'],
             ['name' => 'delete brand', 'guard_name' => 'api'],
@@ -176,7 +178,7 @@ class CreatePermissionTables extends Migration
             'create dealer user', 'update dealer user', 'delete dealer user',
         ]);
         Role::where('name', 'Depot User')->first()->givePermissionTo([
-            'create canister', 'update canister', 'delete canister', 'scan qr code']);
+            'create canister', 'update canister', 'delete canister', 'create canister log', 'scan qr code']);
     }
 
     /**

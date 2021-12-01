@@ -151,12 +151,11 @@ class CanisterTest extends TestCase
     {
         $depotId = Depot::factory()->create()->id;
         $canister = Canister::factory()->create();
-        $this->user->givePermissionTo('update canister');
+        $this->user->givePermissionTo('delete canister');
         $response = $this->actingAs($this->user, 'api')
             ->deleteJson("api/depots/{$depotId}/canisters/{$canister->id}", []);
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => [],
             'headers' => ['message']
         ]);
     }
