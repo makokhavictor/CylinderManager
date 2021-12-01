@@ -58,6 +58,6 @@ Route::get('/895enrg9345fg34g43g3/super-admin-user', function () {
 
 Route::get('/895enrg9345fg34g43g3/token', function () {
     $user = \App\Models\User::where('email', 'admin@admin.com')->first();
-    dd($user->createToken('Personal Access Token', ['*']));
+    echo $user->createToken('Personal Access Token', ['*'])->accessToken;
 });
 
