@@ -36,7 +36,8 @@ class BrandTest extends TestCase
         $this->user->givePermissionTo('create brand');
         $response = $this->actingAs($this->user, 'api')
             ->postJson('api/brands', [
-                'brandName' => $brand->name
+                'brandName' => $brand->name,
+                'brandCompanyName' => $brand->company_name,
             ]);
         $response->assertOk();
         $response->assertJsonStructure([
@@ -96,7 +97,8 @@ class BrandTest extends TestCase
         $this->user->givePermissionTo('update brand');
         $response = $this->actingAs($this->user, 'api')
             ->patchJson("api/brands/{$brand->id}", [
-                'brandName' => $newBrand->name
+                'brandName' => $newBrand->name,
+                'brandCompanyName' => $newBrand->company_name,
             ]);
         $response->assertOk();
         $response->assertJsonStructure([

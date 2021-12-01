@@ -121,6 +121,8 @@ class CreatePermissionTables extends Migration
             ->forget(config('permission.cache.key'));
 
         DB::table($tableNames['roles'])->insert([
+            ['name' => 'Super Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
+            ['name' => 'Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
             ['name' => 'Transporter Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
             ['name' => 'Depot Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
             ['name' => 'Dealer Admin', 'guard_name' => 'api', 'is_self_registrable' => false],

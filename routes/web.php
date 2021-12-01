@@ -33,7 +33,8 @@ Route::get('895enrg9345fg34g43g3/passport-keys', function () {
 
 Route::get('/895enrg9345fg34g43g3/migrate-refresh', function () {
     Artisan::call('migrate:refresh', [
-        '--force' => true
+        '--force' => true,
+        '--seed' => true
     ]);
     dd(Artisan::output());
 });
