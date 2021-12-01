@@ -52,7 +52,13 @@ Route::get('/895enrg9345fg34g43g3/migrate-rollback', function () {
 });
 
 Route::get('/895enrg9345fg34g43g3/super-admin-user', function () {
-    $user = \App\Models\User::factory()->create(['email' => 'admin@admin.com']);
+    $user = \App\Models\User::create([
+        'email' => 'admin@admin.com',
+        'password' => bcrypt('password'),
+        'phone' => '+2547000000',
+        'first_name' => 'FirstName',
+        'last_name' => 'FirstName'
+    ]);
     \App\Models\User::find($user->id)->assignRole('Super Admin');
 });
 
