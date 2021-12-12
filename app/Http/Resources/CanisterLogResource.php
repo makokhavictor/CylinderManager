@@ -36,6 +36,8 @@ class CanisterLogResource extends JsonResource
             'fromTransporterId' => $this->when($this->from_transporter_id, $this->from_transporter_id),
             'fromTransporterName' => $this->when($this->from_transporter_id, $fromTransporterName),
             'canisterQR' => $this->canister->QR,
+            'brandId' => $this->canister->brand->id,
+            'brandName' => $this->canister->brand->name,
             'filled' =>  $this->filled,
         ];
     }

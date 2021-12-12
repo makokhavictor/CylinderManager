@@ -15,7 +15,10 @@ class CreatedCanisterLogResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => CanisterlogResource::make($this),
+            'data' => [
+                'batchId' => $this->id,
+                'canisters' => CanisterlogResource::collection($this->canisterLogs)
+            ],
             'headers' => [
                 'message' => 'Successfully added canister log'
             ]

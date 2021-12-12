@@ -30,6 +30,10 @@ class CreateCanisterLogsTable extends Migration
             $table->foreignId('canister_id')->nullable();
             $table->foreign('canister_id')->references('id')->on('canisters');
             $table->boolean('filled')->default(false);
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('canister_log_batch_id');
+            $table->foreign('canister_log_batch_id')->references('id')->on('canister_log_batches');
             $table->timestamps();
         });
     }

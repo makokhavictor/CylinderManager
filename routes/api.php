@@ -58,7 +58,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('depot-users', [RegisterDepotUserController::class, 'store']);
     Route::post('dealer-users', [RegisterDealerUserController::class, 'store']);
     Route::post('transporter-users', [RegisterTransporterUserController::class, 'store']);
-    Route::post('canister-log', [CanisterLogController::class, 'store']);
+    Route::post('canister-logs', [CanisterLogController::class, 'store']);
 
 });
 

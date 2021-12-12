@@ -10,13 +10,14 @@ use App\Http\Resources\DepotResource;
 use App\Models\Depot;
 use App\Http\Requests\StoreDepotRequest;
 use App\Http\Requests\UpdateDepotRequest;
+use Illuminate\Http\JsonResponse;
 
 class DepotController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
@@ -28,8 +29,8 @@ class DepotController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreDepotRequest  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param StoreDepotRequest $request
+     * @return JsonResponse
      */
     public function store(StoreDepotRequest $request)
     {
@@ -48,22 +49,20 @@ class DepotController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Depot  $depot
-     * @return \Illuminate\Http\JsonResponse
+     * @param Depot $depot
+     * @return DepotResource
      */
     public function show(Depot $depot)
     {
-        return response()->json([
-            'data' => DepotResource::make($depot)
-        ]);
+        return DepotResource::make($depot);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateDepotRequest  $request
-     * @param  \App\Models\Depot  $depot
-     * @return \Illuminate\Http\JsonResponse
+     * @param UpdateDepotRequest $request
+     * @param Depot $depot
+     * @return UpdatedDepotResource
      */
     public function update(UpdateDepotRequest $request, Depot $depot)
     {
@@ -74,15 +73,15 @@ class DepotController extends Controller
             'location' => $request->get('depotLocation'),
         ]);
 
-        return response()->json(UpdatedDepotResource::make($depot));
+        return UpdatedDepotResource::make($depot);
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Depot  $depot
-     * @return \Illuminate\Http\JsonResponse
+     * @param Depot $depot
+     * @return JsonResponse
      */
     public function destroy(DeleteDepotRequest $request, Depot $depot)
     {

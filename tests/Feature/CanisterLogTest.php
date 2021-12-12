@@ -15,20 +15,31 @@ class CanisterLogTest extends TestCase
      * @test
      * @return void
      */
-    public function depot_user_can_log_new_canister()
+    public function depot_user_can_log_new_canisters()
     {
-        $canister = Canister::factory()->create();
+        $canisters = Canister::factory()
+            ->count(3)
+            ->create()
+            ->map
+            ->only(['id', 'filled'])
+            ->map(function ($item) {
+                $item['filled'] = $this->faker->boolean;
+                return $item;
+            });
         $user = User::find(DepotUser::factory()->create()->user_id);
         $user->assignRole('Depot User');
         $response = $this->actingAs($user, 'api')
-            ->postJson('/api/canister-log', [
+            ->postJson('/api/canister-logs', [
                 'toDepotId' => $user->depotUser->depot->id,
-                'canisterId' => $canister->id,
-                'filled' => $this->faker->boolean
+                'canisters' => $canisters->toArray(),
             ]);
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => ['id', 'toDepotName', 'toDepotId', 'canisterQR', 'filled'],
+            'data' => [
+                'batchId', 'canisters' => [[
+                    'id', 'canisterQR', 'brandId', 'brandName', 'filled', 'toDepotName', 'toDepotId',
+                ]]
+            ],
             'headers' => ['message']
         ]);
     }

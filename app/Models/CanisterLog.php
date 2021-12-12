@@ -18,7 +18,8 @@ class CanisterLog extends Model
         'from_transporter_id',
         'canister_id',
         'filled',
-        'released_at'
+        'released_at',
+        'user_id'
     ];
 
     public function toDepot()
