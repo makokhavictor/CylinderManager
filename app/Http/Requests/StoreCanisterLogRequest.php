@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCanisterLogRequest extends FormRequest
@@ -29,5 +30,10 @@ class StoreCanisterLogRequest extends FormRequest
             'toDepotId' => 'required_without_all:toTransporterId,toDealerId',
             'canisters.*.id' => 'required|exists:canisters,id'
         ];
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new AuthorizationException( 'You are not authorised to create a canister log');
     }
 }
