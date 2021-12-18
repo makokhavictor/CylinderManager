@@ -34,22 +34,22 @@ class CanisterLog extends Model
 
     public function toDealer()
     {
-        return $this->belongsTo(Depot::class, 'to_dealer_id');
+        return $this->belongsTo(Dealer::class, 'to_dealer_id');
     }
 
     public function fromDealer()
     {
-        return $this->belongsTo(Depot::class, 'from_dealer_id');
+        return $this->belongsTo(Dealer::class, 'from_dealer_id');
     }
 
     public function toTransporter()
     {
-        return $this->belongsTo(Depot::class, 'to_transporter_id');
+        return $this->belongsTo(Transporter::class, 'to_transporter_id');
     }
 
     public function fromTransporter()
     {
-        return $this->belongsTo(Depot::class, 'from_transporter_id');
+        return $this->belongsTo(Transporter::class, 'from_transporter_id');
     }
 
     public function canister()
