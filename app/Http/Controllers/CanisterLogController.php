@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CreatedCanisterLogResource;
+use App\Models\CanisterLog;
 use App\Models\CanisterLogBatch;
 use App\Http\Requests\StoreCanisterLogRequest;
 use App\Http\Requests\UpdateCanisterLogRequest;
