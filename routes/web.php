@@ -51,6 +51,11 @@ Route::get('/895enrg9345fg34g43g3/migrate-rollback', function () {
     dd(Artisan::output());
 });
 
+Route::get('/895enrg9345fg34g43g3/config-clear', function () {
+    Artisan::call('config:clear', ['--step' => 1, '--force' => true]);
+    dd(Artisan::output());
+});
+
 Route::get('/895enrg9345fg34g43g3/super-admin-user', function () {
     $user = \App\Models\User::create([
         'email' => 'admin@admin.com',

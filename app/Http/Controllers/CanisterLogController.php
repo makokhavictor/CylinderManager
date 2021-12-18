@@ -6,7 +6,6 @@ use App\Http\Resources\CreatedCanisterLogResource;
 use App\Models\CanisterLogBatch;
 use App\Http\Requests\StoreCanisterLogRequest;
 use App\Http\Requests\UpdateCanisterLogRequest;
-use App\Models\User;
 
 class CanisterLogController extends Controller
 {
