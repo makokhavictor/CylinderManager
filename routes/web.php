@@ -52,7 +52,7 @@ Route::get('/895enrg9345fg34g43g3/migrate-rollback', function () {
 });
 
 Route::get('/895enrg9345fg34g43g3/config-clear', function () {
-    Artisan::call('config:clear', ['--step' => 1, '--force' => true]);
+    Artisan::call('config:clear');
     dd(Artisan::output());
 });
 
