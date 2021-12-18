@@ -10,7 +10,9 @@ use App\Http\Resources\TransporterCollection;
 use App\Http\Resources\TransporterResource;
 use App\Http\Resources\UpdatedTransporterResource;
 use App\Models\Transporter;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class TransporterController extends Controller
 {
@@ -31,13 +33,25 @@ class TransporterController extends Controller
      *
      * @param StoreTransporterRequest $request
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function store(StoreTransporterRequest $request)
     {
+
+        $transporterUser = User::find(auth()->id())->transporterUser;
+        if (!$transporterUser) {
+            throw ValidationException::withMessages([
+                'authId' => ['You have not registered as a transporter user. This feature is only available for users registered as transporters']
+            ]);
+        }
+
         $transporter = Transporter::create([
             'name' => $request->get('transporterName'),
             'code' => $request->get('transporterCode'),
         ]);
+
+        $transporterUser->transporter_id = $transporter->id;
+
         return response()->json(
             CreatedTransporterResource::make($transporter)
         )->setStatusCode(201);

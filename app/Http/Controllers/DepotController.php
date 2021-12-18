@@ -10,7 +10,9 @@ use App\Http\Resources\DepotResource;
 use App\Models\Depot;
 use App\Http\Requests\StoreDepotRequest;
 use App\Http\Requests\UpdateDepotRequest;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class DepotController extends Controller
 {
@@ -34,6 +36,13 @@ class DepotController extends Controller
      */
     public function store(StoreDepotRequest $request)
     {
+        $depotUser = User::find(auth()->id())->depotUser;
+        if (!$depotUser) {
+            throw ValidationException::withMessages([
+                'authId' => ['You have not registered as a depot user. This feature is only available for users registered as depot users']
+            ]);
+        }
+
         $depot = Depot::create([
             'name' => $request->get('depotName'),
             'code' => $request->get('depotCode'),
@@ -41,6 +50,7 @@ class DepotController extends Controller
             'location' => $request->get('depotLocation'),
         ]);
         $depot->brands()->attach($request->get('brandIds'));
+        $depotUser->depot_id = $depot->id;
         return response()->json(
             CreatedDepotResource::make($depot)
         )->setStatusCode(201);

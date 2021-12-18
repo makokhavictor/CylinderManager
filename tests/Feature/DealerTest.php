@@ -44,6 +44,28 @@ class DealerTest extends TestCase
      * @test
      * @return void
      */
+    public function users_not_registered_as_dealer_cannot_create_dealer()
+    {
+        $dealer = Dealer::factory()->make();
+        $user = User::find(User::factory()->create()->id);
+        $user->givePermissionTo('create dealer');
+        $response = $this->actingAs($user, 'api')
+            ->postJson('/api/dealers', [
+                'dealerName' => $dealer->name,
+                'dealerCode' => $dealer->code,
+                'dealerEPRALicenceNo' => $dealer->EPRA_licence_no,
+                'dealerLocation' => $dealer->location,
+                'dealerGPS' => $dealer->GPS,
+            ]);
+        $response->assertUnprocessable();
+    }
+
+    /**
+     * POST api/dealers
+     *
+     * @test
+     * @return void
+     */
     public function if_dealer_EPRALicence_not_provided_returns_unprocessable()
     {
         $dealer = Dealer::factory()->make();

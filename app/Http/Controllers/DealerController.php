@@ -11,13 +11,15 @@ use App\Http\Resources\DealerResource;
 use App\Http\Resources\UpdatedDealerResource;
 use App\Models\Dealer;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class DealerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
@@ -28,12 +30,18 @@ class DealerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\StoreDealerRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param StoreDealerRequest $request
+     * @return JsonResponse
+     * @throws ValidationException
      */
     public function store(StoreDealerRequest $request)
     {
         $dealerUser = User::find(auth()->id())->dealerUser;
+        if (!$dealerUser) {
+            throw ValidationException::withMessages([
+                'authId' => ['You have not registered as a dealer user. This feature is only available for users registered as dealers']
+            ]);
+        }
         $dealer = Dealer::create([
             'code' => $request->get('dealerCode'),
             'EPRA_licence_no' => $request->get('dealerEPRALicenceNo'),
@@ -51,8 +59,8 @@ class DealerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Dealer $dealer
-     * @return \Illuminate\Http\JsonResponse
+     * @param Dealer $dealer
+     * @return JsonResponse
      */
     public function show(Dealer $dealer)
     {
@@ -64,9 +72,9 @@ class DealerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\UpdateDealerRequest $request
-     * @param \App\Models\Dealer $dealer
-     * @return \Illuminate\Http\JsonResponse
+     * @param UpdateDealerRequest $request
+     * @param Dealer $dealer
+     * @return JsonResponse
      */
     public function update(UpdateDealerRequest $request, Dealer $dealer)
     {
@@ -84,8 +92,8 @@ class DealerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Dealer $dealer
-     * @return \Illuminate\Http\JsonResponse
+     * @param Dealer $dealer
+     * @return JsonResponse
      */
     public function destroy(DeleteDealerRequest $request, Dealer $dealer)
     {
