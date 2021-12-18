@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CanisterLogResourceX extends JsonResource
+class CanisterLogResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
