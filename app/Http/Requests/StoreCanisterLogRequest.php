@@ -28,6 +28,7 @@ class StoreCanisterLogRequest extends FormRequest
         return [
             'canisterQR' => 'exists:canisters,QR',
             'toDepotId' => 'required_without_all:toTransporterId,toDealerId',
+            'canisters' => 'required|array|min:1',
             'canisters.*.id' => 'required|exists:canisters,id'
         ];
     }

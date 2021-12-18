@@ -43,4 +43,30 @@ class CanisterLogTest extends TestCase
             'headers' => ['message']
         ]);
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @test
+     * @return void
+     */
+    public function canisters_field_is_required_as_array()
+    {
+        Canister::factory()
+            ->count(3)
+            ->create()
+            ->map
+            ->only(['id', 'filled'])
+            ->map(function ($item) {
+                $item['filled'] = $this->faker->boolean;
+                return $item;
+            });
+        $user = User::find(DepotUser::factory()->create()->user_id);
+        $user->assignRole('Depot User');
+        $response = $this->actingAs($user, 'api')
+            ->postJson('/api/canister-logs', [
+                'toDepotId' => $user->depotUser->depot->id,
+            ]);
+        $response->assertUnprocessable();
+    }
 }

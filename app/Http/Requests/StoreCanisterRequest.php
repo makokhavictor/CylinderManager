@@ -30,7 +30,7 @@ class StoreCanisterRequest extends FormRequest
             'canisterManufDate' => 'required',
             'brandId' => 'required',
             'canisterRFID' => 'required',
-            'QR' => 'canisterQR',
+            'canisterQR' => 'required',
             'canisterRecertification' => 'required'
         ];
     }
