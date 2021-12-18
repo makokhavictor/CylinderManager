@@ -12,6 +12,7 @@ use App\Http\Controllers\RegisterDealerUserController;
 use App\Http\Controllers\RegisterDepotUserController;
 use App\Http\Controllers\RegisterTransporterUserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TransporterController;
 use App\Http\Controllers\TransporterUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserResource;
@@ -53,6 +54,7 @@ Route::middleware('auth:api')->group(function () {
         'dealers/{dealer}/users' => DealerUserController::class,
         'dealers' => DealerController::class,
         'depots' => DepotController::class,
+        'transporters' => TransporterController::class,
         'brands' => BrandController::class,
     ]);
     Route::post('depot-users', [RegisterDepotUserController::class, 'store']);

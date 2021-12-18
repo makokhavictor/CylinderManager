@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CreatedTransporterResource extends JsonResource
+class TransporterResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +15,9 @@ class CreatedTransporterResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => TransporterResource::make($this),
-            'headers' => [
-                'message' => 'Transporter created successfully'
-            ]
+            'id' =>$this->id,
+            'transporterCode' =>$this->code,
+            'transporterName' =>$this->name,
         ];
     }
 }
