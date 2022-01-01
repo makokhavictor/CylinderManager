@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Permission;
@@ -70,5 +71,11 @@ Route::get('/895enrg9345fg34g43g3/super-admin-user', function () {
 Route::get('/895enrg9345fg34g43g3/token', function () {
     $user = \App\Models\User::where('email', 'admin@admin.com')->first();
     echo $user->createToken('Personal Access Token', ['*'])->accessToken;
+});
+
+Route::get('/895enrg9345fg34g43g3/redis', function () {
+    $app = Redis::connection();
+    $app->set('redis-up-message', 'Redis is Up and Running!');
+    echo $app->get('redis-up-message');
 });
 

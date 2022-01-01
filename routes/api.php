@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CanisterController;
 use App\Http\Controllers\CanisterLogController;
+use App\Http\Controllers\CanisterStatisticsController;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\DealerUserController;
 use App\Http\Controllers\DepotController;
@@ -46,7 +47,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('oauth/revoke', [AuthController::class, 'destroy']);
     Route::post('oauth/password-change', [AuthController::class, 'passwordChange']);
     Route::get('roles', [RoleController::class, 'index']);
-
+    Route::get('depots/{depot}/statistics',[CanisterStatisticsController::class, 'index']);
     Route::resources([
         'depots/{depot}/users' => DepotUserController::class,
         'depots/{depot}/canisters' => CanisterController::class,
