@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CanisterLogCreatedEvent;
 use App\Http\Resources\CreatedCanisterLogResource;
 use App\Models\CanisterLog;
 use App\Models\CanisterLogBatch;
@@ -30,7 +31,7 @@ class CanisterLogController extends Controller
     {
         $batch = CanisterLogBatch::create();
         foreach ($request->get('canisters') as $canister) {
-            $batch->canisterLogs()->create([
+            $canisterLog = $batch->canisterLogs()->create([
                 'to_depot_id' => $request->get('toDepotId'),
                 'to_dealer_id' => $request->get('toDealerId'),
                 'to_transporter_id' => $request->get('toTransporterId'),
@@ -41,6 +42,8 @@ class CanisterLogController extends Controller
                 'filled' => $canister['filled'],
                 'user_id' => auth()->id()
             ]);
+
+            CanisterLogCreatedEvent::dispatch($canisterLog);
         }
 
 

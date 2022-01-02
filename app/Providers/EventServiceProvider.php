@@ -2,24 +2,17 @@
 
 namespace App\Providers;
 
-use App\Events\BuyerCreatedEvent;
+use App\Events\CanisterLogCreatedEvent;
 use App\Events\DepotUserCreatedEvent;
-use App\Events\FarmerCreatedEvent;
 use App\Events\PasswordResetEvent;
 use App\Events\TransporterCreatedEvent;
-use App\Listeners\AssignBuyerWallet;
-use App\Listeners\AssignFarmerWallet;
-use App\Listeners\AssignRoleBuyer;
 use App\Listeners\AssignRoleDepotUser;
-use App\Listeners\AssignRoleFarmer;
 use App\Listeners\AssignRoleTransporter;
+use App\Listeners\MarkCanisterAsReleasedFromPreviousLocation;
 use App\Listeners\SendPasswordResetTokenSms;
-use App\Models\DepotUser;
-use App\Models\Transporter;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -42,6 +35,9 @@ class EventServiceProvider extends ServiceProvider
         DepotUserCreatedEvent::class => [
             AssignRoleDepotUser::class
         ],
+        CanisterLogCreatedEvent::class => [
+            MarkCanisterAsReleasedFromPreviousLocation::class
+        ]
     ];
 
     /**

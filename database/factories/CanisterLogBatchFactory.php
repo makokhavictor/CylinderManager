@@ -3,11 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\CanisterLogBatch;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CanisterLogFactory extends Factory
+class CanisterLogBatchFactory extends Factory
 {
+    protected $model = CanisterLogBatch::class;
     /**
      * Define the model's default state.
      *
@@ -16,8 +16,6 @@ class CanisterLogFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory()->create()->id,
-            'canister_log_batch_id' => CanisterLogBatch::factory()->create()->id
         ];
     }
 }

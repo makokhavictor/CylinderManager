@@ -34,6 +34,13 @@ class CreateCanisterLogsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('canister_log_batch_id');
             $table->foreign('canister_log_batch_id')->references('id')->on('canister_log_batches');
+            $table->dateTime('released_at')->nullable();
+            $table->foreignId('released_to_depot_id')->nullable();
+            $table->foreignId('released_to_transporter_id')->nullable();
+            $table->foreignId('released_to_dealer_id')->nullable();
+            $table->foreign('released_to_depot_id')->references('id')->on('depots');
+            $table->foreign('released_to_transporter_id')->references('id')->on('transporters');
+            $table->foreign('released_to_dealer_id')->references('id')->on('dealers');
             $table->timestamps();
         });
     }
