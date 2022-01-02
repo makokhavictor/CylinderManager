@@ -16,4 +16,8 @@ class Dealer extends Model
     public function dealerUsers() {
         return $this->hasMany(DealerUser::class);
     }
+
+    public function receivedCanisterLogs() {
+        return $this->hasMany(CanisterLog::class, 'to_dealer_id');
+    }
 }
