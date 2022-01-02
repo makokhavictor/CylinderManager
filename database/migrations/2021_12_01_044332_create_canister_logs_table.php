@@ -41,6 +41,7 @@ class CreateCanisterLogsTable extends Migration
             $table->foreign('released_to_depot_id')->references('id')->on('depots');
             $table->foreign('released_to_transporter_id')->references('id')->on('transporters');
             $table->foreign('released_to_dealer_id')->references('id')->on('dealers');
+            $table->boolean('defective')->default(false);
             $table->timestamps();
         });
     }
