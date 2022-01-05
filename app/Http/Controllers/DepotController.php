@@ -37,11 +37,11 @@ class DepotController extends Controller
     public function store(StoreDepotRequest $request)
     {
         $depotUser = User::find(auth()->id())->depotUser;
-        if (!$depotUser) {
-            throw ValidationException::withMessages([
-                'authId' => ['You have not registered as a depot user. This feature is only available for users registered as depot users']
-            ]);
-        }
+//        if (!$depotUser) {
+//            throw ValidationException::withMessages([
+//                'authId' => ['You have not registered as a depot user. This feature is only available for users registered as depot users']
+//            ]);
+//        }
 
         $depot = Depot::create([
             'name' => $request->get('depotName'),
@@ -50,7 +50,7 @@ class DepotController extends Controller
             'location' => $request->get('depotLocation'),
         ]);
         $depot->brands()->attach($request->get('brandIds'));
-        $depotUser->depot_id = $depot->id;
+//        $depotUser->depot_id = $depot->id;
         return response()->json(
             CreatedDepotResource::make($depot)
         )->setStatusCode(201);
@@ -95,6 +95,7 @@ class DepotController extends Controller
      */
     public function destroy(DeleteDepotRequest $request, Depot $depot)
     {
+        $depot->brands()->detach();
         $depot->delete();
         return response()->json([
             'headers' => [

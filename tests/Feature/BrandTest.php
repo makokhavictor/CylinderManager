@@ -61,6 +61,7 @@ class BrandTest extends TestCase
         $response->assertJsonStructure([
             'data' => [['id', 'brandName']]
         ]);
+
         $response->assertJsonFragment(['brandName' => $brands[0]->name]);
     }
 
