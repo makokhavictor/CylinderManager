@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Resources\CreatedUserResource;
+use App\Http\Resources\UserCollection;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function index() {
+        $users = new User();
+        return UserCollection::make($users->paginate());
+    }
+
     public function store(UserStoreRequest $request) {
         $user = User::create([
             'first_name' => $request->get('firstName'),

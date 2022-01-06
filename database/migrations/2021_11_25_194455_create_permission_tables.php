@@ -124,10 +124,11 @@ class CreatePermissionTables extends Migration
             ['name' => 'Super Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
             ['name' => 'Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
             ['name' => 'Transporter Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
+            ['name' => 'Transporter User', 'guard_name' => 'api', 'is_self_registrable' => false],
             ['name' => 'Depot Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
+            ['name' => 'Depot User', 'guard_name' => 'api', 'is_self_registrable' => true],
             ['name' => 'Dealer Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
-            ['name' => 'Transporter', 'guard_name' => 'api', 'is_self_registrable' => true],
-            ['name' => 'Depot User', 'guard_name' => 'api', 'is_self_registrable' => true]
+            ['name' => 'Dealer User', 'guard_name' => 'api', 'is_self_registrable' => false],
         ]);
 
         DB::table($tableNames['permissions'])->insert([

@@ -59,6 +59,7 @@ Route::middleware('auth:api')->group(function () {
         'depots' => DepotController::class,
         'transporters' => TransporterController::class,
         'brands' => BrandController::class,
+        'users' => UserController::class
     ]);
     Route::post('depot-users', [RegisterDepotUserController::class, 'store']);
     Route::post('dealer-users', [RegisterDealerUserController::class, 'store']);
@@ -67,6 +68,6 @@ Route::middleware('auth:api')->group(function () {
 
 });
 
-Route::middleware('guest:api')->group(function () {
-    Route::post('oauth/register', [UserController::class, 'store']);
-});
+//Route::middleware('guest:api')->group(function () {
+//    Route::post('oauth/register', [UserController::class, 'store']);
+//});

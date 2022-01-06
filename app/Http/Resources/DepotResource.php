@@ -18,9 +18,10 @@ class DepotResource extends JsonResource
             'id' =>$this->id,
             'depotCode' =>$this->code,
             'depotName' =>$this->name,
-            'depotEPRALicenceNo' =>$this->EPRA_license_no,
+            'depotEPRALicenceNo' =>$this->EPRA_licence_no,
             'depotLocation' =>$this->location,
-            'brands' => BrandResource::collection($this->brands)
+            'brands' => BrandResource::collection($this->brands),
+            'brandIds' => $this->brands->pluck('id')
         ];
     }
 }
