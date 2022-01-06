@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Canister;
 use App\Models\Depot;
-use App\Models\DepotUser;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -26,12 +25,12 @@ class CanisterTest extends TestCase
 
     public function user_with_permission_can_create_canister()
     {
-        $depotUser = DepotUser::factory()->create();
-        $user = User::find($depotUser->user_id);
+        $user = User::find(User::factory()->create()->id);
         $canister = Canister::factory()->make();
         $user->assignRole('Depot User');
+        $depot = Depot::factory()->create();
         $response = $this->actingAs($user, 'api')
-            ->postJson("api/depots/{$depotUser->depot_id}/canisters", [
+            ->postJson("api/depots/{$depot->id}/canisters", [
                 'canisterCode' => $canister->code,
                 'canisterManuf' => $canister->manuf,
                 'canisterManufDate' => $canister->manuf_date,

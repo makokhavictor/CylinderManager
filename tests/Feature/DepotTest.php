@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Brand;
-use App\Models\DepotUser;
 use App\Models\User;
 use App\Models\Depot;
 use Tests\TestCase;
@@ -21,7 +20,6 @@ class DepotTest extends TestCase
         $brand = Brand::factory()->create();
         $depot = Depot::factory()->make();
         $user = User::find(User::factory()->create()->id);
-        DepotUser::factory()->state(['user_id' => $user->id])->create();
         $user->givePermissionTo('create depot');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/depots', [

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Traits\HasDealerUser;
-use App\Traits\HasDepotUser;
-use App\Traits\HasTransporterUser;
+use App\Traits\HasDealers;
+use App\Traits\HasDepots;
+use App\Traits\HasTransporters;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasTransporterUser, HasDepotUser, HasRoles, HasDealerUser;
+    use HasApiTokens, HasFactory, Notifiable, HasTransporters, HasDepots, HasRoles, HasDealers;
 
     protected $guard_name = 'api';
     /**

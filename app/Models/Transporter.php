@@ -11,8 +11,8 @@ class Transporter extends Model
 
     protected $fillable = ['name', 'code'];
 
-    public function transporterUsers() {
-        return $this->hasMany(TransporterUser::class);
+    public function users() {
+        return $this->hasMany(User::class);
     }
 
     public function receivedCanisterLogs() {

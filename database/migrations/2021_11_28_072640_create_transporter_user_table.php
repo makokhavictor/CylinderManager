@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDealerUsersTable extends Migration
+class CreateTransporterUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateDealerUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('dealer_users', function (Blueprint $table) {
+        Schema::create('transporter_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dealer_id')->nullable();
-            $table->foreign('dealer_id')->references('id')->on('dealers');
+            $table->foreignId('transporter_id')->nullable();
+            $table->foreign('transporter_id')->references('id')->on('transporters');
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
@@ -30,6 +30,6 @@ class CreateDealerUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dealer_users');
+        Schema::dropIfExists('transporter_users');
     }
 }

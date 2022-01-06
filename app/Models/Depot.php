@@ -13,9 +13,9 @@ class Depot extends Model
         'name', 'code', 'EPRA_licence_no', 'location'
     ];
 
-    public function depotUsers()
+    public function users()
     {
-        return $this->hasMany(DepotUser::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function brands()

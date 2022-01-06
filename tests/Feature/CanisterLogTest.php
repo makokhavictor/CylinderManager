@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Canister;
 use App\Models\CanisterLog;
 use App\Models\Depot;
-use App\Models\DepotUser;
 use App\Models\Transporter;
 use App\Models\User;
 use Tests\TestCase;
@@ -30,11 +29,13 @@ class CanisterLogTest extends TestCase
                 $item['filled'] = $this->faker->boolean;
                 return $item;
             });
-        $user = User::find(DepotUser::factory()->create()->user_id);
+        $user = User::find(User::factory()->create()->id);
+        $depot = Depot::find(Depot::factory()->create()->id);
+        $user->depots()->save($depot);
         $user->assignRole('Depot User');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/canister-logs', [
-                'toDepotId' => $user->depotUser->depot->id,
+                'toDepotId' => $user->depots[0]->id,
                 'canisters' => $canisters->toArray(),
             ]);
         $response->assertOk();
@@ -66,11 +67,13 @@ class CanisterLogTest extends TestCase
                 $item['filled'] = $this->faker->boolean;
                 return $item;
             });
-        $user = User::find(DepotUser::factory()->create()->user_id);
+        $user = User::find(User::factory()->create()->id);
+        $depot = Depot::find(Depot::factory()->create()->id);
+        $user->depots()->save($depot);
         $user->assignRole('Depot User');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/canister-logs', [
-                'toDepotId' => $user->depotUser->depot->id,
+                'toDepotId' => $user->depots[0]->id,
             ]);
         $response->assertUnprocessable();
     }
@@ -91,10 +94,9 @@ class CanisterLogTest extends TestCase
                 $item['filled'] = $this->faker->boolean;
                 return $item;
             });
-        $user = User::find(DepotUser::factory()->create()->user_id);
-        $user->assignRole('Depot User');
-
+        $user = User::find(User::factory()->create()->id);
         $currentDepot = Depot::factory()->create();
+        $user->assignRole('Depot User');
 
         $canisterLog = CanisterLog::factory()->state([
             'canister_id' => $canisters[0]['id'],
@@ -104,7 +106,7 @@ class CanisterLogTest extends TestCase
 
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/canister-logs', [
-                'toDepotId' => $user->depotUser->depot->id,
+                'toDepotId' => Depot::factory()->create()->id,
                 'canisters' => $canisters->toArray(),
             ]);
         $response->assertOk();
@@ -129,7 +131,7 @@ class CanisterLogTest extends TestCase
                 $item['filled'] = $this->faker->boolean;
                 return $item;
             });
-        $user = User::find(DepotUser::factory()->create()->user_id);
+        $user = User::find(User::factory()->create()->id);
         $user->assignRole('Depot User');
 
         $currentDepot = Depot::factory()->create();

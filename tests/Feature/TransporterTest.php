@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Brand;
-use App\Models\TransporterUser;
 use App\Models\User;
 use App\Models\Transporter;
 use Tests\TestCase;
@@ -20,7 +18,6 @@ class TransporterTest extends TestCase
     {
         $transporter = Transporter::factory()->make();
         $user = User::find(User::factory()->create()->id);
-        TransporterUser::factory()->state(['user_id' => $user->id])->create();
         $user->givePermissionTo('create transporter');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/transporters', [

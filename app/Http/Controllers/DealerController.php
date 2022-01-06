@@ -36,12 +36,6 @@ class DealerController extends Controller
      */
     public function store(StoreDealerRequest $request)
     {
-//        $dealerUser = User::find(auth()->id())->dealerUser;
-//        if (!$dealerUser) {
-//            throw ValidationException::withMessages([
-//                'authId' => ['You have not registered as a dealer user. This feature is only available for users registered as dealers']
-//            ]);
-//        }
         $dealer = Dealer::create([
             'code' => $request->get('dealerCode'),
             'EPRA_licence_no' => $request->get('dealerEPRALicenceNo'),
@@ -49,8 +43,6 @@ class DealerController extends Controller
             'GPS' => $request->get('dealerGPS')
         ]);
 
-//        $dealerUser->dealer_id = $dealer->id;
-//        $dealerUser->save();
         return response()
             ->json(CreatedDealerResource::make($dealer))
             ->setStatusCode(201);

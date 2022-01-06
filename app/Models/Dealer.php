@@ -13,8 +13,8 @@ class Dealer extends Model
         'code', 'EPRA_licence_no', 'location', 'GPS'
     ];
 
-    public function dealerUsers() {
-        return $this->hasMany(DealerUser::class);
+    public function users() {
+        return $this->belongsToMany(User::class);
     }
 
     public function receivedCanisterLogs() {

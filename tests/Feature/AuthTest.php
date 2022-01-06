@@ -3,10 +3,8 @@
 namespace Tests\Feature;
 
 use App\Mail\PasswordResetMail;
-use App\Models\DepotUser;
+use App\Models\Depot;
 use App\Models\Otp;
-use App\Models\Transporter;
-use App\Models\TransporterUser;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
@@ -56,13 +54,12 @@ class AuthTest extends TestCase
      */
     public function depot_users_can_get_their_depot_user_id()
     {
-        $depotUser = DepotUser::factory()->create();
-
-        $user = User::find($depotUser->user_id);
+        $depot = Depot::find(Depot::factory()->create()->id);
+        $user = User::find(User::factory()->create()->id);
+        $user->depots()->save($depot);
         $user->assignRole('Depot User');
         $this->actingAs($user, 'api')
             ->get('api/oauth/user')
-            ->assertJsonFragment(['depotUserId' => $depotUser->id])
             ->assertJsonFragment(['roles' => ['Depot User']])
             ->assertSee(['permissions'])
             ->assertJsonStructure([
@@ -77,211 +74,15 @@ class AuthTest extends TestCase
      */
     public function transporter_users_can_get_their_transporter_id()
     {
-        $transporterUser = TransporterUser::factory()->create();
-        $user = User::find($transporterUser->user_id);
-        $user->assignRole('Transporter');
+
+        $depot = Depot::find(Depot::factory()->create()->id);
+        $user = User::find(User::factory()->create()->id);
+        $user->depots()->save($depot);
+
+        $user->assignRole('Transporter User');
         $this->actingAs($user, 'api')
             ->get('api/oauth/user')
-            ->assertJsonFragment(['transporterUserId' => $transporterUser->id])
-            ->assertJsonFragment(['roles' => ['Transporter']]);
-    }
-
-    /**
-     * POST api/oauth/register
-     * @group auth
-     * @test
-     */
-    public function user_can_register_with_phone_only()
-    {
-        Artisan::call('passport:install');
-        $user = User::factory()->make();
-
-        $this->postJson('api/oauth/register', [
-            'email' => '',
-            'phone' => $user->phone,
-            'firstName' => $user->first_name,
-            'lastName' => $user->last_name,
-            'password' => 'password',
-            'passwordConfirmation' => 'password'
-        ])->assertCreated()
-            ->assertJsonStructure([
-                'data' => [
-                    'user' => ['id', 'firstName', 'lastName', 'email', 'phone'],
-                    'token' => ['access_token', 'expires_in']
-                ],
-                'header' => ['message']
-            ]);
-    }
-
-    /**
-     * POST api/oauth/register
-     * @group auth
-     * @test
-     */
-    public function user_can_register_with_email_only()
-    {
-        Artisan::call('passport:install');
-        $user = User::factory()->make();
-
-        $this->postJson('api/oauth/register', [
-            'email' => $user->email,
-            'phone' => '',
-            'firstName' => $user->first_name,
-            'lastName' => $user->last_name,
-            'password' => 'password',
-            'passwordConfirmation' => 'password'
-        ])->assertCreated()
-            ->assertJsonStructure([
-                'data' => [
-                    'user' => ['id', 'firstName', 'lastName', 'email', 'phone'],
-                    'token' => ['access_token', 'expires_in']
-                ]
-            ]);
-    }
-
-    /**
-     * POST api/oauth/register
-     * @group auth
-     * @test
-     */
-    public function user_can_register_with_both_email_and_phone()
-    {
-        Artisan::call('passport:install');
-        $user = User::factory()->make();
-
-        $response = $this->postJson('api/oauth/register', [
-            'email' => $user->email,
-            'phone' => $user->phone,
-            'firstName' => $user->first_name,
-            'lastName' => $user->last_name,
-            'password' => 'password',
-            'passwordConfirmation' => 'password'
-        ]);
-        $response->assertCreated();
-        $response->assertJsonStructure([
-                'data' => [
-                    'user' => ['id', 'firstName', 'lastName', 'email', 'phone'],
-                    'token' => ['access_token', 'expires_in']
-                ]
-            ]);
-    }
-
-    /**
-     * POST api/oauth/register
-     * @group auth
-     * @test
-     */
-    public function returns_unprocessed_error_name_field_is_missing()
-    {
-        $user = User::factory()->make();
-
-        $this->postJson('api/oauth/register', [
-            'email' => '',
-            'phone' => $user->phone,
-            'name' => '',
-            'password' => 'password',
-            'passwordConfirmation' => 'password'
-        ])->assertUnprocessable();
-    }
-
-    /**
-     * POST api/oauth/register
-     * @group auth
-     * @test
-     */
-    public function returns_unprocessed_error_if_both_email_and_phone_field_is_missing()
-    {
-        $user = User::factory()->make();
-
-        $this->postJson('api/oauth/register', [
-            'email' => '',
-            'phone' => '',
-            'firstName' => $user->first_name,
-            'lastName' => $user->last_name,
-            'password' => 'password',
-            'passwordConfirmation' => 'password'
-        ])->assertUnprocessable();
-    }
-
-    /**
-     * POST api/oauth/register
-     * @group auth
-     * @test
-     */
-    public function returns_unprocessed_error_if_password_and_confirm_password_mismatch()
-    {
-        $user = User::factory()->make();
-
-        $this->postJson('api/oauth/register', [
-            'email' => '',
-            'phone' => $user->phone,
-            'firstName' => $user->first_name,
-            'lastName' => $user->last_name,
-            'password' => 'password',
-            'passwordConfirmation' => 'password-not-matching'
-        ])->assertUnprocessable();
-    }
-
-    /**
-     * POST api/oauth/register
-     * @group auth
-     * @test
-     */
-    public function returns_unprocessed_error_when_phone_is_already_taken()
-    {
-        $registeredUser = User::factory()->create();
-        $user = User::factory()->make();
-
-        $this->postJson('api/oauth/register', [
-            'email' => '',
-            'phone' => $registeredUser->phone,
-            'firstName' => $user->first_name,
-            'lastName' => $user->last_name,
-            'password' => 'password',
-            'passwordConfirmation' => 'password'
-        ])->assertUnprocessable();
-    }
-
-    /**
-     * POST api/oauth/register
-     * @group auth
-     * @test
-     */
-    public function returns_unprocessed_error_when_email_is_already_taken()
-    {
-        $registeredUser = User::factory()->create();
-        $user = User::factory()->make();
-
-        $this->postJson('api/oauth/register', [
-            'email' => $registeredUser->email,
-            'phone' => '',
-            'firstName' => $user->first_name,
-            'lastName' => $user->last_name,
-            'password' => 'password',
-            'passwordConfirmation' => 'password'
-        ])->assertUnprocessable();
-    }
-
-
-    /**
-     * POST api/oauth/register
-     * @group auth
-     * @test
-     */
-    public function returns_unprocessed_error_when_username_is_already_taken()
-    {
-        $registeredUser = User::factory()->create();
-        $user = User::factory()->make();
-
-        $this->postJson('api/oauth/register', [
-            'username' => $registeredUser->username,
-            'email' => $user->email,
-            'phone' => $user->phone,
-            'firstName' => $user->first_name,
-            'lastName' => $user->last_name,
-            'password' => 'password',
-            'passwordConfirmation' => 'password'
-        ])->assertUnprocessable();
+            ->assertJsonFragment(['roles' => ['Transporter User']]);
     }
 
     /**

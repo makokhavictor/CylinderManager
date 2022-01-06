@@ -2,11 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Route;
-use Laravel\Passport\Client;
 
 class CreatedUserResource extends JsonResource
 {

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\DealerUser;
 use App\Models\User;
 use App\Models\Dealer;
 use Tests\TestCase;
@@ -19,9 +18,6 @@ class DealerTest extends TestCase
     {
         $dealer = Dealer::factory()->make();
         $user = User::find(User::factory()->create()->id);
-        DealerUser::factory()
-            ->state(['dealer_id' => null, 'user_id' => $user->id])
-            ->create();
         $user->givePermissionTo('create dealer');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/dealers', [

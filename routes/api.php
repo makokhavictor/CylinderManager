@@ -6,15 +6,9 @@ use App\Http\Controllers\CanisterController;
 use App\Http\Controllers\CanisterLogController;
 use App\Http\Controllers\CanisterStatisticsController;
 use App\Http\Controllers\DealerController;
-use App\Http\Controllers\DealerUserController;
 use App\Http\Controllers\DepotController;
-use App\Http\Controllers\DepotUserController;
-use App\Http\Controllers\RegisterDealerUserController;
-use App\Http\Controllers\RegisterDepotUserController;
-use App\Http\Controllers\RegisterTransporterUserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TransporterController;
-use App\Http\Controllers\TransporterUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
@@ -51,19 +45,13 @@ Route::middleware('auth:api')->group(function () {
     Route::get('dealers/{dealer}/statistics',[CanisterStatisticsController::class, 'dealers']);
     Route::get('transporters/{transporter}/statistics',[CanisterStatisticsController::class, 'transporters']);
     Route::resources([
-        'depots/{depot}/users' => DepotUserController::class,
         'depots/{depot}/canisters' => CanisterController::class,
-        'transporters/{transporter}/users' => TransporterUserController::class,
-        'dealers/{dealer}/users' => DealerUserController::class,
         'dealers' => DealerController::class,
         'depots' => DepotController::class,
         'transporters' => TransporterController::class,
         'brands' => BrandController::class,
         'users' => UserController::class
     ]);
-    Route::post('depot-users', [RegisterDepotUserController::class, 'store']);
-    Route::post('dealer-users', [RegisterDealerUserController::class, 'store']);
-    Route::post('transporter-users', [RegisterTransporterUserController::class, 'store']);
     Route::post('canister-logs', [CanisterLogController::class, 'store']);
 
 });

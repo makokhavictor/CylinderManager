@@ -3,11 +3,8 @@
 namespace App\Providers;
 
 use App\Events\CanisterLogCreatedEvent;
-use App\Events\DepotUserCreatedEvent;
 use App\Events\PasswordResetEvent;
 use App\Events\TransporterCreatedEvent;
-use App\Listeners\AssignRoleDepotUser;
-use App\Listeners\AssignRoleTransporter;
 use App\Listeners\MarkCanisterAsReleasedFromPreviousLocation;
 use App\Listeners\SendPasswordResetTokenSms;
 use Illuminate\Auth\Events\Registered;
@@ -27,13 +24,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         PasswordResetEvent::class => [
             SendPasswordResetTokenSms::class
-        ],
-        TransporterCreatedEvent::class => [
-            AssignRoleTransporter::class
-        ],
-
-        DepotUserCreatedEvent::class => [
-            AssignRoleDepotUser::class
         ],
         CanisterLogCreatedEvent::class => [
             MarkCanisterAsReleasedFromPreviousLocation::class

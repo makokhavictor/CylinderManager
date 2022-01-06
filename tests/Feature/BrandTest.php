@@ -2,16 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Mail\PasswordResetMail;
 use App\Models\Brand;
-use App\Models\DepotUser;
-use App\Models\Otp;
-use App\Models\Transporter;
-use App\Models\TransporterUser;
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class BrandTest extends TestCase
