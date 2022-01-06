@@ -30,6 +30,6 @@ class CreateTransporterUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transporter_users');
+        Schema::dropIfExists('transporter_user');
     }
 }

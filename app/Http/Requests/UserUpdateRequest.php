@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class UserStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return User::find(auth()->id())->can('create user');
+        return User::find(auth()->id())->can('update user');
     }
 
     /**
@@ -25,11 +25,11 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'nullable|unique:users,username',
+            'username' => 'nullable|unique:users,username,'.$this->user->id,
             'firstName' => 'required',
             'lastName' => 'required',
-            'phone' => 'unique:users,phone',
-            'email' => 'nullable|email|required_without:phone|unique:users,email',
+            'phone' => 'unique:users,phone,'.$this->user->id,
+            'email' => 'nullable|email|required_without:phone|unique:users,email,'.$this->user->id,
         ];
     }
 }

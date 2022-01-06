@@ -30,6 +30,6 @@ class CreateDealerUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dealer_users');
+        Schema::dropIfExists('dealer_user');
     }
 }
