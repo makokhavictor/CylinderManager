@@ -13,6 +13,7 @@ class DepotTest extends TestCase
      * POST api/depots
      *
      * @test
+     * @group depot
      * @return void
      */
     public function authenticated_user_with_permission_can_create_depot()
@@ -31,7 +32,10 @@ class DepotTest extends TestCase
             ]);
         $response->assertCreated();
         $response->assertJsonStructure([
-            'data' => ['id', 'depotName', 'brands' => [['id', 'brandName']]],
+            'data' => [
+                'id', 'depotName', 'brands' => [['id', 'brandName']],
+                'depotRoles' => [['roleName', 'permissions' => []]]
+            ],
             'headers' => ['message']
         ]);
     }

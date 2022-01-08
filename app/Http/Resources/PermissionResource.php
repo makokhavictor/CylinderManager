@@ -4,21 +4,20 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CreatedUserResource extends JsonResource
+class PermissionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
         return [
-            'data' => UserResource::make($this),
-            'headers' => [
-                'message' => 'User successful created'
-            ]
+            'id' => $this->id,
+            'permissionName' => $this->name,
+
         ];
     }
 }

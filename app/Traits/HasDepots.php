@@ -9,7 +9,7 @@ trait HasDepots
 {
     public function depots(): BelongsToMany
     {
-        return $this->belongsToMany(Depot::class);
+        return $this->belongsToMany(Depot::class, 'station_permissions');
     }
 
     public function getDepotIdsAttribute()

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Canister;
 use App\Models\CanisterLog;
 use App\Models\Depot;
+use App\Models\Role;
 use App\Models\Transporter;
 use App\Models\User;
 use Tests\TestCase;
@@ -31,7 +32,7 @@ class CanisterLogTest extends TestCase
             });
         $user = User::find(User::factory()->create()->id);
         $depot = Depot::find(Depot::factory()->create()->id);
-        $user->depots()->save($depot);
+        $depot->stationPermissions()->create(['user_id' => $user->id, 'role_id' => Role::where('name', 'Depot User')->first()->id ]);
         $user->assignRole('Depot User');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/canister-logs', [
@@ -69,7 +70,7 @@ class CanisterLogTest extends TestCase
             });
         $user = User::find(User::factory()->create()->id);
         $depot = Depot::find(Depot::factory()->create()->id);
-        $user->depots()->save($depot);
+        $depot->stationPermissions()->create(['user_id' => $user->id, 'role_id' => Role::where('name', 'Depot User')->first()->id ]);
         $user->assignRole('Depot User');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/canister-logs', [

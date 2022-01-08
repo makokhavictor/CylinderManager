@@ -9,7 +9,7 @@ trait HasTransporters
 {
     public function transporters(): BelongsToMany
     {
-        return $this->belongsToMany(Transporter::class);
+        return $this->belongsToMany(Transporter::class, 'station_permissions');
     }
 
     public function getTransporterIdsAttribute()

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CreatedUserResource extends JsonResource
+class UpdatedUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +17,7 @@ class CreatedUserResource extends JsonResource
         return [
             'data' => UserResource::make($this),
             'headers' => [
-                'message' => 'User successful created'
+                'message' => 'User successfully updated'
             ]
         ];
     }

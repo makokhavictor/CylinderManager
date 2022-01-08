@@ -43,7 +43,6 @@ class CreatePermissionTables extends Migration
             }
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
-            $table->boolean('is_self_registrable')->default(false);
             $table->timestamps();
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);
@@ -121,14 +120,14 @@ class CreatePermissionTables extends Migration
             ->forget(config('permission.cache.key'));
 
         DB::table($tableNames['roles'])->insert([
-            ['name' => 'Super Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
-            ['name' => 'Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
-            ['name' => 'Transporter Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
-            ['name' => 'Transporter User', 'guard_name' => 'api', 'is_self_registrable' => false],
-            ['name' => 'Depot Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
-            ['name' => 'Depot User', 'guard_name' => 'api', 'is_self_registrable' => true],
-            ['name' => 'Dealer Admin', 'guard_name' => 'api', 'is_self_registrable' => false],
-            ['name' => 'Dealer User', 'guard_name' => 'api', 'is_self_registrable' => false],
+            ['name' => 'Super Admin', 'guard_name' => 'api'],
+            ['name' => 'Admin', 'guard_name' => 'api'],
+            ['name' => 'Transporter Admin User', 'guard_name' => 'api'],
+            ['name' => 'Transporter User', 'guard_name' => 'api'],
+            ['name' => 'Depot Admin User', 'guard_name' => 'api'],
+            ['name' => 'Depot User', 'guard_name' => 'api'],
+            ['name' => 'Dealer Admin User', 'guard_name' => 'api'],
+            ['name' => 'Dealer User', 'guard_name' => 'api'],
         ]);
 
         DB::table($tableNames['permissions'])->insert([
@@ -163,21 +162,27 @@ class CreatePermissionTables extends Migration
             ['name' => 'delete canister', 'guard_name' => 'api'],
 
             ['name' => 'create canister log', 'guard_name' => 'api'],
+            ['name' => 'update canister log', 'guard_name' => 'api'],
+            ['name' => 'delete canister log', 'guard_name' => 'api'],
 
             ['name' => 'create brand', 'guard_name' => 'api'],
             ['name' => 'update brand', 'guard_name' => 'api'],
             ['name' => 'delete brand', 'guard_name' => 'api'],
 
+            ['name' => 'create user', 'guard_name' => 'api'],
+            ['name' => 'update user', 'guard_name' => 'api'],
+            ['name' => 'delete user', 'guard_name' => 'api'],
+
             ['name' => 'scan qr code', 'guard_name' => 'api'],
         ]);
 
-        Role::where('name', 'Transporter Admin')->first()->givePermissionTo([
+        Role::where('name', 'Transporter Admin User')->first()->givePermissionTo([
             'create transporter user', 'update transporter user', 'delete transporter user',
         ]);
-        Role::where('name', 'Depot Admin')->first()->givePermissionTo([
+        Role::where('name', 'Depot Admin User')->first()->givePermissionTo([
             'create depot user', 'update depot user', 'delete depot user',
         ]);
-        Role::where('name', 'Dealer Admin')->first()->givePermissionTo([
+        Role::where('name', 'Dealer Admin User')->first()->givePermissionTo([
             'create dealer user', 'update dealer user', 'delete dealer user',
         ]);
         Role::where('name', 'Depot User')->first()->givePermissionTo([

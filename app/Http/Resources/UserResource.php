@@ -14,6 +14,20 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $depotAllocations = [];
+        if($this->dealers) {
+            $depotAllocations = $this->depots   ->pluck('id');
+        }
+
+        $transporterAllocations = [];
+        if($this->dealers) {
+            $transporterAllocations = $this->transporters->pluck('id');
+        }
+
+        $dealerAllocations = [];
+        if($this->dealers) {
+            $dealerAllocations = $this->dealers->pluck('id');
+        }
         return [
             'id' => $this->id,
             'username' => $this->username,
@@ -22,9 +36,6 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'createdAt' => $this->created_at,
-            'dealerIds' => $this->dealers->pluck('id'),
-            'transporterIds' => $this->transporters->pluck('id'),
-            'depotIds' => $this->depots->pluck('id'),
             'profileDescription' => $this->profile_description,
             'emailVerified' => !!$this->email_verified_at,
             'emailVerifiedAt' => $this->email_verified_at,
@@ -33,6 +44,7 @@ class UserResource extends JsonResource
             'profilePictureLink' => $this->profile_picture_link,
             'roles' => $this->roles->pluck('name'),
             'permissions' => $this->getAllPermissions()->pluck('name'),
+            'stationSpecificRoles' => RoleResource::collection($this->permissibleRoles)
         ];
     }
 }

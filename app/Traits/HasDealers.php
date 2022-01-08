@@ -9,7 +9,7 @@ trait HasDealers
 {
     public function dealers(): BelongsToMany
     {
-        return $this->belongsToMany(Dealer::class);
+        return $this->belongsToMany(Dealer::class, 'station_permissions');
     }
 
     public function getDealerIdsAttribute()

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CreatedUserResource extends JsonResource
+class DeletedUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,9 @@ class CreatedUserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => UserResource::make($this),
+            'data' => [],
             'headers' => [
-                'message' => 'User successful created'
+                'message' => 'User successfully deleted'
             ]
         ];
     }

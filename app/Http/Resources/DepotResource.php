@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Role;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DepotResource extends JsonResource
@@ -21,7 +22,8 @@ class DepotResource extends JsonResource
             'depotEPRALicenceNo' =>$this->EPRA_licence_no,
             'depotLocation' =>$this->location,
             'brands' => BrandResource::collection($this->brands),
-            'brandIds' => $this->brands->pluck('id')
+            'brandIds' => $this->brands->pluck('id'),
+            'depotRoles' => RoleResource::collection(Role::find($this->stationRoles->pluck('role_id')))
         ];
     }
 }

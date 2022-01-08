@@ -8,6 +8,7 @@ use App\Http\Controllers\CanisterStatisticsController;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StationRoleController;
 use App\Http\Controllers\TransporterController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserResource;
@@ -41,6 +42,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('oauth/revoke', [AuthController::class, 'destroy']);
     Route::post('oauth/password-change', [AuthController::class, 'passwordChange']);
     Route::get('roles', [RoleController::class, 'index']);
+    Route::get('permissions/stations', [StationRoleController::class, 'index']);
     Route::get('depots/{depot}/statistics',[CanisterStatisticsController::class, 'depots']);
     Route::get('dealers/{dealer}/statistics',[CanisterStatisticsController::class, 'dealers']);
     Route::get('transporters/{transporter}/statistics',[CanisterStatisticsController::class, 'transporters']);
@@ -55,7 +57,3 @@ Route::middleware('auth:api')->group(function () {
     Route::post('canister-logs', [CanisterLogController::class, 'store']);
 
 });
-
-//Route::middleware('guest:api')->group(function () {
-//    Route::post('oauth/register', [UserController::class, 'store']);
-//});

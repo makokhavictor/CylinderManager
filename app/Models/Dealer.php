@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\IsStation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Dealer extends Model
 {
-    use HasFactory;
+    use HasFactory, IsStation;
 
     protected $fillable = [
         'code', 'EPRA_licence_no', 'location', 'GPS'

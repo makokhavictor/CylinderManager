@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Mail\PasswordResetMail;
 use App\Models\Depot;
 use App\Models\Otp;
+use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
@@ -56,15 +57,16 @@ class AuthTest extends TestCase
     {
         $depot = Depot::find(Depot::factory()->create()->id);
         $user = User::find(User::factory()->create()->id);
-        $user->depots()->save($depot);
+        $depot->stationPermissions()->create(['user_id' => $user->id, 'role_id' => Role::where('name', 'Depot User')->first()->id ]);
         $user->assignRole('Depot User');
-        $this->actingAs($user, 'api')
-            ->get('api/oauth/user')
-            ->assertJsonFragment(['roles' => ['Depot User']])
-            ->assertSee(['permissions'])
-            ->assertJsonStructure([
-                'data' => ['roles']
-            ]);
+        $response = $this->actingAs($user, 'api')
+            ->get('api/oauth/user');
+        $response->assertJsonFragment(['roles' => ['Depot User']]);
+        $response->assertSee(['permissions']);
+        $response->assertJsonStructure([
+            'data' => ['stationSpecificRoles' => [['roleId', 'roleName' , 'depotId', 'depotName', 'permissions' => [['id', 'permissionName']]]]]
+        ]);
+        $response->assertJsonFragment(['depotId' => $depot->id]);
     }
 
     /**
@@ -77,7 +79,7 @@ class AuthTest extends TestCase
 
         $depot = Depot::find(Depot::factory()->create()->id);
         $user = User::find(User::factory()->create()->id);
-        $user->depots()->save($depot);
+        $depot->stationPermissions()->create(['user_id' => $user->id, 'role_id' => Role::where('name', 'Transporter User')->first()->id ]);
 
         $user->assignRole('Transporter User');
         $this->actingAs($user, 'api')
@@ -263,9 +265,9 @@ class AuthTest extends TestCase
         ])->create();
         $response = $this->actingAs($user, 'api')
             ->postJson('api/oauth/password-change', [
-            'password' => $newPassword,
-            'passwordConfirmation' => $newPassword
-        ]);
+                'password' => $newPassword,
+                'passwordConfirmation' => $newPassword
+            ]);
         $response->assertStatus(200);
     }
 
@@ -315,9 +317,9 @@ class AuthTest extends TestCase
         ])->create();
         $response = $this->actingAs($user, 'api')
             ->postJson('api/oauth/password-change', [
-            'password' => $newPassword,
-            'passwordConfirmation' => $newPassword . 'Unmatched'
-        ]);
+                'password' => $newPassword,
+                'passwordConfirmation' => $newPassword . 'Unmatched'
+            ]);
         $response->assertUnprocessable();
     }
 
@@ -336,10 +338,10 @@ class AuthTest extends TestCase
         ])->create()->id);
         $response = $this->actingAs($user, 'api')
             ->postJson('api/oauth/password-change', [
-            'oldPassword' => $oldPassword,
-            'password' => $newPassword,
-            'passwordConfirmation' => $newPassword
-        ]);
+                'oldPassword' => $oldPassword,
+                'password' => $newPassword,
+                'passwordConfirmation' => $newPassword
+            ]);
         $response->assertOk();
     }
 
@@ -358,10 +360,10 @@ class AuthTest extends TestCase
         ])->create()->id);
         $response = $this->actingAs($user, 'api')
             ->postJson('api/oauth/password-change', [
-            'oldPassword' => $oldPassword . 'unmatched',
-            'password' => $newPassword,
-            'passwordConfirmation' => $newPassword
-        ]);
+                'oldPassword' => $oldPassword . 'unmatched',
+                'password' => $newPassword,
+                'passwordConfirmation' => $newPassword
+            ]);
         $response->assertUnauthorized();
     }
 

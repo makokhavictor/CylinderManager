@@ -2,6 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Dealer;
+use App\Models\Depot;
+use App\Models\StationPermission;
+use App\Models\Transporter;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoleResource extends JsonResource
@@ -14,10 +18,33 @@ class RoleResource extends JsonResource
      */
     public function toArray($request)
     {
+
+        $dealer = null;
+        $depot = null;
+        $transporter = null;
+        if($this->pivot) {
+            if($this->pivot->permissible_type === Depot::class) {
+                $depot = Depot::find($this->pivot->permissible_id);
+            }
+
+            elseif($this->pivot->permissible_type === Transporter::class) {
+                $transporter = Depot::find($this->pivot->permissible_id);
+            }
+
+            elseif($this->pivot->permissible_type === Dealer::class) {
+                $dealer = Depot::find($this->pivot->permissible_id);
+            }
+        }
         return [
-            'name' => $this->name,
-            'id' => $this->id,
-            'isSelfRegistrable' => $this->is_self_registrable
+            'roleId' => $this->id,
+            'roleName' => $this->name,
+            'permissions' => PermissionResource::collection($this->permissions),
+            'depotId' => $this->when($depot, $depot?->id),
+            'depotName' => $this->when($depot, $depot?->name),
+            'dealerId' => $this->when($dealer, $dealer?->id),
+            'dealerName' => $this->when($dealer, $dealer?->name),
+            '$transporterId' => $this->when($transporter, $transporter?->id),
+            '$transporterName' => $this->when($transporter, $transporter?->name),
         ];
     }
 }
