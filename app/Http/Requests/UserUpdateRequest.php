@@ -28,7 +28,7 @@ class UserUpdateRequest extends FormRequest
             'username' => 'nullable|unique:users,username,'.$this->user->id,
             'firstName' => 'required',
             'lastName' => 'required',
-            'phone' => 'unique:users,phone,'.$this->user->id,
+            'phone' => 'nullable|unique:users,phone,'.$this->user->id,
             'email' => 'nullable|email|required_without:phone|unique:users,email,'.$this->user->id,
         ];
     }

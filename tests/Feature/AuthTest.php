@@ -34,7 +34,7 @@ class AuthTest extends TestCase
             ->assertOk()
             ->assertJsonStructure([
                 'data' => [
-                    'id',
+                    'userId',
                     'email',
                     'firstName',
                     'lastName',
@@ -64,7 +64,7 @@ class AuthTest extends TestCase
         $response->assertJsonFragment(['roles' => ['Depot User']]);
         $response->assertSee(['permissions']);
         $response->assertJsonStructure([
-            'data' => ['stationSpecificRoles' => [['roleId', 'roleName' , 'depotId', 'depotName', 'permissions' => [['id', 'permissionName']]]]]
+            'data' => ['stationSpecificRoles' => [['roleId', 'roleName' , 'depotId', 'depotName', 'permissions' => [['permissionId', 'permissionName']]]]]
         ]);
         $response->assertJsonFragment(['depotId' => $depot->id]);
     }

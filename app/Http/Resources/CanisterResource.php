@@ -15,7 +15,7 @@ class CanisterResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'canisterId' => $this->id,
             'canisterCode' => $this->code,
             'canisterRecertification' => $this->recertification,
             'canisterManuf' => $this->manuf,

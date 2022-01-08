@@ -42,7 +42,7 @@ class CanisterTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
-                'id',
+                'canisterId',
                 'canisterRecertification',
                 'canisterManuf',
                 'brandId',
@@ -69,7 +69,7 @@ class CanisterTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [[
-                'id',
+                'canisterId',
                 'canisterRecertification',
                 'canisterManuf',
                 'brandId',
@@ -97,7 +97,7 @@ class CanisterTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
-                'id',
+                'canisterId',
                 'canisterRecertification',
                 'canisterManuf',
                 'brandId',
@@ -134,7 +134,7 @@ class CanisterTest extends TestCase
             ]);
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => ['id', 'canisterRFID'],
+            'data' => ['canisterId', 'canisterRFID'],
             'headers' => ['message']
         ]);
         $response->assertJsonFragment(['canisterRFID' => $updateCanister->RFID]);

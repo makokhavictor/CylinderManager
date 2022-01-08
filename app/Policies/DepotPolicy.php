@@ -69,7 +69,6 @@ class DepotPolicy
         return $user->id === $post->user_id
             ? Response::allow()
             : Response::deny('You do not own this post.');
-        echo "YEEEEEEEEEEEEEEEEEEEEEEEE";
         return $user->can('delete depot');
     }
 

@@ -17,13 +17,7 @@ class CreatedDealerResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => [
-                'id' => $this->id,
-                'dealerName' => $this->name,
-                'dealerEPRALicenceNo' =>$this->EPRA_licence_no,
-                'dealerLocation' =>$this->location,
-                'dealerGPS' =>$this->GPS
-            ],
+            'data' => DealerResource::make($this),
             'headers' => [
                 'message' => 'Successfully created dealer'
             ]

@@ -9,7 +9,10 @@ use App\Http\Resources\CreatedUserResource;
 use App\Http\Resources\UpdatedUserResource;
 use App\Http\Resources\DeletedUserResource;
 use App\Http\Resources\UserCollection;
+use App\Models\Dealer;
+use App\Models\Depot;
 use App\Models\Role;
+use App\Models\Transporter;
 use App\Models\User;
 
 class UserController extends Controller
@@ -35,7 +38,22 @@ class UserController extends Controller
             $allocations = $request->get('stationSpecificRoles');
 
             foreach ($allocations as $key => $allocation) {
-                $user->permissibleRoles()->save(Role::find($allocation['roleId']), ['permissible_id' => 1, 'permissible_type' => 'App\Models\Depots']);
+                if (key_exists('transporterId', $allocation)) {
+                    $user->permissibleRoles()->save(Role::find($allocation['roleId']),
+                        ['permissible_id' => $allocation['transporterId'], 'permissible_type' => Transporter::class]
+                    );
+                }
+                if (key_exists('dealerId', $allocation)) {
+                    $user->permissibleRoles()->save(Role::find($allocation['roleId']),
+                        ['permissible_id' =>$allocation['dealerId'], 'permissible_type' => Dealer::class]
+                    );
+                }
+                if (key_exists('depotId', $allocation)) {
+                    $user->permissibleRoles()->save(Role::find($allocation['roleId']),
+                        ['permissible_id' => $allocation['depotId'], 'permissible_type' => Depot::class]
+                    );
+                }
+
             }
 
 

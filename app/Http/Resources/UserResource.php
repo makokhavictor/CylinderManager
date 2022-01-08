@@ -14,22 +14,8 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $depotAllocations = [];
-        if($this->dealers) {
-            $depotAllocations = $this->depots   ->pluck('id');
-        }
-
-        $transporterAllocations = [];
-        if($this->dealers) {
-            $transporterAllocations = $this->transporters->pluck('id');
-        }
-
-        $dealerAllocations = [];
-        if($this->dealers) {
-            $dealerAllocations = $this->dealers->pluck('id');
-        }
         return [
-            'id' => $this->id,
+            'userId' => $this->id,
             'username' => $this->username,
             'firstName' => $this->first_name,
             'lastName' => $this->last_name,

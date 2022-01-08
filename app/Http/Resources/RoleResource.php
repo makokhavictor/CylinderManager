@@ -28,11 +28,11 @@ class RoleResource extends JsonResource
             }
 
             elseif($this->pivot->permissible_type === Transporter::class) {
-                $transporter = Depot::find($this->pivot->permissible_id);
+                $transporter = Transporter::find($this->pivot->permissible_id);
             }
 
             elseif($this->pivot->permissible_type === Dealer::class) {
-                $dealer = Depot::find($this->pivot->permissible_id);
+                $dealer = Dealer::find($this->pivot->permissible_id);
             }
         }
         return [

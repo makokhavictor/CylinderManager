@@ -26,7 +26,7 @@ class TransporterTest extends TestCase
             ]);
         $response->assertCreated();
         $response->assertJsonStructure([
-            'data' => ['id', 'transporterName'],
+            'data' => ['transporterId', 'transporterName'],
             'headers' => ['message']
         ]);
     }
@@ -45,11 +45,11 @@ class TransporterTest extends TestCase
             ->getJson('/api/transporters');
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => [[
-            'id',
+            'transporterId',
             'transporterCode',
             'transporterName',
         ]]]);
-        $response->assertJsonFragment(['id' => $transporter->id]);
+        $response->assertJsonFragment(['transporterId' => $transporter->id]);
     }
 
     /**
@@ -66,11 +66,11 @@ class TransporterTest extends TestCase
             ->getJson("/api/transporters/$transporter->id");
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => [
-            'id',
+            'transporterId',
             'transporterCode',
             'transporterName',
         ]]);
-        $response->assertJsonFragment(['id' => $transporter->id]);
+        $response->assertJsonFragment(['transporterId' => $transporter->id]);
         $response->assertJsonFragment(['transporterName' => $transporter->name]);
     }
 
@@ -93,7 +93,7 @@ class TransporterTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
-                'id',
+                'transporterId',
                 'transporterCode',
                 'transporterName'
             ],

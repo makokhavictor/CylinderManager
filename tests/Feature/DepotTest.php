@@ -33,7 +33,7 @@ class DepotTest extends TestCase
         $response->assertCreated();
         $response->assertJsonStructure([
             'data' => [
-                'id', 'depotName', 'brands' => [['id', 'brandName']],
+                'depotId', 'depotName', 'brands' => [['brandId', 'brandName']],
                 'depotRoles' => [['roleName', 'permissions' => []]]
             ],
             'headers' => ['message']
@@ -93,13 +93,13 @@ class DepotTest extends TestCase
             ->getJson('/api/depots');
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => [[
-            'id',
+            'depotId',
             'depotCode',
             'depotName',
             'depotEPRALicenceNo',
             'depotLocation',
         ]]]);
-        $response->assertJsonFragment(['id' => $depot->id]);
+        $response->assertJsonFragment(['depotId' => $depot->id]);
     }
 
     /**
@@ -116,13 +116,13 @@ class DepotTest extends TestCase
             ->getJson("/api/depots/$depot->id");
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => [
-            'id',
+            'depotId',
             'depotCode',
             'depotName',
             'depotEPRALicenceNo',
             'depotLocation',
         ]]);
-        $response->assertJsonFragment(['id' => $depot->id]);
+        $response->assertJsonFragment(['depotId' => $depot->id]);
         $response->assertJsonFragment(['depotName' => $depot->name]);
     }
 
@@ -147,7 +147,7 @@ class DepotTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
-                'id',
+                'depotId',
                 'depotCode',
                 'depotEPRALicenceNo',
                 'depotLocation',

@@ -33,7 +33,7 @@ class BrandTest extends TestCase
             ]);
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => ['id', 'brandName'],
+            'data' => ['brandId', 'brandName'],
             'headers' => ['message']
         ]);
     }
@@ -51,7 +51,7 @@ class BrandTest extends TestCase
             ->getJson('api/brands');
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => [['id', 'brandName']]
+            'data' => [['brandId', 'brandName']]
         ]);
 
         $response->assertJsonFragment(['brandName' => $brands[0]->name]);
@@ -71,7 +71,7 @@ class BrandTest extends TestCase
             ->getJson("api/brands/{$brand->id}");
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => ['id', 'brandName']
+            'data' => ['brandId', 'brandName']
         ]);
         $response->assertJsonFragment(['brandName' => $brand->name]);
     }
@@ -95,7 +95,7 @@ class BrandTest extends TestCase
             ]);
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => ['id', 'brandName'],
+            'data' => ['brandId', 'brandName'],
             'headers' => ['message']
         ]);
         $response->assertJsonFragment(['brandName' => $newBrand->name]);

@@ -12,6 +12,7 @@ class DealerTest extends TestCase
      * POST api/dealers
      *
      * @test
+     * @group dealers
      * @return void
      */
     public function authenticated_user_with_permission_can_create_dealer()
@@ -29,7 +30,7 @@ class DealerTest extends TestCase
             ]);
         $response->assertCreated();
         $response->assertJsonStructure([
-            'data' => ['id', 'dealerName'],
+            'data' => ['dealerId', 'dealerName'],
             'headers' => ['message']
         ]);
     }
@@ -90,13 +91,13 @@ class DealerTest extends TestCase
             ->getJson('/api/dealers');
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => [[
-            'id',
+            'dealerId',
             'dealerCode',
             'dealerName',
             'dealerEPRALicenceNo',
             'dealerLocation',
         ]]]);
-        $response->assertJsonFragment(['id' => $dealer->id]);
+        $response->assertJsonFragment(['dealerId' => $dealer->id]);
     }
 
     /**
@@ -113,13 +114,13 @@ class DealerTest extends TestCase
             ->getJson("/api/dealers/$dealer->id");
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => [
-            'id',
+            'dealerId',
             'dealerCode',
             'dealerName',
             'dealerEPRALicenceNo',
             'dealerLocation',
         ]]);
-        $response->assertJsonFragment(['id' => $dealer->id]);
+        $response->assertJsonFragment(['dealerId' => $dealer->id]);
         $response->assertJsonFragment(['dealerName' => $dealer->name]);
     }
 
@@ -145,7 +146,7 @@ class DealerTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
-                'id',
+                'dealerId',
                 'dealerCode',
                 'dealerEPRALicenceNo',
                 'dealerLocation',

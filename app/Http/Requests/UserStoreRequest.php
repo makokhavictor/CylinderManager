@@ -28,7 +28,7 @@ class UserStoreRequest extends FormRequest
             'username' => 'nullable|unique:users,username',
             'firstName' => 'required',
             'lastName' => 'required',
-            'phone' => 'unique:users,phone',
+            'phone' => 'nullable|unique:users,phone',
             'email' => 'nullable|email|required_without:phone|unique:users,email',
         ];
     }

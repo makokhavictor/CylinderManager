@@ -23,7 +23,7 @@ class UsersTest extends TestCase
         $response = $this->actingAs($user, 'api')->get('api/users');
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => [['id', 'firstName', 'lastName', 'username', 'email', 'phone']],
+            'data' => [['userId', 'firstName', 'lastName', 'username', 'email', 'phone']],
             'meta'
         ]);
 
@@ -48,7 +48,7 @@ class UsersTest extends TestCase
             'lastName' => $user->last_name,
         ])->assertCreated()
             ->assertJsonStructure([
-                'data' => ['id', 'firstName', 'lastName', 'email', 'phone'],
+                'data' => ['userId', 'firstName', 'lastName', 'email', 'phone'],
                 'headers' => ['message']
             ]);
     }
@@ -71,7 +71,7 @@ class UsersTest extends TestCase
             'lastName' => $user->last_name,
         ])->assertCreated()
             ->assertJsonStructure([
-                'data' => ['id', 'firstName', 'lastName', 'email', 'phone'],
+                'data' => ['userId', 'firstName', 'lastName', 'email', 'phone'],
             ]);
     }
 
@@ -94,7 +94,7 @@ class UsersTest extends TestCase
         ]);
         $response->assertCreated();
         $response->assertJsonStructure([
-            'data' => ['id', 'firstName', 'lastName', 'email', 'phone'],
+            'data' => ['userId', 'firstName', 'lastName', 'email', 'phone'],
             'headers' => ['message']
         ]);
     }
@@ -197,7 +197,7 @@ class UsersTest extends TestCase
 
     /**
      * POST api/users
-     * @group users
+     * @group users-1
      * @test
      */
     public function admin_can_register_depot_and_or_transporter_and_or_dealer()
@@ -233,10 +233,12 @@ class UsersTest extends TestCase
         ]);
         $response->assertCreated();
         $response->assertJsonStructure([
-            'data' => ['id', 'firstName', 'lastName', 'email', 'phone', 'stationSpecificRoles' => [['roleId', 'permissions']]
+            'data' => ['userId', 'firstName', 'lastName', 'email', 'phone', 'stationSpecificRoles' => [['roleId', 'permissions']]
             ],
             'headers' => ['message']
         ]);
+        $response->assertJsonFragment(['depotId' => $depot->id]);
+        $response->assertJsonFragment(['dealerId' => $dealers[0]->id]);
     }
 
 }
