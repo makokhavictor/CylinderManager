@@ -36,13 +36,13 @@ Route::middleware('api')->group(function() {
 });
 
 Route::middleware('auth:api')->group(function () {
+    Route::get('{station}/{stationId}/roles', [StationRoleController::class, 'index']);
     Route::get('oauth/user', function () {
         return UserResource::make(auth()->user());
     });
     Route::get('oauth/revoke', [AuthController::class, 'destroy']);
     Route::post('oauth/password-change', [AuthController::class, 'passwordChange']);
     Route::get('roles', [RoleController::class, 'index']);
-    Route::get('permissions/stations', [StationRoleController::class, 'index']);
     Route::get('depots/{depot}/statistics',[CanisterStatisticsController::class, 'depots']);
     Route::get('dealers/{dealer}/statistics',[CanisterStatisticsController::class, 'dealers']);
     Route::get('transporters/{transporter}/statistics',[CanisterStatisticsController::class, 'transporters']);

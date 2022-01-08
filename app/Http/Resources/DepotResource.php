@@ -16,7 +16,7 @@ class DepotResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' =>$this->id,
+            'depotId' =>$this->id,
             'depotCode' =>$this->code,
             'depotName' =>$this->name,
             'depotEPRALicenceNo' =>$this->EPRA_licence_no,

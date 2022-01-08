@@ -15,7 +15,7 @@ class DealerResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'dealerId' => $this->id,
             'dealerName' => $this->name,
             'dealerCode' => $this->code,
             'dealerEPRALicenceNo' => $this->EPRA_licence_no,

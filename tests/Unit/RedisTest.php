@@ -12,7 +12,7 @@ class RedisTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function redis_running()
     {
         $app = Redis::connection();
         $app->set('test', 'testValue');

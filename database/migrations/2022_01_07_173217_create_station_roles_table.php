@@ -24,6 +24,7 @@ class CreateStationRolesTable extends Migration
             $table->foreignId('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->timestamps();
+            $table->unique(['roleable_id', 'roleable_type', 'role_id']);
         });
 
         DB::table('station_roles')->insert([
