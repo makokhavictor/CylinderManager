@@ -55,7 +55,7 @@ class UsersTest extends TestCase
 
     /**
      * POST api/users
-     * @group auth
+     * @group users
      * @test
      */
     public function user_can_register_with_email_only()

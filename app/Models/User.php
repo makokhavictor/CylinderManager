@@ -80,4 +80,29 @@ class User extends Authenticatable
             'last_login_ip' => request()->getClientIp()
         ]);
     }
+
+    public function allocateRoles($roles) {
+        $this->permissibleRoles()->detach();
+        if ($roles) {
+            foreach ($roles as $key => $allocation) {
+                if (key_exists('transporterId', $allocation)) {
+                    $this->permissibleRoles()->save(Role::find($allocation['roleId']),
+                        ['permissible_id' => $allocation['transporterId'], 'permissible_type' => Transporter::class]
+                    );
+                }
+                if (key_exists('dealerId', $allocation)) {
+                    $this->permissibleRoles()->save(Role::find($allocation['roleId']),
+                        ['permissible_id' =>$allocation['dealerId'], 'permissible_type' => Dealer::class]
+                    );
+                }
+                if (key_exists('depotId', $allocation)) {
+                    $this->permissibleRoles()->save(Role::find($allocation['roleId']),
+                        ['permissible_id' => $allocation['depotId'], 'permissible_type' => Depot::class]
+                    );
+                }
+
+            }
+
+        }
+    }
 }

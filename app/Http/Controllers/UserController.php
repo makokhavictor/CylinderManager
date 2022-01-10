@@ -34,30 +34,7 @@ class UserController extends Controller
             'password' => bcrypt(md5(rand(1, 1000))),
         ]);
 
-        if ($request->get('stationSpecificRoles')) {
-            $allocations = $request->get('stationSpecificRoles');
-
-            foreach ($allocations as $key => $allocation) {
-                if (key_exists('transporterId', $allocation)) {
-                    $user->permissibleRoles()->save(Role::find($allocation['roleId']),
-                        ['permissible_id' => $allocation['transporterId'], 'permissible_type' => Transporter::class]
-                    );
-                }
-                if (key_exists('dealerId', $allocation)) {
-                    $user->permissibleRoles()->save(Role::find($allocation['roleId']),
-                        ['permissible_id' =>$allocation['dealerId'], 'permissible_type' => Dealer::class]
-                    );
-                }
-                if (key_exists('depotId', $allocation)) {
-                    $user->permissibleRoles()->save(Role::find($allocation['roleId']),
-                        ['permissible_id' => $allocation['depotId'], 'permissible_type' => Depot::class]
-                    );
-                }
-
-            }
-
-
-        }
+        $user->allocateRoles($request->get('stationSpecificRoles'));
 
         return response()->json(new CreatedUserResource($user))->setStatusCode(201);
     }
@@ -72,6 +49,8 @@ class UserController extends Controller
             'phone' => $request->get('phone'),
             'password' => bcrypt(md5(rand(1, 1000))),
         ]);
+
+        $user->allocateRoles($request->get('stationSpecificRoles'));
 
         return response()->json(new UpdatedUserResource($user));
     }
