@@ -80,7 +80,7 @@ Route::get('/895enrg9345fg34g43g3/redis', function () {
 });
 
 Route::get('/895enrg9345fg34g43g3/db-wipe', function () {
-    Artisan::call('db:wipe');
+    Artisan::call('db:wipe',[ '--force' => true]);
     dd(Artisan::output());
 });
 
