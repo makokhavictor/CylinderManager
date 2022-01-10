@@ -24,7 +24,7 @@ class AuthTest extends TestCase
 
     /**
      * GET api/oauth/user
-     * @group auth
+     * @group auth-1
      * @test
      */
     public function auth_users_can_get_their_details()
@@ -44,6 +44,8 @@ class AuthTest extends TestCase
                     'emailVerified',
                     'phoneVerified',
                     'profilePictureLink',
+                    'lastLoginAt',
+                    'lastLoginIp'
                 ]
             ]);
     }

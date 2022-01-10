@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DealerCreatedEvent;
 use App\Http\Requests\StoreDealerRequest;
 use App\Http\Requests\UpdateDealerRequest;
 use App\Http\Requests\DeleteDealerRequest;
@@ -38,10 +39,13 @@ class DealerController extends Controller
     {
         $dealer = Dealer::create([
             'code' => $request->get('dealerCode'),
+            'name' => $request->get('dealerName'),
             'EPRA_licence_no' => $request->get('dealerEPRALicenceNo'),
             'location' => $request->get('dealerLocation'),
             'GPS' => $request->get('dealerGPS')
         ]);
+
+        DealerCreatedEvent::dispatch($dealer);
 
         return response()
             ->json(CreatedDealerResource::make($dealer))

@@ -25,6 +25,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->longText('profile_description')->nullable();
             $table->string('profile_picture_string')->nullable();
+            $table->dateTime('last_login_at')->nullable();
+            $table->ipAddress('last_login_ip')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

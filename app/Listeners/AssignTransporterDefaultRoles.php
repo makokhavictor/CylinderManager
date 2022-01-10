@@ -2,13 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Events\DepotCreatedEvent;
-use App\Models\Depot;
-use App\Models\StationRole;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Events\TransporterCreatedEvent;
 
-class AssignDepotDefaultRoles
+class AssignTransporterDefaultRoles
 {
     /**
      * Create the event listener.
@@ -26,8 +22,9 @@ class AssignDepotDefaultRoles
      * @param  \App\Events\DepotCreatedEvent  $event
      * @return void
      */
-    public function handle(DepotCreatedEvent $event)
+    public function handle(TransporterCreatedEvent $event)
     {
-        $event->depot->assignDefaultUserRoles();
+        $event->transporter->assignDefaultUserRoles();
+
     }
 }

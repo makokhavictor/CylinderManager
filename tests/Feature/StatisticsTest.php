@@ -110,5 +110,23 @@ class StatisticsTest extends TestCase
         $response->assertJsonFragment(['defective' => 4]);
     }
 
+    /**
+     * POST api/statistics/dashboard-summary
+     * @test
+     * @group stats-1
+     */
+    public function user_can_view_dashboard_stats() {
+        $user = User::find(User::factory()->create()->id);
+        $response = $this->actingAs($user, 'api')
+            ->get('api/statistics/dashboard-summary');
+        $response->assertOk();
+
+        $response->assertJsonStructure([
+            'data' => [
+                'depotsCount', 'transportersCount', 'dealersCount'
+            ]
+        ]);
+    }
+
 
 }

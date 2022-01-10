@@ -2,13 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\DepotCreatedEvent;
-use App\Models\Depot;
-use App\Models\StationRole;
+use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Laravel\Passport\Events\AccessTokenCreated;
 
-class AssignDepotDefaultRoles
+class APILogin
 {
     /**
      * Create the event listener.
@@ -23,11 +22,15 @@ class AssignDepotDefaultRoles
     /**
      * Handle the event.
      *
-     * @param  \App\Events\DepotCreatedEvent  $event
+     * @param AccessTokenCreated $event
      * @return void
      */
-    public function handle(DepotCreatedEvent $event)
+    public function handle(AccessTokenCreated $event)
     {
-        $event->depot->assignDefaultUserRoles();
+        if(!empty($event->userId)){
+
+            $user = User::find($event->userId);
+            $user->saveLogin();
+        }
     }
 }

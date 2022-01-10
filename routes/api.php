@@ -46,6 +46,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('depots/{depot}/statistics',[CanisterStatisticsController::class, 'depots']);
     Route::get('dealers/{dealer}/statistics',[CanisterStatisticsController::class, 'dealers']);
     Route::get('transporters/{transporter}/statistics',[CanisterStatisticsController::class, 'transporters']);
+    Route::get('statistics/dashboard-summary', [\App\Http\Controllers\StatisticsController::class, 'dashboardSummary']);
     Route::resources([
         'depots/{depot}/canisters' => CanisterController::class,
         'dealers' => DealerController::class,

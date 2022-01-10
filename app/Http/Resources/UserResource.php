@@ -28,6 +28,8 @@ class UserResource extends JsonResource
             'phoneVerified' => !!$this->phone_verified_at,
             'phoneVerifiedAt' => $this->phone_verified_at,
             'profilePictureLink' => $this->profile_picture_link,
+            'lastLoginAt' => $this->last_login_at,
+            'lastLoginIp' => $this->last_login_ip,
             'roles' => $this->roles->pluck('name'),
             'permissions' => $this->getAllPermissions()->pluck('name'),
             'stationSpecificRoles' => RoleResource::collection($this->permissibleRoles)

@@ -3,9 +3,13 @@
 namespace App\Providers;
 
 use App\Events\CanisterLogCreatedEvent;
+use App\Events\DealerCreatedEvent;
 use App\Events\DepotCreatedEvent;
 use App\Events\PasswordResetEvent;
+use App\Events\TransporterCreatedEvent;
+use App\Listeners\AssignDealerDefaultRoles;
 use App\Listeners\AssignDepotDefaultRoles;
+use App\Listeners\AssignTransporterDefaultRoles;
 use App\Listeners\MarkCanisterAsReleasedFromPreviousLocation;
 use App\Listeners\SendPasswordResetTokenSms;
 use Illuminate\Auth\Events\Registered;
@@ -29,9 +33,21 @@ class EventServiceProvider extends ServiceProvider
         DepotCreatedEvent::class => [
             AssignDepotDefaultRoles::class
         ],
+
+        DealerCreatedEvent::class => [
+            AssignDealerDefaultRoles::class
+        ],
+
+        TransporterCreatedEvent::class => [
+            AssignTransporterDefaultRoles::class
+        ],
+
         CanisterLogCreatedEvent::class => [
             MarkCanisterAsReleasedFromPreviousLocation::class
-        ]
+        ],
+        'Laravel\Passport\Events\AccessTokenCreated' => [
+            'App\Listeners\APILogin',
+        ],
     ];
 
     /**

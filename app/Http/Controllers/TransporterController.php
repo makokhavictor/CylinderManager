@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TransporterCreatedEvent;
 use App\Http\Requests\DeleteTransporterRequest;
 use App\Http\Requests\StoreTransporterRequest;
 use App\Http\Requests\UpdateTransporterRequest;
@@ -38,19 +39,12 @@ class TransporterController extends Controller
     public function store(StoreTransporterRequest $request)
     {
 
-//        $transporterUser = User::find(auth()->id())->transporterUser;
-//        if (!$transporterUser) {
-//            throw ValidationException::withMessages([
-//                'authId' => ['You have not registered as a transporter user. This feature is only available for users registered as transporters']
-//            ]);
-//        }
-
         $transporter = Transporter::create([
             'name' => $request->get('transporterName'),
             'code' => $request->get('transporterCode'),
         ]);
 
-//        $transporterUser->transporter_id = $transporter->id;
+        TransporterCreatedEvent::dispatch($transporter);
 
         return response()->json(
             CreatedTransporterResource::make($transporter)

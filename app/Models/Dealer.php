@@ -11,7 +11,7 @@ class Dealer extends Model
     use HasFactory, IsStation;
 
     protected $fillable = [
-        'code', 'EPRA_licence_no', 'location', 'GPS'
+        'name', 'code', 'EPRA_licence_no', 'location', 'GPS'
     ];
 
     public function users() {

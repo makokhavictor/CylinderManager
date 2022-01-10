@@ -14,6 +14,7 @@ class DealerFactory extends Factory
     public function definition()
     {
         return [
+            'name' => $this->faker->company(),
             'code' => $this->faker->randomNumber(7),
             'EPRA_licence_no' => $this->faker->randomNumber(7),
             'location' => $this->faker->city(),

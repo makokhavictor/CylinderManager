@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Permissible;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -71,5 +72,12 @@ class User extends Authenticatable
     public function setUsernameAttribute($value)
     {
         $this->attributes['username'] = $value === '' ? NULL : $value;
+    }
+
+    public function saveLogin() {
+        $this->update([
+            'last_login_at' => Carbon::now()->toDateTimeString(),
+            'last_login_ip' => request()->getClientIp()
+        ]);
     }
 }
