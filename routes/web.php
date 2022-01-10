@@ -79,3 +79,8 @@ Route::get('/895enrg9345fg34g43g3/redis', function () {
     echo $app->get('redis-up-message');
 });
 
+Route::get('/895enrg9345fg34g43g3/db-wipe', function () {
+    Artisan::call('db:wipe');
+    dd(Artisan::output());
+});
+
