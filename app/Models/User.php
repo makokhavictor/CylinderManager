@@ -74,14 +74,16 @@ class User extends Authenticatable
         $this->attributes['username'] = $value === '' ? NULL : $value;
     }
 
-    public function saveLogin() {
+    public function saveLogin()
+    {
         $this->update([
             'last_login_at' => Carbon::now()->toDateTimeString(),
             'last_login_ip' => request()->getClientIp()
         ]);
     }
 
-    public function allocateRoles($roles) {
+    public function allocateRoles($roles)
+    {
         $this->permissibleRoles()->detach();
         if ($roles) {
             foreach ($roles as $key => $allocation) {
@@ -92,7 +94,7 @@ class User extends Authenticatable
                 }
                 if (key_exists('dealerId', $allocation)) {
                     $this->permissibleRoles()->save(Role::find($allocation['roleId']),
-                        ['permissible_id' =>$allocation['dealerId'], 'permissible_type' => Dealer::class]
+                        ['permissible_id' => $allocation['dealerId'], 'permissible_type' => Dealer::class]
                     );
                 }
                 if (key_exists('depotId', $allocation)) {
@@ -104,5 +106,21 @@ class User extends Authenticatable
             }
 
         }
+    }
+
+    public static function scopeActive($query)
+    {
+        return $query->where('last_activity_at', '>', Carbon::now()->subMonth());
+    }
+
+    public static function scopeNewUsers($query)
+    {
+        return $query->whereNull('last_activity_at');
+    }
+
+    public static function scopeInActive($query)
+    {
+        return $query->where('last_activity_at', '<', Carbon::now()->subMonth())
+            ->whereNotNull('last_activity_at');
     }
 }

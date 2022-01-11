@@ -16,7 +16,4 @@ class Transporter extends Model
         return $this->hasMany(User::class);
     }
 
-    public function receivedCanisterLogs() {
-        return $this->hasMany(CanisterLog::class, 'to_transporter_id');
-    }
 }

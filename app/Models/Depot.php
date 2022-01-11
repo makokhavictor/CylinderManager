@@ -24,7 +24,4 @@ class Depot extends Model
         return $this->belongsToMany(Brand::class);
     }
 
-    public function receivedCanisterLogs() {
-        return $this->hasMany(CanisterLog::class, 'to_depot_id');
-    }
 }

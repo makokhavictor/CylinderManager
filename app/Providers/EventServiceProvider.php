@@ -7,14 +7,18 @@ use App\Events\DealerCreatedEvent;
 use App\Events\DepotCreatedEvent;
 use App\Events\PasswordResetEvent;
 use App\Events\TransporterCreatedEvent;
+use App\Events\UserActivityEvent;
+use App\Listeners\APILogin;
 use App\Listeners\AssignDealerDefaultRoles;
 use App\Listeners\AssignDepotDefaultRoles;
 use App\Listeners\AssignTransporterDefaultRoles;
 use App\Listeners\MarkCanisterAsReleasedFromPreviousLocation;
 use App\Listeners\SendPasswordResetTokenSms;
+use App\Listeners\UpdateLastActivityTime;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Laravel\Passport\Events\AccessTokenCreated;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -45,9 +49,12 @@ class EventServiceProvider extends ServiceProvider
         CanisterLogCreatedEvent::class => [
             MarkCanisterAsReleasedFromPreviousLocation::class
         ],
-        'Laravel\Passport\Events\AccessTokenCreated' => [
-            'App\Listeners\APILogin',
+        AccessTokenCreated::class => [
+            APILogin::class,
         ],
+        UserActivityEvent::class => [
+            UpdateLastActivityTime::class
+        ]
     ];
 
     /**

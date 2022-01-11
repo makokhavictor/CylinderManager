@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\CanisterLog;
 use App\Models\Depot;
 use App\Models\StationPermission;
 use App\Models\StationRole;
@@ -23,6 +24,10 @@ trait IsStation
         foreach ($stationRoles as $stationRole) {
             $this->stationRoles()->create(["role_id" => $stationRole->role_id]);
         }
+    }
+
+    public function receivedCanisterLogs() {
+        return $this->morphMany(CanisterLog::class, 'toable');
     }
 
 }
