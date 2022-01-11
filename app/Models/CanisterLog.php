@@ -10,12 +10,10 @@ class CanisterLog extends Model
     use HasFactory;
 
     protected $fillable = [
-        'to_depot_id',
-        'to_dealer_id',
-        'to_transporter_id',
-        'from_depot_id',
-        'from_dealer_id',
-        'from_transporter_id',
+        'toable_id',
+        'fromable_id',
+        'toable_type',
+        'fromable_type',
         'canister_id',
         'filled',
         'released_at',

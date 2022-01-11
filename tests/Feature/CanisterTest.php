@@ -27,7 +27,7 @@ class CanisterTest extends TestCase
     {
         $user = User::find(User::factory()->create()->id);
         $canister = Canister::factory()->make();
-        $user->assignRole('Depot User');
+        $user->assignRole('Depot Admin User');
         $depot = Depot::factory()->create();
         $response = $this->actingAs($user, 'api')
             ->postJson("api/depots/{$depot->id}/canisters", [

@@ -15,7 +15,7 @@ class StoreCanisterLogRequest extends FormRequest
      */
     public function authorize()
     {
-        return User::find(auth()->id())->can('create canister log');
+        return User::find(auth()->id())->can('dispatch canister');
     }
 
     /**
@@ -26,16 +26,15 @@ class StoreCanisterLogRequest extends FormRequest
     public function rules()
     {
         return [
-            'canisterQR' => 'exists:canisters,QR',
             'toDepotId' => 'exists:depots,id|required_without_all:toTransporterId,toDealerId',
             'canisters' => 'required|array|min:1',
-            'canisters.*.id' => 'required|exists:canisters,id',
+            'canisters.*.canisterId' => 'required|exists:canisters,id',
+//            'canisters.*.canisterQR' => 'required|exists:canisters,QR',
             'canisters.*.filled' => 'required',
             'toDealerId' => 'exists:dealers,id',
-            'toTransporterId' => 'exists:transporters,id',
+            'transporterId' => 'exists:transporters,id',
             'fromDepotId' => 'exists:depots,id',
             'fromDealerId' => 'exists:dealers,id',
-            'fromTransporterId' => 'exists:transporters,id',
 
         ];
     }

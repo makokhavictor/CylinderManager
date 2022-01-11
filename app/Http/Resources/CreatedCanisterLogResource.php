@@ -2,6 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\CanisterLog;
+use App\Models\Dealer;
+use App\Models\Depot;
+use App\Models\Transporter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,10 +20,7 @@ class CreatedCanisterLogResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => [
-                'batchId' => $this->id,
-                'canisters' => CanisterLogResource::collection($this->canisterLogs)
-            ],
+            'data' => CanisterLogBatchResource::make($this),
             'headers' => [
                 'message' => 'Successfully added canister log'
             ]

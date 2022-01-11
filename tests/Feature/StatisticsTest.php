@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\CanisterLog;
+use App\Models\CanisterLogBatch;
 use App\Models\Dealer;
 use App\Models\Depot;
 use App\Models\Transporter;
@@ -17,18 +18,22 @@ class StatisticsTest extends TestCase
      */
     public function auth_user_can_get_depot_statistics()
     {
+
         $user = User::find(User::factory()->create()->id);
         $depot = Depot::factory()->create();
         CanisterLog::factory()->state([
-            'to_depot_id' => $depot->id,
-            'filled' => true
+            'toable_id' => $depot->id,
+            'toable_type' => Depot::class,
+            'filled' => true,
         ])->count(2)->create();
         CanisterLog::factory()->state([
-            'to_depot_id' => $depot->id,
+            'toable_id' => $depot->id,
+            'toable_type' => Depot::class,
             'filled' => false
         ])->count(3)->create();
         CanisterLog::factory()->state([
-            'to_depot_id' => $depot->id,
+            'toable_id' => $depot->id,
+            'toable_type' => Depot::class,
             'defective' => true
         ])->count(4)->create();
         $response = $this->actingAs($user, 'api')
@@ -53,15 +58,18 @@ class StatisticsTest extends TestCase
         $user = User::find(User::factory()->create()->id);
         $dealer = Dealer::factory()->create();
         CanisterLog::factory()->state([
-            'to_dealer_id' => $dealer->id,
+            'toable_id' => $dealer->id,
+            'toable_type' => Dealer::class,
             'filled' => true
         ])->count(2)->create();
         CanisterLog::factory()->state([
-            'to_dealer_id' => $dealer->id,
+            'toable_id' => $dealer->id,
+            'toable_type' => Dealer::class,
             'filled' => false
         ])->count(3)->create();
         CanisterLog::factory()->state([
-            'to_dealer_id' => $dealer->id,
+            'toable_id' => $dealer->id,
+            'toable_type' => Dealer::class,
             'defective' => true
         ])->count(4)->create();
         $response = $this->actingAs($user, 'api')
@@ -86,15 +94,18 @@ class StatisticsTest extends TestCase
         $user = User::find(User::factory()->create()->id);
         $transporter = Transporter::factory()->create();
         CanisterLog::factory()->state([
-            'to_transporter_id' => $transporter->id,
+            'toable_id' => $transporter->id,
+            'toable_type' => Transporter::class,
             'filled' => true
         ])->count(2)->create();
         CanisterLog::factory()->state([
-            'to_transporter_id' => $transporter->id,
+            'toable_id' => $transporter->id,
+            'toable_type' => Transporter::class,
             'filled' => false
         ])->count(3)->create();
         CanisterLog::factory()->state([
-            'to_transporter_id' => $transporter->id,
+            'toable_id' => $transporter->id,
+            'toable_type' => Transporter::class,
             'defective' => true
         ])->count(4)->create();
         $response = $this->actingAs($user, 'api')
@@ -113,7 +124,7 @@ class StatisticsTest extends TestCase
     /**
      * POST api/statistics/dashboard-summary
      * @test
-     * @group stats-1
+     * @group statistics
      */
     public function user_can_view_dashboard_stats() {
         $user = User::find(User::factory()->create()->id);

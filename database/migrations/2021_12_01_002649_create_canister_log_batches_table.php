@@ -15,6 +15,12 @@ class CreateCanisterLogBatchesTable extends Migration
     {
         Schema::create('canister_log_batches', function (Blueprint $table) {
             $table->id();
+            $table->integer('toable_id');
+            $table->string('toable_type');
+            $table->integer('fromable_id');
+            $table->string('fromable_type');
+            $table->string('transporter_id');
+            $table->boolean('received')->default(false);
             $table->timestamps();
         });
     }

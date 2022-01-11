@@ -15,18 +15,11 @@ class CreateCanisterLogsTable extends Migration
     {
         Schema::create('canister_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('from_depot_id')->nullable();
-            $table->foreignId('from_transporter_id')->nullable();
-            $table->foreignId('from_dealer_id')->nullable();
-            $table->foreign('from_depot_id')->references('id')->on('depots');
-            $table->foreign('from_transporter_id')->references('id')->on('transporters');
-            $table->foreign('from_dealer_id')->references('id')->on('dealers');
-            $table->foreignId('to_depot_id')->nullable();
-            $table->foreignId('to_transporter_id')->nullable();
-            $table->foreignId('to_dealer_id')->nullable();
-            $table->foreign('to_depot_id')->references('id')->on('depots');
-            $table->foreign('to_transporter_id')->references('id')->on('transporters');
-            $table->foreign('to_dealer_id')->references('id')->on('dealers');
+
+            $table->integer('fromable_id')->nullable();
+            $table->string('fromable_type')->nullable();
+            $table->integer('toable_id');
+            $table->string('toable_type');
             $table->foreignId('canister_id')->nullable();
             $table->foreign('canister_id')->references('id')->on('canisters');
             $table->boolean('filled')->default(false);
@@ -35,12 +28,14 @@ class CreateCanisterLogsTable extends Migration
             $table->foreignId('canister_log_batch_id');
             $table->foreign('canister_log_batch_id')->references('id')->on('canister_log_batches');
             $table->dateTime('released_at')->nullable();
-            $table->foreignId('released_to_depot_id')->nullable();
-            $table->foreignId('released_to_transporter_id')->nullable();
-            $table->foreignId('released_to_dealer_id')->nullable();
-            $table->foreign('released_to_depot_id')->references('id')->on('depots');
-            $table->foreign('released_to_transporter_id')->references('id')->on('transporters');
-            $table->foreign('released_to_dealer_id')->references('id')->on('dealers');
+            $table->integer('releasable_id')->nullable(); // ID of station the canister has been transfered to
+            $table->string('releasable_type')->nullable();
+//            $table->foreignId('released_to_depot_id')->nullable();
+//            $table->foreignId('released_to_transporter_id')->nullable();
+//            $table->foreignId('released_to_dealer_id')->nullable();
+//            $table->foreign('released_to_depot_id')->references('id')->on('depots');
+//            $table->foreign('released_to_transporter_id')->references('id')->on('transporters');
+//            $table->foreign('released_to_dealer_id')->references('id')->on('dealers');
             $table->boolean('defective')->default(false);
             $table->timestamps();
         });

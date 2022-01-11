@@ -173,20 +173,35 @@ class CreatePermissionTables extends Migration
             ['name' => 'update user', 'guard_name' => 'api'],
             ['name' => 'delete user', 'guard_name' => 'api'],
 
+            ['name' => 'dispatch canister', 'guard_name' => 'api'],
+            ['name' => 'receive dispatched canister', 'guard_name' => 'api'],
+            ['name' => 'confirm dispatch', 'guard_name' => 'api'],
+
             ['name' => 'scan qr code', 'guard_name' => 'api'],
         ]);
 
         Role::where('name', 'Transporter Admin User')->first()->givePermissionTo([
             'create transporter user', 'update transporter user', 'delete transporter user',
+
         ]);
         Role::where('name', 'Depot Admin User')->first()->givePermissionTo([
-            'create depot user', 'update depot user', 'delete depot user',
+            'create depot user', 'update depot user', 'delete depot user', 'create canister', 'update canister'
         ]);
         Role::where('name', 'Dealer Admin User')->first()->givePermissionTo([
-            'create dealer user', 'update dealer user', 'delete dealer user',
+            'create dealer user', 'update dealer user', 'delete dealer user', 'create canister', 'update canister'
         ]);
         Role::where('name', 'Depot User')->first()->givePermissionTo([
-            'create canister', 'update canister', 'delete canister', 'create canister log', 'scan qr code']);
+//            'create canister log', 'scan qr code',
+            'dispatch canister', 'receive dispatched canister'
+        ]);
+
+        Role::where('name', 'Dealer User')->first()->givePermissionTo([
+            'dispatch canister', 'receive dispatched canister', 'create canister', 'update canister'
+        ]);
+
+        Role::where('name', 'Transporter User')->first()->givePermissionTo([
+            'confirm dispatch'
+        ]);
     }
 
     /**
