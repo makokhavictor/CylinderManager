@@ -19,6 +19,15 @@ class Otp extends Model
         self::where('identifier', $identifier)->where('valid', true)->where('usage', $usage)->delete();
         $token = str_pad(self::generatePin($digits), $digits, '0', STR_PAD_LEFT);
 
+        if (config('mail')['mailers']['smtp']['host'] === 'smtp.mailtrap.io') {
+            return self::create([
+                'identifier' => $identifier,
+                'token' => '123456',// TODO remove in production
+                'validity' => $validity,
+                'usage' => $usage
+            ]);
+        }
+
         return self::create([
             'identifier' => $identifier,
             'token' => $token,

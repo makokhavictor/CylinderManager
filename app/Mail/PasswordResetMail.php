@@ -33,7 +33,7 @@ class PasswordResetMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Riziki Password Reset')->view('mails.password-reset')->with([
+        return $this->subject('LPG Password Reset')->view('mails.password-reset')->with([
             'token' => $this->token
         ]);
     }

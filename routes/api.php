@@ -37,7 +37,7 @@ Route::middleware('api')->group(function() {
     Route::post('oauth/reset-password', [AuthController::class, 'resetPassword']);
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware(['auth:api', 'activity-time-logger'])->group(function () {
     Route::get('{station}/{stationId}/roles', [StationRoleController::class, 'index']);
     Route::get('oauth/user', function () {
         return UserResource::make(auth()->user());

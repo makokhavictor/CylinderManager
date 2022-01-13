@@ -6,7 +6,6 @@ use App\Models\Dealer;
 use App\Models\Depot;
 use App\Models\Transporter;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class StatisticsController extends Controller
 {
