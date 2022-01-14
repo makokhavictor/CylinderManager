@@ -11,27 +11,28 @@ use App\Models\Canister;
 use App\Http\Requests\StoreCanisterRequest;
 use App\Http\Requests\UpdateCanisterRequest;
 use App\Models\Depot;
+use Illuminate\Http\JsonResponse;
 
 class CanisterController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return CanisterCollection
      */
     public function index()
     {
         $canisters = new Canister();
 
-        return response()->json(CanisterCollection::make($canisters->paginate()));
+        return CanisterCollection::make($canisters->paginate());
     }
 
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\StoreCanisterRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param StoreCanisterRequest $request
+     * @return CreatedCanisterResource
      */
     public function store(StoreCanisterRequest $request)
     {
@@ -46,29 +47,27 @@ class CanisterController extends Controller
                 'recertification' => $request->canisterRecertification
             ]);
 
-        return response()->json(CreatedCanisterResource::make($canister));
+        return CreatedCanisterResource::make($canister);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Canister $canister
-     * @return \Illuminate\Http\JsonResponse
+     * @param Canister $canister
+     * @return CanisterResource
      */
     public function show(Depot $depot, Canister $canister)
     {
-        return response()->json([
-            'data' => CanisterResource::make($canister)
-        ]);
+        return CanisterResource::make($canister);
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\UpdateCanisterRequest $request
-     * @param \App\Models\Canister $canister
-     * @return \Illuminate\Http\JsonResponse
+     * @param UpdateCanisterRequest $request
+     * @param Canister $canister
+     * @return JsonResponse
      */
     public function update(UpdateCanisterRequest $request, Depot $depot, Canister $canister)
     {
@@ -88,8 +87,8 @@ class CanisterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Canister $canister
-     * @return \Illuminate\Http\JsonResponse
+     * @param Canister $canister
+     * @return JsonResponse
      */
     public function destroy(DeleteCanisterRequest $request, Depot $depot, Canister $canister)
     {

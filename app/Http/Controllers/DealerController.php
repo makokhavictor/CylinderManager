@@ -20,12 +20,12 @@ class DealerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return JsonResponse
+     * @return DealerCollection
      */
     public function index()
     {
         $depots = new Dealer();
-        return response()->json(DealerCollection::make($depots->paginate()));
+        return DealerCollection::make($depots->paginate());
     }
 
     /**

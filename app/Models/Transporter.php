@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\IsStation;
+use App\Traits\Paginatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Transporter extends Model
 {
-    use HasFactory, IsStation;
+    use HasFactory, IsStation, Paginatable;
 
     protected $fillable = ['name', 'code'];
 

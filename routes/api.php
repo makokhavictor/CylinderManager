@@ -51,7 +51,8 @@ Route::middleware(['auth:api', 'activity-time-logger'])->group(function () {
     Route::get('statistics/dashboard-summary', [StatisticsController::class, 'dashboardSummary']);
     Route::resources([
         'canisters/batch-dispatches' => CanisterDispatchController::class,
-        'depots/{depot}/canisters' => CanisterController::class,
+//        'depots/{depot}/canisters' => CanisterController::class,
+        'canisters' => CanisterController::class,
         'dealers' => DealerController::class,
         'depots' => DepotController::class,
         'transporters' => TransporterController::class,

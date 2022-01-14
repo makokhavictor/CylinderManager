@@ -20,12 +20,12 @@ class TransporterController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return JsonResponse
+     * @return TransporterCollection
      */
     public function index()
     {
         $transporters = new Transporter();
-        return response()->json(TransporterCollection::make($transporters->paginate()));
+        return TransporterCollection::make($transporters->paginate());
     }
 
 

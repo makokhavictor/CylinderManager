@@ -21,12 +21,12 @@ class DepotController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return JsonResponse
+     * @return DepotCollection
      */
     public function index()
     {
         $depots = new Depot();
-        return response()->json(DepotCollection::make($depots->paginate()));
+        return DepotCollection::make($depots->paginate());
     }
 
 
