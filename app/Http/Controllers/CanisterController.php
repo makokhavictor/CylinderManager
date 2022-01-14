@@ -11,6 +11,7 @@ use App\Models\Canister;
 use App\Http\Requests\StoreCanisterRequest;
 use App\Http\Requests\UpdateCanisterRequest;
 use App\Models\Depot;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
 class CanisterController extends Controller
@@ -41,10 +42,11 @@ class CanisterController extends Controller
             [
                 'code' => $request->canisterCode,
                 'manuf' => $request->canisterManuf,
-                'manuf_date' => $request->canisterManufDate,
-                'brand_id' => $request->brandId,
+                'manuf_date' => new Carbon($request->canisterManufDate),
+                'brand_id' => $request->canisterBrandId,
                 'RFID' => $request->canisterRFID,
-                'recertification' => $request->canisterRecertification
+                'recertification' => $request->canisterRecertification,
+                'size' => $request->get('canisterSize')
             ]);
 
         return CreatedCanisterResource::make($canister);

@@ -27,8 +27,8 @@ class StoreCanisterRequest extends FormRequest
         return [
             'canisterCode' => 'required',
             'canisterManuf' => 'required',
-            'canisterManufDate' => 'required',
-            'brandId' => 'required',
+            'canisterManufDate' => 'required|date',
+            'canisterBrandId' => 'required',
             'canisterRFID' => 'required',
             'canisterQR' => 'required',
             'canisterRecertification' => 'required'

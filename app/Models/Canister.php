@@ -10,7 +10,15 @@ class Canister extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['code', 'manuf', 'manuf_date', 'brand_id', 'RFID', 'QR', 'recertification'];
+    protected $fillable = [
+        'code',
+        'manuf',
+        'manuf_date',
+        'brand_id',
+        'RFID', 'QR',
+        'recertification',
+        'size'
+    ];
 
     public function brand()
     {
