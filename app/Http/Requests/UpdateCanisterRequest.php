@@ -25,12 +25,13 @@ class UpdateCanisterRequest extends FormRequest
     public function rules()
     {
         return [
+
             'canisterCode' => 'required',
             'canisterManuf' => 'required',
-            'canisterManufDate' => 'required',
-            'brandId' => 'required',
+            'canisterManufDate' => 'required|date',
+            'canisterBrandId' => 'required',
             'canisterRFID' => 'required',
-            'QR' => 'canisterQR',
+            'canisterQR' => 'required|unique:canisters,QR,'.$this->canister->id,
             'canisterRecertification' => 'required'
         ];
     }

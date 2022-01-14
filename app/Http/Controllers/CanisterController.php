@@ -77,7 +77,7 @@ class CanisterController extends Controller
             'code' => $request->canisterCode,
             'manuf' => $request->canisterManuf,
             'manuf_date' => $request->canisterManufDate,
-            'brand_id' => $request->brandId,
+            'brand_id' => $request->canisterBrandId,
             'RFID' => $request->canisterRFID,
             'QR' => $request->canisterQR,
             'recertification' => $request->canisterRecertification
