@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCanisterRequest extends FormRequest
+class StoreOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class StoreCanisterRequest extends FormRequest
      */
     public function authorize()
     {
-        return User::find(auth()->id())->can('create canister');
+        return User::find(auth()->id())->can('create refill order');
     }
 
     /**
@@ -25,13 +25,7 @@ class StoreCanisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'canisterSize' => 'required',
-            'canisterCode' => 'required',
-            'canisterManuf' => 'required',
-            'canisterManufDate' => 'required|date',
-            'canisterBrandId' => 'required',
-            'canisterRFID' => 'required',
-            'canisterRecertification' => 'required'
+            //
         ];
     }
 }

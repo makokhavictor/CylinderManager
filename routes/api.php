@@ -8,6 +8,7 @@ use App\Http\Controllers\CanisterLogController;
 use App\Http\Controllers\CanisterStatisticsController;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\DepotController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StationRoleController;
 use App\Http\Controllers\StatisticsController;
@@ -51,13 +52,13 @@ Route::middleware(['auth:api', 'activity-time-logger'])->group(function () {
     Route::get('statistics/dashboard-summary', [StatisticsController::class, 'dashboardSummary']);
     Route::resources([
         'canisters/batch-dispatches' => CanisterDispatchController::class,
-//        'depots/{depot}/canisters' => CanisterController::class,
         'canisters' => CanisterController::class,
         'dealers' => DealerController::class,
         'depots' => DepotController::class,
         'transporters' => TransporterController::class,
         'brands' => BrandController::class,
-        'users' => UserController::class
+        'users' => UserController::class,
+        'orders' => OrderController::class
     ]);
     Route::post('canister-logs', [CanisterLogController::class, 'store']);
 

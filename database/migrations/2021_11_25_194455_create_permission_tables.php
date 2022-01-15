@@ -165,6 +165,10 @@ class CreatePermissionTables extends Migration
             ['name' => 'update canister log', 'guard_name' => 'api'],
             ['name' => 'delete canister log', 'guard_name' => 'api'],
 
+            ['name' => 'create refill order', 'guard_name' => 'api'],
+            ['name' => 'update refill order', 'guard_name' => 'api'],
+            ['name' => 'delete refill order', 'guard_name' => 'api'],
+
             ['name' => 'create brand', 'guard_name' => 'api'],
             ['name' => 'update brand', 'guard_name' => 'api'],
             ['name' => 'delete brand', 'guard_name' => 'api'],
@@ -181,22 +185,38 @@ class CreatePermissionTables extends Migration
         ]);
 
         Role::where('name', 'Transporter Admin User')->first()->givePermissionTo([
-            'create transporter user', 'update transporter user', 'delete transporter user',
+            'create transporter user',
+            'update transporter user',
+            'delete transporter user',
 
         ]);
         Role::where('name', 'Depot Admin User')->first()->givePermissionTo([
             'create depot user', 'update depot user', 'delete depot user', 'create canister', 'update canister'
         ]);
         Role::where('name', 'Dealer Admin User')->first()->givePermissionTo([
-            'create dealer user', 'update dealer user', 'delete dealer user', 'create canister', 'update canister'
+            'create dealer user',
+            'update dealer user',
+            'delete dealer user',
+
+            'create canister',
+            'update canister',
+
+            'create refill order',
+            'update refill order',
+            'delete refill order',
         ]);
         Role::where('name', 'Depot User')->first()->givePermissionTo([
-//            'create canister log', 'scan qr code',
-            'dispatch canister', 'receive dispatched canister'
+            'dispatch canister',
+            'receive dispatched canister'
         ]);
 
         Role::where('name', 'Dealer User')->first()->givePermissionTo([
-            'dispatch canister', 'receive dispatched canister', 'create canister', 'update canister'
+            'dispatch canister',
+            'receive dispatched canister',
+            'create canister',
+            'update canister',
+            'create refill order',
+            'update refill order'
         ]);
 
         Role::where('name', 'Transporter User')->first()->givePermissionTo([
