@@ -18,7 +18,7 @@ class CanisterTest extends TestCase
     }
 
     /**
-     * POST api/depot/{depotId}/canisters
+     * POST api/canisters
      * @group canister
      * @test
      */
@@ -28,25 +28,26 @@ class CanisterTest extends TestCase
         $user = User::find(User::factory()->create()->id);
         $canister = Canister::factory()->make();
         $user->assignRole('Depot Admin User');
-        $depot = Depot::factory()->create();
         $response = $this->actingAs($user, 'api')
-            ->postJson("api/depots/{$depot->id}/canisters", [
+            ->postJson("api/canisters", [
+                'canisterSize' => $canister->size,
                 'canisterCode' => $canister->code,
                 'canisterManuf' => $canister->manuf,
                 'canisterManufDate' => $canister->manuf_date,
-                'brandId' => $canister->brand_id,
+                'canisterBrandId' => $canister->brand_id,
                 'canisterRFID' => $canister->RFID,
-                'canisterRecertification' => $canister->recertification
+                'canisterRecertification' => $canister->recertification,
             ]);
-        $response->assertOk();
+        $response->assertCreated();
         $response->assertJsonStructure([
             'data' => [
                 'canisterId',
                 'canisterRecertification',
                 'canisterManuf',
-                'brandId',
-                'brandName',
-                'canisterRFID'
+                'canisterBrandId',
+                'canisterBrandName',
+                'canisterRFID',
+                'canisterSize'
             ],
             'headers' => ['message']
         ]);
@@ -60,18 +61,17 @@ class CanisterTest extends TestCase
 
     public function authenticated_users_can_get_canisters()
     {
-        $depotId = Depot::factory()->create()->id;
         $canisters = Canister::factory()->count(2)->create();
         $response = $this->actingAs($this->user, 'api')
-            ->getJson("api/depots/{$depotId}/canisters");
+            ->getJson("api/canisters");
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [[
                 'canisterId',
                 'canisterRecertification',
                 'canisterManuf',
-                'brandId',
-                'brandName',
+                'canisterBrandId',
+                'canisterBrandName',
                 'canisterRFID']
             ]
         ]);
@@ -87,18 +87,17 @@ class CanisterTest extends TestCase
 
     public function authenticated_users_can_get_canister()
     {
-        $depotId = Depot::factory()->create()->id;
         $canister = Canister::factory()->create();
         $response = $this->actingAs($this->user, 'api')
-            ->getJson("api/depots/{$depotId}/canisters/{$canister->id}");
+            ->getJson("api/canisters/{$canister->id}");
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
                 'canisterId',
                 'canisterRecertification',
                 'canisterManuf',
-                'brandId',
-                'brandName',
+                'canisterBrandId',
+                'canisterBrandName',
                 'canisterRFID'
             ]
         ]);
@@ -114,16 +113,15 @@ class CanisterTest extends TestCase
 
     public function user_with_permission_can_update_canister()
     {
-        $depotId = Depot::factory()->create()->id;
         $canister = Canister::factory()->create();
         $updateCanister = Canister::factory()->make();
         $this->user->givePermissionTo('update canister');
         $response = $this->actingAs($this->user, 'api')
-            ->patchJson("api/depots/{$depotId}/canisters/{$canister->id}", [
+            ->patchJson("api/canisters/{$canister->id}", [
                 'canisterCode' => $updateCanister->code,
                 'canisterManuf' => $updateCanister->manuf,
                 'canisterManufDate' => $updateCanister->manuf_date,
-                'brandId' => $updateCanister->brand_id,
+                'canisterBrandId' => $updateCanister->brand_id,
                 'canisterRFID' => $updateCanister->RFID,
                 'canisterRecertification' => $updateCanister->recertification
             ]);
@@ -143,11 +141,10 @@ class CanisterTest extends TestCase
 
     public function user_with_permission_can_delete_canister()
     {
-        $depotId = Depot::factory()->create()->id;
         $canister = Canister::factory()->create();
         $this->user->givePermissionTo('delete canister');
         $response = $this->actingAs($this->user, 'api')
-            ->deleteJson("api/depots/{$depotId}/canisters/{$canister->id}", []);
+            ->deleteJson("api/canisters/{$canister->id}", []);
         $response->assertOk();
         $response->assertJsonStructure([
             'headers' => ['message']

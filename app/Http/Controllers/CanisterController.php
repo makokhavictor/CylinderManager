@@ -44,7 +44,6 @@ class CanisterController extends Controller
                 'manuf' => $request->canisterManuf,
                 'manuf_date' => new Carbon($request->canisterManufDate),
                 'brand_id' => $request->canisterBrandId,
-                'RFID' => $request->canisterRFID,
                 'recertification' => $request->canisterRecertification,
                 'size' => $request->get('canisterSize')
             ]);
