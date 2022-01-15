@@ -51,7 +51,7 @@ class CanisterLogTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'canisterBatchId', 'fromDepotName', 'fromDepotId', 'toDealerName', 'toDealerId', 'canisters' => [[
-                    'canisterId', 'canisterQR', 'brandId', 'brandName', 'filled',
+                    'canisterId', 'brandId', 'brandName', 'filled',
                 ]]
             ],
             'headers' => ['message']
@@ -111,7 +111,7 @@ class CanisterLogTest extends TestCase
         $response->assertJsonStructure([
             'data' => [[
                 'canisterBatchId', 'canisterBatchReceived', 'fromDepotName', 'fromDepotId', 'toDealerName', 'toDealerId', 'canisters' => [[
-                    'canisterId', 'canisterQR', 'brandId', 'brandName', 'filled',
+                    'canisterId', 'brandId', 'brandName', 'filled',
                 ]]]
             ],
         ]);
@@ -174,7 +174,7 @@ class CanisterLogTest extends TestCase
 //        $response->assertJsonStructure([
 //            'data' => [
 //                'canisterBatchId', 'fromDepotName', 'fromDepotId', 'toDealerName', 'toDealerId', 'canisters' => [[
-//                    'canisterId', 'canisterQR', 'brandId', 'brandName', 'filled',
+//                    'canisterId', 'brandId', 'brandName', 'filled',
 //                ]]
 //            ],
 //            'headers' => ['message']
@@ -217,7 +217,7 @@ class CanisterLogTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'canisterBatchId', 'fromDealerName', 'fromDealerId', 'toDepotName', 'toDepotId', 'canisters' => [[
-                    'canisterId', 'canisterQR', 'brandId', 'brandName', 'filled',
+                    'canisterId', 'brandId', 'brandName', 'filled',
                 ]]
             ],
             'headers' => ['message']

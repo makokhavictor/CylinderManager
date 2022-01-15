@@ -29,7 +29,6 @@ class StoreCanisterLogRequest extends FormRequest
             'toDepotId' => 'exists:depots,id|required_without_all:toTransporterId,toDealerId',
             'canisters' => 'required|array|min:1',
             'canisters.*.canisterId' => 'required|exists:canisters,id',
-//            'canisters.*.canisterQR' => 'required|exists:canisters,QR',
             'canisters.*.filled' => 'required',
             'toDealerId' => 'exists:dealers,id',
             'transporterId' => 'exists:transporters,id',

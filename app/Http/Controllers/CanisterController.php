@@ -38,7 +38,7 @@ class CanisterController extends Controller
     public function store(StoreCanisterRequest $request)
     {
         $canister = Canister::firstOrcreate(
-            ['QR' => $request->canisterQR],
+            ['RFID' => $request->canisterRFID],
             [
                 'code' => $request->canisterCode,
                 'manuf' => $request->canisterManuf,
@@ -79,7 +79,6 @@ class CanisterController extends Controller
             'manuf_date' => $request->canisterManufDate,
             'brand_id' => $request->canisterBrandId,
             'RFID' => $request->canisterRFID,
-            'QR' => $request->canisterQR,
             'recertification' => $request->canisterRecertification
         ]);
 

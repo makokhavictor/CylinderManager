@@ -221,7 +221,6 @@ Sample response
 |canisterManufDate | required ||
 |brandId | required ||
 |canisterRFID | required ||
-|canisterQR | required ||
 |canisterRecertification | required ||
 
 Sample Request Object
@@ -234,7 +233,6 @@ Sample Request Object
     "canisterManufDate": "2020-09-06",
     "brandId": 191,
     "canisterRFID": 5355341,
-    "canisterQR": 948012,
     "canisterRecertification": "1986-08-07"
 }
 ```
@@ -250,7 +248,6 @@ Sample Response
         "canisterRecertification": "2009-01-20",
         "canisterManuf": "Dickens, Walter and Gulgowski",
         "canisterManufDate": "1978-06-28",
-        "canisterQR": 5900731,
         "canisterRFID": 8478401,
         "brandId": 193,
         "brandName": "Upton-Okuneva"

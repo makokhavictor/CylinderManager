@@ -21,7 +21,6 @@ class CreateCanistersTable extends Migration
             $table->foreignId('brand_id');
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->string('RFID');
-            $table->string('QR');
             $table->string('recertification');
             $table->softDeletes();
             $table->timestamps();

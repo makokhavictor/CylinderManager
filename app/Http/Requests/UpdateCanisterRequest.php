@@ -30,8 +30,7 @@ class UpdateCanisterRequest extends FormRequest
             'canisterManuf' => 'required',
             'canisterManufDate' => 'required|date',
             'canisterBrandId' => 'required',
-            'canisterRFID' => 'required',
-            'canisterQR' => 'required|unique:canisters,QR,'.$this->canister->id,
+            'canisterRFID' => 'required|unique:canisters,RFID,'.$this->canister->RFID,
             'canisterRecertification' => 'required'
         ];
     }

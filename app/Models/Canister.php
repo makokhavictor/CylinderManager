@@ -15,7 +15,7 @@ class Canister extends Model
         'manuf',
         'manuf_date',
         'brand_id',
-        'RFID', 'QR',
+        'RFID',
         'recertification',
         'size'
     ];

@@ -36,7 +36,6 @@ class CanisterTest extends TestCase
                 'canisterManufDate' => $canister->manuf_date,
                 'brandId' => $canister->brand_id,
                 'canisterRFID' => $canister->RFID,
-                'canisterQR' => $canister->QR,
                 'canisterRecertification' => $canister->recertification
             ]);
         $response->assertOk();
@@ -47,7 +46,6 @@ class CanisterTest extends TestCase
                 'canisterManuf',
                 'brandId',
                 'brandName',
-                'canisterQR',
                 'canisterRFID'
             ],
             'headers' => ['message']
@@ -74,7 +72,6 @@ class CanisterTest extends TestCase
                 'canisterManuf',
                 'brandId',
                 'brandName',
-                'canisterQR',
                 'canisterRFID']
             ]
         ]);
@@ -102,7 +99,6 @@ class CanisterTest extends TestCase
                 'canisterManuf',
                 'brandId',
                 'brandName',
-                'canisterQR',
                 'canisterRFID'
             ]
         ]);
@@ -129,7 +125,6 @@ class CanisterTest extends TestCase
                 'canisterManufDate' => $updateCanister->manuf_date,
                 'brandId' => $updateCanister->brand_id,
                 'canisterRFID' => $updateCanister->RFID,
-                'canisterQR' => $updateCanister->QR,
                 'canisterRecertification' => $updateCanister->recertification
             ]);
         $response->assertOk();
