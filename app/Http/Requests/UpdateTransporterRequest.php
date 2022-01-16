@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTransporterRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateTransporterRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return User::find(auth()->id())->can('update transporter');
     }
 
     /**
