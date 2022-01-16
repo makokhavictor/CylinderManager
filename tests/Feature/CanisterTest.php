@@ -30,7 +30,7 @@ class CanisterTest extends TestCase
         $user->assignRole('Depot Admin User');
         $response = $this->actingAs($user, 'api')
             ->postJson("api/canisters", [
-                'canisterSize' => $canister->size,
+                'canisterSizeId' => $canister->canister_size_id,
                 'canisterCode' => $canister->code,
                 'canisterManuf' => $canister->manuf,
                 'canisterManufDate' => $canister->manuf_date,
@@ -47,7 +47,7 @@ class CanisterTest extends TestCase
                 'canisterBrandId',
                 'canisterBrandName',
                 'canisterRFID',
-                'canisterSize'
+                'canisterSizeId'
             ],
             'headers' => ['message']
         ]);

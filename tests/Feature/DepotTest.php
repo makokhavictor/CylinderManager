@@ -50,6 +50,7 @@ class DepotTest extends TestCase
     {
         $depot = Depot::factory()->make();
         $user = User::find(User::factory()->create()->id);
+        $user->givePermissionTo('create depot');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/depots', [
                 'depotName' => $depot->name,
@@ -69,6 +70,7 @@ class DepotTest extends TestCase
     {
         $depot = Depot::factory()->make();
         $user = User::find(User::factory()->create()->id);
+        $user->givePermissionTo('create depot');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/depots', [
                 'depotName' => $depot->name,
@@ -132,11 +134,12 @@ class DepotTest extends TestCase
      * @test
      * @return void
      */
-    public function authenticated_user_can_edit_their_depot_registration_details()
+    public function authorised_user_can_edit_depot_registration_details()
     {
         $depotEdit = Depot::factory()->make();
         $depot = Depot::factory()->create();
         $user = User::find(User::factory()->create()->id);
+        $user->givePermissionTo('update depot');
         $response = $this->actingAs($user, 'api')
             ->patchJson("/api/depots/$depot->id", [
                 'depotCode' => $depotEdit->code,

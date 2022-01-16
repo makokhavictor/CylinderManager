@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Dealer;
-use App\Models\Depot;
+use App\Models\Brand;
+use App\Models\CanisterSize;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class OrderFactory extends Factory
+class CanisterSizeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,9 +15,10 @@ class OrderFactory extends Factory
      */
     public function definition()
     {
+        $size = $this->faker->randomDigitNotNull();
         return [
-            'depot_id' => Depot::factory()->create()->id,
-            'dealer_id' => Dealer::factory()->create()->id,
+            'value' => $size,
+            'name' => $size.'Kg'
         ];
     }
 }

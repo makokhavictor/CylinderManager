@@ -45,7 +45,7 @@ class CanisterController extends Controller
                 'manuf_date' => new Carbon($request->canisterManufDate),
                 'brand_id' => $request->canisterBrandId,
                 'recertification' => $request->canisterRecertification,
-                'size' => $request->get('canisterSize')
+                'canister_size_id' => $request->get('canisterSizeId')
             ]);
 
         return CreatedCanisterResource::make($canister);

@@ -130,11 +130,12 @@ class DealerTest extends TestCase
      * @test
      * @return void
      */
-    public function authenticated_user_can_edit_their_dealer_registration_details()
+    public function authenticated_user_can_edit_dealer_registration_details()
     {
         $dealerEdit = Dealer::factory()->make();
         $dealer = Dealer::factory()->create();
         $user = User::find(User::factory()->create()->id);
+        $user->givePermissionTo('update dealer');
         $response = $this->actingAs($user, 'api')
             ->patchJson("/api/dealers/$dealer->id", [
                 'dealerCode' => $dealerEdit->code,

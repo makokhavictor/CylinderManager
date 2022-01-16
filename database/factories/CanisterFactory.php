@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Brand;
+use App\Models\CanisterSize;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CanisterFactory extends Factory
@@ -21,7 +22,7 @@ class CanisterFactory extends Factory
             'brand_id' => Brand::factory()->create()->id,
             'RFID' => $this->faker->randomNumber(7),
             'recertification' => $this->faker->date(),
-            'size' => '6Kg'
+            'canister_size_id' => CanisterSize::factory()->create()->id
         ];
     }
 }

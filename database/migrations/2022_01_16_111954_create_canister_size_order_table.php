@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCanistersTable extends Migration
+class CreateCanisterSizeOrderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,13 @@ class CreateCanistersTable extends Migration
      */
     public function up()
     {
-        Schema::create('canisters', function (Blueprint $table) {
+        Schema::create('canister_size_order', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->string('manuf');
-            $table->date('manuf_date');
-            $table->foreignId('brand_id');
-            $table->foreign('brand_id')->references('id')->on('brands');
-            $table->string('RFID');
-            $table->string('recertification');
             $table->foreignId('canister_size_id');
             $table->foreign('canister_size_id')->references('id')->on('canister_sizes');
-            $table->softDeletes();
+            $table->foreignId('order_id');
+            $table->foreign('order_id')->references('id')->on('orders');
+            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
     }
@@ -36,6 +31,6 @@ class CreateCanistersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('canisters');
+        Schema::dropIfExists('canister_size_order');
     }
 }

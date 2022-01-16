@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreOrderRequest extends FormRequest
+class DeleteOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return User::find(auth()->id())->can('create refill order');
+        return User::find(auth()->id())->can('delete refill order');
     }
 
     /**
@@ -25,11 +25,7 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'fromDepotId' => 'required',
-            'toDealerId' => 'required',
-            'orderQuantities' => 'required',
-            'orderQuantities.*.canisterSizeId' => 'required',
-            'orderQuantities.*.quantity' => 'required',
+            //
         ];
     }
 }

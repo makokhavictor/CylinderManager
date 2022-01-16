@@ -25,7 +25,7 @@ class StoreCanisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'canisterSize' => 'required',
+            'canisterSizeId' => 'required',
             'canisterCode' => 'required',
             'canisterManuf' => 'required',
             'canisterManufDate' => 'required|date',

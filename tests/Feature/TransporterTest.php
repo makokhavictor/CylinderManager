@@ -80,11 +80,12 @@ class TransporterTest extends TestCase
      * @test
      * @return void
      */
-    public function authenticated_user_can_edit_their_transporter_registration_details()
+    public function authorised_user_can_edit_transporter_registration_details()
     {
         $transporterEdit = Transporter::factory()->make();
         $transporter = Transporter::factory()->create();
         $user = User::find(User::factory()->create()->id);
+        $user->givePermissionTo('update transporter');
         $response = $this->actingAs($user, 'api')
             ->patchJson("/api/transporters/$transporter->id", [
                 'transporterCode' => $transporterEdit->code,

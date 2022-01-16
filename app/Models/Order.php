@@ -20,4 +20,10 @@ class Order extends Model
     {
         return $this->belongsTo(Dealer::class);
     }
+
+    public function canisterSizes()
+    {
+        return $this->belongsToMany(CanisterSize::class)->withPivot(['quantity']);
+    }
+
 }

@@ -17,11 +17,16 @@ class Canister extends Model
         'brand_id',
         'RFID',
         'recertification',
-        'size'
+        'canister_size_id'
     ];
 
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function canisterSize()
+    {
+        return $this->belongsTo(CanisterSize::class);
     }
 }

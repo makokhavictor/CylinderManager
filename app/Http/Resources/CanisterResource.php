@@ -23,7 +23,8 @@ class CanisterResource extends JsonResource
             'canisterRFID' => $this->RFID,
             'canisterBrandId' => $this->brand_id,
             'canisterBrandName' => $this->brand->name,
-            'canisterSize' => $this->size,
+            'canisterSizeId' => $this->canister_size_id,
+            'canisterSizeName' => $this->canisterSize->name,
         ];
     }
 }
