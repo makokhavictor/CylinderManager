@@ -19,6 +19,8 @@ class CreateCanisterSizeOrderTable extends Migration
             $table->foreign('canister_size_id')->references('id')->on('canister_sizes');
             $table->foreignId('order_id');
             $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreignId('brand_id');
+            $table->foreign('brand_id')->references('id')->on('brands');
             $table->integer('quantity')->default(1);
             $table->timestamps();
         });

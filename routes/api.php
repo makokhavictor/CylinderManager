@@ -5,6 +5,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CanisterController;
 use App\Http\Controllers\CanisterDispatchController;
 use App\Http\Controllers\CanisterLogController;
+use App\Http\Controllers\CanisterSizeController;
 use App\Http\Controllers\CanisterStatisticsController;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\DepotController;
@@ -53,6 +54,7 @@ Route::middleware(['auth:api', 'activity-time-logger'])->group(function () {
     Route::resources([
         'canisters/batch-dispatches' => CanisterDispatchController::class,
         'canisters' => CanisterController::class,
+        'canister-sizes' => CanisterSizeController::class,
         'dealers' => DealerController::class,
         'depots' => DepotController::class,
         'transporters' => TransporterController::class,

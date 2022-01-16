@@ -28,6 +28,7 @@ class StoreOrderRequest extends FormRequest
             'fromDepotId' => 'required',
             'toDealerId' => 'required',
             'orderQuantities' => 'required',
+            'orderQuantities.*.canisterBrandId' => 'required',
             'orderQuantities.*.canisterSizeId' => 'required',
             'orderQuantities.*.quantity' => 'required',
         ];

@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\jsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -38,23 +39,27 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        $permissions = User::find(auth()->id())->permissibleRoles()
-            ->wherePivot('permissible_type', Dealer::class)
-            ->wherePivot('permissible_id', $request->get('toDealerId'))
-            ->get()
-            ->map(function ($role) {
-                return $role->permissions->pluck('name');
-            })->toArray();
-        if (!in_array('create refill order', array_merge(...$permissions))) {
-            throw new AuthorizationException('You are not authorised to make a refill order for this dealer');
+        if(!User::find(\auth()->id())->can('admin: create order')) {
+            $permissions = User::find(auth()->id())->permissibleRoles()
+                ->wherePivot('permissible_type', Dealer::class)
+                ->wherePivot('permissible_id', $request->get('toDealerId'))
+                ->get()
+                ->map(function ($role) {
+                    return $role->permissions->pluck('name');
+                })->toArray();
+            if (!in_array('create refill order', array_merge(...$permissions))) {
+                throw new AuthorizationException('You are not authorised to make a refill order for this dealer');
+            }
         }
+
         $order = Order::create([
             'depot_id' => $request->get('fromDepotId'),
             'dealer_id' => $request->get('toDealerId'),
         ]);
 
         foreach ($request->get('orderQuantities') as $orderQuantity) {
-            $order->canisterSizes()->save(CanisterSize::find($orderQuantity['canisterSizeId']), ['quantity' => $orderQuantity['quantity']]);
+            $order->canisterSizes()->save(CanisterSize::find($orderQuantity['canisterSizeId']),
+                ['quantity' => $orderQuantity['quantity'], 'brand_id' =>  $orderQuantity['canisterBrandId']]);
         }
         return response()->json([
             'data' => OrderResource::make($order),
