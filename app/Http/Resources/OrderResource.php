@@ -20,6 +20,10 @@ class OrderResource extends JsonResource
             'fromDepotName' => $this->depot->name,
             'toDealerId' => $this->dealer_id,
             'toDealerName' => $this->dealer->name,
+            'assignedToTransporterId' => $this->assigned_to,
+            'assignedToTransporterName' => $this->transporter ? $this->transporter->name ?? null,
+            'isAssigned' => !!$this->assigned_at,
+            'assignedAt' => $this->assigned_at,
             'orderQuantities' => OrderQuantityResource::collection($this->canisterSizes)
         ];
     }

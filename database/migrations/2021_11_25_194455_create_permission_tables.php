@@ -136,7 +136,6 @@ class CreatePermissionTables extends Migration
             ['name' => 'update depot', 'guard_name' => 'api'],
             ['name' => 'delete depot', 'guard_name' => 'api'],
 
-
             ['name' => 'create dealer', 'guard_name' => 'api'],
             ['name' => 'update dealer', 'guard_name' => 'api'],
             ['name' => 'delete dealer', 'guard_name' => 'api'],
@@ -145,25 +144,49 @@ class CreatePermissionTables extends Migration
             ['name' => 'update transporter', 'guard_name' => 'api'],
             ['name' => 'delete transporter', 'guard_name' => 'api'],
 
+            ['name' => 'admin: create depot user', 'guard_name' => 'api'],
+            ['name' => 'admin: update depot user', 'guard_name' => 'api'],
+            ['name' => 'admin: delete depot user', 'guard_name' => 'api'],
+
             ['name' => 'create depot user', 'guard_name' => 'api'],
             ['name' => 'update depot user', 'guard_name' => 'api'],
             ['name' => 'delete depot user', 'guard_name' => 'api'],
+
+            ['name' => 'admin: create transporter user', 'guard_name' => 'api'],
+            ['name' => 'admin: update transporter user', 'guard_name' => 'api'],
+            ['name' => 'admin: delete transporter user', 'guard_name' => 'api'],
 
             ['name' => 'create transporter user', 'guard_name' => 'api'],
             ['name' => 'update transporter user', 'guard_name' => 'api'],
             ['name' => 'delete transporter user', 'guard_name' => 'api'],
 
+            ['name' => 'admin: create dealer user', 'guard_name' => 'api'],
+            ['name' => 'admin: update dealer user', 'guard_name' => 'api'],
+            ['name' => 'admin: delete dealer user', 'guard_name' => 'api'],
+
             ['name' => 'create dealer user', 'guard_name' => 'api'],
             ['name' => 'update dealer user', 'guard_name' => 'api'],
             ['name' => 'delete dealer user', 'guard_name' => 'api'],
+
+            ['name' => 'admin: create canister', 'guard_name' => 'api'],
+            ['name' => 'admin: update canister', 'guard_name' => 'api'],
+            ['name' => 'admin: delete canister', 'guard_name' => 'api'],
 
             ['name' => 'create canister', 'guard_name' => 'api'],
             ['name' => 'update canister', 'guard_name' => 'api'],
             ['name' => 'delete canister', 'guard_name' => 'api'],
 
+            ['name' => 'admin: create canister log', 'guard_name' => 'api'],
+            ['name' => 'admin: update canister log', 'guard_name' => 'api'],
+            ['name' => 'admin: delete canister log', 'guard_name' => 'api'],
+
             ['name' => 'create canister log', 'guard_name' => 'api'],
             ['name' => 'update canister log', 'guard_name' => 'api'],
             ['name' => 'delete canister log', 'guard_name' => 'api'],
+
+            ['name' => 'admin: create refill order', 'guard_name' => 'api'],
+            ['name' => 'admin: update refill order', 'guard_name' => 'api'],
+            ['name' => 'admin: delete refill order', 'guard_name' => 'api'],
 
             ['name' => 'create refill order', 'guard_name' => 'api'],
             ['name' => 'update refill order', 'guard_name' => 'api'],
@@ -177,11 +200,69 @@ class CreatePermissionTables extends Migration
             ['name' => 'update user', 'guard_name' => 'api'],
             ['name' => 'delete user', 'guard_name' => 'api'],
 
+            ['name' => 'admin: dispatch canister', 'guard_name' => 'api'],
+            ['name' => 'admin: receive dispatched canister', 'guard_name' => 'api'],
+            ['name' => 'admin: confirm dispatch', 'guard_name' => 'api'],
+
             ['name' => 'dispatch canister', 'guard_name' => 'api'],
             ['name' => 'receive dispatched canister', 'guard_name' => 'api'],
             ['name' => 'confirm dispatch', 'guard_name' => 'api'],
 
             ['name' => 'scan qr code', 'guard_name' => 'api'],
+        ]);
+
+        Role::where('name', 'Admin')->first()->givePermissionTo([
+            'create depot',
+            'update depot',
+            'delete depot',
+
+            'create dealer',
+            'update dealer',
+            'delete dealer',
+
+            'create transporter',
+            'update transporter',
+            'delete transporter',
+
+            'admin: create depot user',
+            'admin: update depot user',
+            'admin: delete depot user',
+
+            'admin: create transporter user',
+            'admin: update transporter user',
+            'admin: delete transporter user',
+
+            'admin: create dealer user',
+            'admin: update dealer user',
+            'admin: delete dealer user',
+
+            'admin: create canister',
+            'admin: update canister',
+            'admin: delete canister',
+
+            'admin: create canister log',
+            'admin: update canister log',
+            'admin: delete canister log',
+
+            'admin: create refill order',
+            'admin: update refill order',
+            'admin: delete refill order',
+
+            'create brand',
+            'update brand',
+            'delete brand',
+
+            'create user',
+            'update user',
+            'delete user',
+
+            'admin: dispatch canister',
+            'admin: receive dispatched canister',
+            'admin: confirm dispatch',
+
+            'admin: assign order',
+            'assign order'
+
         ]);
 
         Role::where('name', 'Transporter Admin User')->first()->givePermissionTo([
