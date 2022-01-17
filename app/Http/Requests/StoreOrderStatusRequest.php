@@ -14,7 +14,8 @@ class StoreOrderStatusRequest extends FormRequest
      */
     public function authorize()
     {
-        return User::find(auth()->id())->can('accept refill order') || User::find(auth()->id())->can('assign');
+        return User::find(auth()->id())->can('aadmin: assign order')
+            || User::find(auth()->id())->can('assign order');
     }
 
     /**

@@ -23,7 +23,7 @@ class Order extends Model
 
     public function canisterSizes()
     {
-        return $this->belongsToMany(CanisterSize::class)->withPivot(['quantity']);
+        return $this->belongsToMany(CanisterSize::class)->withPivot(['quantity', 'brand_id']);
     }
 
 }

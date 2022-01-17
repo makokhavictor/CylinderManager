@@ -29,6 +29,7 @@ class AddAssignedColumnOnOrders extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign('orders_assigned_to_foreign');
             $table->dropColumn('assigned_to');
             $table->dropColumn('assigned_at');
         });

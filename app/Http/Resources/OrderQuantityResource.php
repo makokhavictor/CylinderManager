@@ -22,7 +22,7 @@ class OrderQuantityResource extends JsonResource
             'value' => $this->value,
             'quantity' => $this->pivot->quantity,
             'canisterBrandId' => $this->pivot->brand_id,
-            'canisterBrandName' => $brand ? $brand->id : null
+            'canisterBrandName' => $brand ? $brand->name : null
         ];
     }
 }

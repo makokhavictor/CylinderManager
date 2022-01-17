@@ -208,6 +208,9 @@ class CreatePermissionTables extends Migration
             ['name' => 'receive dispatched canister', 'guard_name' => 'api'],
             ['name' => 'confirm dispatch', 'guard_name' => 'api'],
 
+            ['name' => 'admin: assign order', 'guard_name' => 'api'],
+            ['name' => 'assign order', 'guard_name' => 'api'],
+
             ['name' => 'scan qr code', 'guard_name' => 'api'],
         ]);
 

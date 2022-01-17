@@ -31,9 +31,11 @@ class OrderStatusTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
-                'orderId', 'assignedToTransporterId', 'assignedToTransporterName', 'assigned', 'assignedAt'
+                'orderId', 'assignedToTransporterId', 'assignedToTransporterName', 'isAssigned', 'assignedAt'
             ],
             'headers' => ['message']
         ]);
+
+        $response->assertJsonFragment(['isAssigned' => true]);
     }
 }
