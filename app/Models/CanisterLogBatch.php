@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class CanisterLogBatch extends Model
 {
     protected $fillable = [
+        'order_id',
         'toable_id',
         'toable_type',
         'fromable_id',

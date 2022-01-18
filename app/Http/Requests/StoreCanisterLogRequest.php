@@ -26,6 +26,7 @@ class StoreCanisterLogRequest extends FormRequest
     public function rules()
     {
         return [
+            'orderId' => 'required|exists:orders,id',
             'toDepotId' => 'exists:depots,id|required_without_all:toTransporterId,toDealerId',
             'canisters' => 'required|array|min:1',
             'canisters.*.canisterId' => 'required|exists:canisters,id',

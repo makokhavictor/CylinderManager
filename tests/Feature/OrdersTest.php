@@ -75,8 +75,8 @@ class OrdersTest extends TestCase
         $response = $this->actingAs($user, 'api')->postJson('/api/orders', [
             'fromDepotId' => $depot->id,
             'toDealerId' => $dealer->id,
-            'orderQuantities' => [[
-                'canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 2],
+            'orderQuantities' => [
+                ['canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 2],
                 ['canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 3]]
         ]);
 

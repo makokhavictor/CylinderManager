@@ -24,6 +24,7 @@ class CanisterLogBatchResource extends JsonResource
         $toDealer = $this->toable_type === Dealer::class ? Dealer::find($this->toable_id) : null;
 
         return [
+            'orderId' => $this->order_id,
             'canisterBatchId' => $this->id,
             'canisterBatchReceived' => $this->received,
             'fromDepotId' => $this->when($fromDepot, $fromDepot ? $fromDepot->id : null),

@@ -8,9 +8,11 @@ use App\Models\CanisterLog;
 use App\Models\CanisterLogBatch;
 use App\Models\Dealer;
 use App\Models\Depot;
+use App\Models\Order;
 use App\Models\Role;
 use App\Models\Transporter;
 use App\Models\User;
+use Database\Factories\OrderFactory;
 use Tests\TestCase;
 
 class CanisterLogTest extends TestCase
@@ -24,6 +26,7 @@ class CanisterLogTest extends TestCase
      */
     public function depot_user_can_dispatch_to_dealer()
     {
+        $order = Order::factory()->create();
         $canisters = Canister::factory()
             ->count(3)
             ->create()
@@ -35,13 +38,14 @@ class CanisterLogTest extends TestCase
                 return $item;
             });
         $user = User::find(User::factory()->create()->id);
-        $depot = Depot::find(Depot::factory()->create()->id);
-        $dealer = Dealer::find(Dealer::factory()->create()->id);
+        $depot = Depot::find($order->depot_id);
+        $dealer = Dealer::find($order->dealer_id);
         $transporter = Transporter::find(Transporter::factory()->create()->id);
         $depot->stationPermissions()->create(['user_id' => $user->id, 'role_id' => Role::where('name', 'Depot User')->first()->id ]);
         $user->assignRole('Depot User');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/canisters/batch-dispatches', [
+                'orderId' => $order->id,
                 'fromDepotId' => $depot->id,
                 'toDealerId' => $dealer->id,
                 'transporterId' => $transporter->id,
@@ -50,7 +54,7 @@ class CanisterLogTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([
             'data' => [
-                'canisterBatchId', 'fromDepotName', 'fromDepotId', 'toDealerName', 'toDealerId', 'canisters' => [[
+                'orderId', 'canisterBatchId', 'fromDepotName', 'fromDepotId', 'toDealerName', 'toDealerId', 'canisters' => [[
                     'canisterId', 'brandId', 'brandName', 'filled',
                 ]]
             ],
@@ -190,6 +194,7 @@ class CanisterLogTest extends TestCase
      */
     public function dealer_user_can_dispatch_to_depot()
     {
+        $order = Order::factory()->create();
         $canisters = Canister::factory()
             ->count(3)
             ->create()
@@ -201,13 +206,14 @@ class CanisterLogTest extends TestCase
                 return $item;
             });
         $user = User::find(User::factory()->create()->id);
-        $depot = Depot::find(Depot::factory()->create()->id);
-        $dealer = Dealer::find(Dealer::factory()->create()->id);
+        $depot = Depot::find($order->depot_id);
+        $dealer = Dealer::find($order->dealer_id);
         $transporter = Transporter::find(Transporter::factory()->create()->id);
         $dealer->stationPermissions()->create(['user_id' => $user->id, 'role_id' => Role::where('name', 'Dealer User')->first()->id ]);
         $user->assignRole('Dealer User');
         $response = $this->actingAs($user, 'api')
             ->postJson('/api/canisters/batch-dispatches', [
+                'orderId' => $order->id,
                 'fromDealerId' => $dealer->id,
                 'toDepotId' => $depot->id,
                 'transporterId' => $transporter->id,
