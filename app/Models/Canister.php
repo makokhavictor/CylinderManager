@@ -29,4 +29,7 @@ class Canister extends Model
     {
         return $this->belongsTo(CanisterSize::class);
     }
+    public function canisterLogs() {
+        return $this->hasMany(CanisterLog::class);
+    }
 }

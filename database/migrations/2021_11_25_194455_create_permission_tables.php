@@ -282,9 +282,6 @@ class CreatePermissionTables extends Migration
             'update dealer user',
             'delete dealer user',
 
-            'create canister',
-            'update canister',
-
             'create refill order',
             'update refill order',
             'delete refill order',
@@ -297,8 +294,6 @@ class CreatePermissionTables extends Migration
         Role::where('name', 'Dealer User')->first()->givePermissionTo([
             'dispatch canister',
             'receive dispatched canister',
-            'create canister',
-            'update canister',
             'create refill order',
             'update refill order'
         ]);

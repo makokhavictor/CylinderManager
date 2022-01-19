@@ -8,6 +8,7 @@ use App\Http\Controllers\CanisterLogController;
 use App\Http\Controllers\CanisterSizeController;
 use App\Http\Controllers\CanisterStatisticsController;
 use App\Http\Controllers\DealerController;
+use App\Http\Controllers\DepotCanisterController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderStatusController;
@@ -48,6 +49,7 @@ Route::middleware(['auth:api', 'activity-time-logger'])->group(function () {
     Route::get('oauth/revoke', [AuthController::class, 'destroy']);
     Route::post('oauth/password-change', [AuthController::class, 'passwordChange']);
     Route::get('roles', [RoleController::class, 'index']);
+    Route::get('depots/{depot}/canisters', [DepotCanisterController::class, 'index']);
     Route::get('depots/{depot}/statistics', [CanisterStatisticsController::class, 'depots']);
     Route::get('dealers/{dealer}/statistics', [CanisterStatisticsController::class, 'dealers']);
     Route::get('transporters/{transporter}/statistics', [CanisterStatisticsController::class, 'transporters']);

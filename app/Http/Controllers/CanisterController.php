@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteCanisterRequest;
+use App\Http\Requests\StoreCanisterRequest;
+use App\Http\Requests\UpdateCanisterRequest;
 use App\Http\Resources\CanisterCollection;
 use App\Http\Resources\CanisterResource;
 use App\Http\Resources\CreatedCanisterResource;
 use App\Http\Resources\UpdatedCanisterResource;
 use App\Models\Canister;
-use App\Http\Requests\StoreCanisterRequest;
-use App\Http\Requests\UpdateCanisterRequest;
+use App\Models\CanisterLog;
+use App\Models\Dealer;
 use App\Models\Depot;
+use App\Models\Transporter;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
@@ -47,6 +50,26 @@ class CanisterController extends Controller
                 'recertification' => $request->canisterRecertification,
                 'canister_size_id' => $request->get('canisterSizeId')
             ]);
+        $canisterLog = null;
+        if ($request->get('currentlyAtDepotId')) {
+            $canisterLog = Depot::find($request->get('currentlyAtDepotId'));
+//            $toable['id'] = $request->get('currentlyAtDepotId');
+//            $toable['type'] = Depot::class;
+        } elseif ($request->get('currentlyAtDealerId')) {
+            $canisterLog = Dealer::find($request->get('currentlyAtDealerId'));
+//            $toable['id'] = $request->get('currentlyAtDealerId');
+//            $toable['type'] = Dealer::class;
+        } else {
+            $canisterLog = Transporter::find($request->get('currentlyAtTransporterId'));
+//            $toable['id'] = $request->get('currentlyAtTransporterId');
+//            $toable['type'] = Transporter::class;
+        }
+
+        $canisterLog->receivedCanisterLogs()->create([
+            'canister_id' => $canister['id'],
+            'filled' => $request->get('currentlyFilled'),
+            'user_id' => auth()->id()
+        ]);
 
         return CreatedCanisterResource::make($canister);
     }

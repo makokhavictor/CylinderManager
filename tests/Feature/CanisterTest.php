@@ -37,6 +37,8 @@ class CanisterTest extends TestCase
                 'canisterBrandId' => $canister->brand_id,
                 'canisterRFID' => $canister->RFID,
                 'canisterRecertification' => $canister->recertification,
+                'currentlyAtDepotId' => Depot::factory()->create()->id,
+                'currentlyFilled' => true,
             ]);
         $response->assertCreated();
         $response->assertJsonStructure([
@@ -47,10 +49,13 @@ class CanisterTest extends TestCase
                 'canisterBrandId',
                 'canisterBrandName',
                 'canisterRFID',
-                'canisterSizeId'
+                'canisterSizeId',
+                'currentlyAtDepotId',
+                'currentlyFilled'
             ],
             'headers' => ['message']
         ]);
+        $response->assertJsonFragment(['currentlyFilled' => true]);
     }
 
     /**
