@@ -25,7 +25,7 @@ class UpdateBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'brandName' => 'required'
+            'canisterBrandName' => 'required'
         ];
     }
 }

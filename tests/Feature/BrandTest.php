@@ -28,12 +28,12 @@ class BrandTest extends TestCase
         $this->user->givePermissionTo('create brand');
         $response = $this->actingAs($this->user, 'api')
             ->postJson('api/brands', [
-                'brandName' => $brand->name,
+                'canisterBrandName' => $brand->name,
                 'brandCompanyName' => $brand->company_name,
             ]);
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => ['brandId', 'brandName'],
+            'data' => ['canisterBrandId', 'canisterBrandName'],
             'headers' => ['message']
         ]);
     }
@@ -51,10 +51,10 @@ class BrandTest extends TestCase
             ->getJson('api/brands');
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => [['brandId', 'brandName']]
+            'data' => [['canisterBrandId', 'canisterBrandName']]
         ]);
 
-        $response->assertJsonFragment(['brandName' => $brands[0]->name]);
+        $response->assertJsonFragment(['canisterBrandName' => $brands[0]->name]);
     }
 
 
@@ -71,9 +71,9 @@ class BrandTest extends TestCase
             ->getJson("api/brands/{$brand->id}");
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => ['brandId', 'brandName']
+            'data' => ['canisterBrandId', 'canisterBrandName']
         ]);
-        $response->assertJsonFragment(['brandName' => $brand->name]);
+        $response->assertJsonFragment(['canisterBrandName' => $brand->name]);
     }
 
 
@@ -90,15 +90,15 @@ class BrandTest extends TestCase
         $this->user->givePermissionTo('update brand');
         $response = $this->actingAs($this->user, 'api')
             ->patchJson("api/brands/{$brand->id}", [
-                'brandName' => $newBrand->name,
-                'brandCompanyName' => $newBrand->company_name,
+                'canisterBrandName' => $newBrand->name,
+                'canisterBrandCompanyName' => $newBrand->company_name,
             ]);
         $response->assertOk();
         $response->assertJsonStructure([
-            'data' => ['brandId', 'brandName'],
+            'data' => ['canisterBrandId', 'canisterBrandName'],
             'headers' => ['message']
         ]);
-        $response->assertJsonFragment(['brandName' => $newBrand->name]);
+        $response->assertJsonFragment(['canisterBrandName' => $newBrand->name]);
     }
 
     /**

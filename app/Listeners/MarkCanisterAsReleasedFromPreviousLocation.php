@@ -35,9 +35,9 @@ class MarkCanisterAsReleasedFromPreviousLocation
             ->first();
         if ($previousLog) {
             $previousLog->released_at = new Carbon();
-            $previousLog->released_to_depot_id = $event->canisterLog->to_depot_id;
-            $previousLog->released_to_dealer_id = $event->canisterLog->to_dealer_id;
-            $previousLog->released_to_transporter_id = $event->canisterLog->to_transporter_id;
+            $previousLog->released_at = new Carbon();
+            $previousLog->releasable_id = $event->canisterLog->toable_id;
+            $previousLog->releasable_type = $event->canisterLog->toable_type;
             $previousLog->save();
         }
 

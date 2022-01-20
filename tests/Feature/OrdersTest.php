@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Brand;
 use App\Models\CanisterSize;
 use App\Models\Dealer;
 use App\Models\Depot;
@@ -36,9 +37,9 @@ class OrdersTest extends TestCase
         $response = $this->actingAs($user, 'api')->postJson('/api/orders', [
             'fromDepotId' => $depot->id,
             'toDealerId' => $dealer->id,
-            'orderQuantities' => [[
-                'canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 5],
-                ['canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 4]]
+            'orderQuantities' => [
+                ['canisterBrandId' => Brand::factory()->create()->id, 'canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 5],
+                ['canisterBrandId' => Brand::factory()->create()->id, 'canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 4]]
         ]);
 
         $response->assertCreated();
@@ -76,8 +77,8 @@ class OrdersTest extends TestCase
             'fromDepotId' => $depot->id,
             'toDealerId' => $dealer->id,
             'orderQuantities' => [
-                ['canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 2],
-                ['canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 3]]
+                ['canisterBrandId' => Brand::factory()->create()->id, 'canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 2],
+                ['canisterBrandId' => Brand::factory()->create()->id, 'canisterSizeId' => CanisterSize::factory()->create()->id, 'quantity' => 3]]
         ]);
 
         $response->assertForbidden();
@@ -96,7 +97,9 @@ class OrdersTest extends TestCase
         $user = User::find(User::factory()->create()->id);
         $orders = Order::factory()->count(2)->create();
         foreach ($orders as $order) {
-            $order->canisterSizes()->save(CanisterSize::factory()->create());
+            $order->canisterSizes()->save(CanisterSize::factory()->create(), [
+                'brand_id' => Brand::factory()->create()->id
+            ]);
         }
 
         $response = $this->actingAs($user, 'api')->getJson('/api/orders');
@@ -119,7 +122,9 @@ class OrdersTest extends TestCase
         $user = User::find(User::factory()->create()->id);
         $user->givePermissionTo('delete refill order');
         $order = Order::factory()->create();
-        $order->canisterSizes()->save(CanisterSize::factory()->create());
+        $order->canisterSizes()->save(CanisterSize::factory()->create(), [
+            'brand_id' => Brand::factory()->create()->id
+        ]);
 
         $response = $this->actingAs($user, 'api')->deleteJson("/api/orders/{$order->id}");
 

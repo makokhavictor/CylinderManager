@@ -35,7 +35,7 @@ class BrandController extends Controller
     public function store(StoreBrandRequest $request)
     {
         $brand = Brand::create([
-            'name' => $request->get('brandName'),
+            'name' => $request->get('canisterBrandName'),
             'company_name' => $request->get('brandCompanyName'),
         ]);
 
@@ -67,7 +67,7 @@ class BrandController extends Controller
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
         $brand->update([
-            'name' => $request->get('brandName')
+            'name' => $request->get('canisterBrandName')
         ]);
         return response()->json(UpdatedBrandResource::make($brand));
     }

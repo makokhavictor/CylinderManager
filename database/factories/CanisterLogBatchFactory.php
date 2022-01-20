@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\CanisterLogBatch;
 use App\Models\Dealer;
 use App\Models\Depot;
+use App\Models\Order;
 use App\Models\Transporter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,7 +24,8 @@ class CanisterLogBatchFactory extends Factory
             'fromable_type' => Depot::class,
             'toable_id' => Dealer::factory()->create(),
             'toable_type' => Dealer::class,
-            'transporter_id' => Transporter::factory()->create()->id
+            'transporter_id' => Transporter::factory()->create()->id,
+            'order_id' => Order::factory()->create()->id
         ];
     }
 }

@@ -33,7 +33,7 @@ class DepotTest extends TestCase
         $response->assertCreated();
         $response->assertJsonStructure([
             'data' => [
-                'depotId', 'depotName', 'brands' => [['brandId', 'brandName']],
+                'depotId', 'depotName', 'brands' => [['canisterBrandId', 'canisterBrandName']],
                 'depotRoles' => [['roleName', 'permissions' => []]]
             ],
             'headers' => ['message']

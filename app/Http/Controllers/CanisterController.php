@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CanisterLogCreatedEvent;
 use App\Http\Requests\DeleteCanisterRequest;
 use App\Http\Requests\StoreCanisterRequest;
 use App\Http\Requests\UpdateCanisterRequest;
@@ -50,26 +51,21 @@ class CanisterController extends Controller
                 'recertification' => $request->canisterRecertification,
                 'canister_size_id' => $request->get('canisterSizeId')
             ]);
-        $canisterLog = null;
         if ($request->get('currentlyAtDepotId')) {
-            $canisterLog = Depot::find($request->get('currentlyAtDepotId'));
-//            $toable['id'] = $request->get('currentlyAtDepotId');
-//            $toable['type'] = Depot::class;
+            $station = Depot::find($request->get('currentlyAtDepotId'));
         } elseif ($request->get('currentlyAtDealerId')) {
-            $canisterLog = Dealer::find($request->get('currentlyAtDealerId'));
-//            $toable['id'] = $request->get('currentlyAtDealerId');
-//            $toable['type'] = Dealer::class;
+            $station = Dealer::find($request->get('currentlyAtDealerId'));
         } else {
-            $canisterLog = Transporter::find($request->get('currentlyAtTransporterId'));
-//            $toable['id'] = $request->get('currentlyAtTransporterId');
-//            $toable['type'] = Transporter::class;
+            $station = Transporter::find($request->get('currentlyAtTransporterId'));
         }
 
-        $canisterLog->receivedCanisterLogs()->create([
+        $canisterLog = $station->receivedCanisterLogs()->create([
             'canister_id' => $canister['id'],
             'filled' => $request->get('currentlyFilled'),
             'user_id' => auth()->id()
         ]);
+
+        CanisterLogCreatedEvent::dispatch($canisterLog);
 
         return CreatedCanisterResource::make($canister);
     }

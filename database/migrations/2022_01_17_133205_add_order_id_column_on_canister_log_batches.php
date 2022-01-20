@@ -14,7 +14,7 @@ class AddOrderIdColumnOnCanisterLogBatches extends Migration
     public function up()
     {
         Schema::table('canister_log_batches', function (Blueprint $table) {
-            $table->foreignId('order_id');
+            $table->foreignId('order_id')->nullable();
             $table->foreign('order_id')->references('id')->on('orders');
         });
     }

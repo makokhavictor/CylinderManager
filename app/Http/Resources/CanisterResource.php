@@ -24,16 +24,6 @@ class CanisterResource extends JsonResource
         $toDepotId = $toDepot ? $toDepot->id : null;
         $toDealerId = $toDealer ? $toDealer->id : null;
         $toTransporterId = $toTransporter ? $toTransporter->id : null;
-        if ($lastLog) {
-            logger('====>');
-            logger($lastLog->toable_type);
-            logger('<====');
-            logger(Depot::class);
-        }
-
-        logger($toDepotId);
-        logger($toDealerId);
-        logger($toTransporterId);
         return [
             'currentlyAtDepotId' => $this->when($lastLog && $lastLog->toable_type === Depot::class, $toDepotId),
             'currentlyAtDealerId' => $this->when($lastLog && $lastLog->toable_type === Dealer::class, $toDealerId),

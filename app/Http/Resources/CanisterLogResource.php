@@ -38,8 +38,10 @@ class CanisterLogResource extends JsonResource
             'toDealerName' => $this->when($this->toable_type === Dealer::class, $toDealer ? $toDealer->name : null),
             'toTransporterName' => $this->when($this->toable_type === Transporter::class, $toTransporter ? $toTransporter->name : null),
             'canisterId' => $this->canister->id,
-            'brandId' => $this->canister->brand->id,
-            'brandName' => $this->canister->brand->name,
+            'canisterBrandId' => $this->canister->brand->id,
+            'canisterSizeId' => $this->canister->canisterSize->id,
+            'canisterSizeName' => $this->canister->canisterSize->name,
+            'canisterBrandName' => $this->canister->brand->name,
             'filled' => $this->filled,
         ];
     }

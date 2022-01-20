@@ -55,7 +55,7 @@ class CanisterLogTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'orderId', 'canisterBatchId', 'fromDepotName', 'fromDepotId', 'toDealerName', 'toDealerId', 'canisters' => [[
-                    'canisterId', 'brandId', 'brandName', 'filled',
+                    'canisterId', 'canisterBrandId', 'canisterBrandName', 'filled',
                 ]]
             ],
             'headers' => ['message']
@@ -94,7 +94,7 @@ class CanisterLogTest extends TestCase
             'toable_type' => Dealer::class,
             'fromable_id' => $depot->id,
             'fromable_type' => Depot::class,
-            'transporter_id' => $transporter->id
+            'transporter_id' => $transporter->id,
         ]);
 
         foreach ($canisters as $canister) {
@@ -115,7 +115,7 @@ class CanisterLogTest extends TestCase
         $response->assertJsonStructure([
             'data' => [[
                 'canisterBatchId', 'canisterBatchReceived', 'fromDepotName', 'fromDepotId', 'toDealerName', 'toDealerId', 'canisters' => [[
-                    'canisterId', 'brandId', 'brandName', 'filled',
+                    'canisterId', 'canisterBrandId', 'canisterBrandName', 'filled',
                 ]]]
             ],
         ]);
@@ -178,7 +178,7 @@ class CanisterLogTest extends TestCase
 //        $response->assertJsonStructure([
 //            'data' => [
 //                'canisterBatchId', 'fromDepotName', 'fromDepotId', 'toDealerName', 'toDealerId', 'canisters' => [[
-//                    'canisterId', 'brandId', 'brandName', 'filled',
+//                    'canisterId', 'canisterBrandId', 'canisterBrandName', 'filled',
 //                ]]
 //            ],
 //            'headers' => ['message']
@@ -223,7 +223,7 @@ class CanisterLogTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'canisterBatchId', 'fromDealerName', 'fromDealerId', 'toDepotName', 'toDepotId', 'canisters' => [[
-                    'canisterId', 'brandId', 'brandName', 'filled',
+                    'canisterId', 'canisterBrandId', 'canisterBrandName', 'filled',
                 ]]
             ],
             'headers' => ['message']

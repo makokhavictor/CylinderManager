@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Canister;
 use App\Models\CanisterLogBatch;
 use App\Models\Dealer;
 use App\Models\Order;
@@ -22,7 +23,7 @@ class CanisterLogFactory extends Factory
             'canister_log_batch_id' => CanisterLogBatch::factory()->create()->id,
             'toable_id' => Dealer::factory()->create()->id,
             'toable_type' => Dealer::class,
-            'order_id' => Order::factory()->create()->id
+            'canister_id' => Canister::factory()->create()->id
         ];
     }
 }
