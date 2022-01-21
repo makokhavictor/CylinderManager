@@ -11,6 +11,7 @@ use App\Http\Controllers\DealerController;
 use App\Http\Controllers\DepotCanisterController;
 use App\Http\Controllers\DepotController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDispatchController;
 use App\Http\Controllers\OrderStatusController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StationRoleController;
@@ -56,6 +57,7 @@ Route::middleware(['auth:api', 'activity-time-logger'])->group(function () {
     Route::get('statistics/dashboard-summary', [StatisticsController::class, 'dashboardSummary']);
 
     Route::post('orders/{order}/status', [OrderStatusController::class, 'store']);
+    Route::post('orders/{order}/dispatch', [OrderDispatchController::class, 'store']);
 
     Route::apiResources([
         'canisters/batch-dispatches' => CanisterDispatchController::class,

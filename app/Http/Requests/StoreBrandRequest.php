@@ -26,7 +26,7 @@ class StoreBrandRequest extends FormRequest
     {
         return [
             'canisterBrandName' => 'required',
-            'brandCompanyName' => 'required',
+            'canisterBrandCompanyName' => 'required',
         ];
     }
 }

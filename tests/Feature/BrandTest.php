@@ -29,7 +29,7 @@ class BrandTest extends TestCase
         $response = $this->actingAs($this->user, 'api')
             ->postJson('api/brands', [
                 'canisterBrandName' => $brand->name,
-                'brandCompanyName' => $brand->company_name,
+                'canisterBrandCompanyName' => $brand->company_name,
             ]);
         $response->assertOk();
         $response->assertJsonStructure([

@@ -29,8 +29,8 @@ class StoreDepotRequest extends FormRequest
             'depotCode' => 'required',
             'depotEPRALicenceNo' => 'required',
             'depotLocation' => 'required',
-            'brandIds' => 'required|array|min:1',
-            "brandIds.*"  => "required|distinct|exists:brands,id",
+            'canisterBrandIds' => 'required|array|min:1',
+            "canisterBrandIds.*"  => "required|distinct|exists:brands,id",
         ];
     }
 }

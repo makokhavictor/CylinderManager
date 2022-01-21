@@ -35,7 +35,6 @@ class StoreCanisterLogRequest extends FormRequest
             'transporterId' => 'exists:transporters,id',
             'fromDepotId' => 'exists:depots,id',
             'fromDealerId' => 'exists:dealers,id',
-
         ];
     }
 
