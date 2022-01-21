@@ -15,7 +15,7 @@ class CreateCanisterSizesTable extends Migration
     {
         Schema::create('canister_sizes', function (Blueprint $table) {
             $table->id();
-            $table->integer('value');
+            $table->double('value');
             $table->string('name');
             $table->timestamps();
         });
