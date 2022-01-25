@@ -44,7 +44,7 @@ class Otp extends Model
      */
     public static function validate(string $identifier, string $token, string $usage = 'confirm-transaction') : object
     {
-        $otp = self::where('identifier', $identifier)->where('token', $token)->where('usage', $usage)->first();
+        $otp = self::where('identifier', $identifier)->where('token', $token)->where('usage', $usage)->latest()->first();
 
         if ($otp == null) {
             return (object)[
