@@ -54,10 +54,10 @@ class OrderResource extends JsonResource
             'dealerToTransporter' => $dealerToTransporter,
             'transporterToDepot' => $transporterToDepot,
 
-            'depotToTransporterConfirmed' => $this->depot_transporter_ok_at,
-            'transporterToDealerConfirmed' => $this->transporter_dealer_ok_at,
-            'dealerToTransporterConfirmed' => $this->dealer_transporter_ok_at,
-            'transporterToDepotConfirmed' => $this->transporter_depot_ok_at,
+            'depotToTransporterConfirmed' => !!$this->depot_transporter_ok,
+            'transporterToDealerConfirmed' => !!$this->transporter_dealer_ok,
+            'dealerToTransporterConfirmed' => !!$this->dealer_transporter_ok,
+            'transporterToDepotConfirmed' => !!$this->transporter_depot_ok,
 
             'depotToTransporterConfirmedAt' => $this->depot_transporter_ok_at,
             'transporterToDealerConfirmedAt' => $this->transporter_dealer_ok_at,

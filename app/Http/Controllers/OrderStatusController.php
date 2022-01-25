@@ -35,7 +35,7 @@ class OrderStatusController extends Controller
             ]);
         }
 
-        if ($request->boolean('depotToTransporterOk') !== null) {
+        if ($request->get('depotToTransporterOk') !== null) {
             $order->depot_transporter_ok = $request->boolean('depotToTransporterOk');
             $order->depot_transporter_ok_at = Carbon::now();
             $order->save();
@@ -47,19 +47,19 @@ class OrderStatusController extends Controller
             ]);
         }
 
-        if ($request->boolean('transporterToDepotOk') !== null) {
+        if ($request->get('transporterToDepotOk') !== null) {
             $order->transporter_depot_ok = $request->boolean('transporterToDepotOk');
             $order->transporter_depot_ok_at = Carbon::now();
             $order->save();
             return response()->json([
                 'data' => OrderResource::make($order),
                 'headers' => [
-                    'message' => 'Order from depot confirmed'
+                    'message' => 'Order from depot transporter'
                 ]
             ]);
         }
 
-        if ($request->boolean('dealerToTransporterOk') !== null) {
+        if ($request->get('dealerToTransporterOk') !== null) {
             $order->dealer_transporter_ok = $request->boolean('dealerToTransporterOk');
             $order->dealer_transporter_ok_at = Carbon::now();
             $order->save();
@@ -71,7 +71,7 @@ class OrderStatusController extends Controller
             ]);
         }
 
-        if ($request->boolean('transporterToDealerOk') !== null) {
+        if ($request->get('transporterToDealerOk') !== null) {
             $order->transporter_dealer_ok = $request->boolean('transporterToDealerOk');
             $order->transporter_dealer_ok_at = Carbon::now();
             $order->save();

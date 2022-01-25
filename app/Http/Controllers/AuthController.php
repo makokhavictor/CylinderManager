@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use AWS;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -29,6 +30,9 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function update(PasswordUpdateRequest $request)
     {
 
@@ -41,6 +45,9 @@ class AuthController extends Controller
             $user = User::where('email', $request->get('email'))->first();
         }
 
+        if(!$user) {
+            throw ValidationException::withMessages(['email' => 'Email not found in our records']);
+        }
         PasswordResetEvent::dispatch($otp, $user);
 
         return response()->json(ForgotPasswordResource::make($otp));

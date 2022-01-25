@@ -34,7 +34,6 @@ class TransporterController extends Controller
      *
      * @param StoreTransporterRequest $request
      * @return JsonResponse
-     * @throws ValidationException
      */
     public function store(StoreTransporterRequest $request)
     {
