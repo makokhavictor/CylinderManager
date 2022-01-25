@@ -18,7 +18,7 @@ class CanisterSizeFactory extends Factory
         $size = $this->faker->randomDigitNotNull();
         return [
             'value' => $size,
-            'name' => $size.'Kg'
+            'name' => $size.'Kg',
         ];
     }
 }

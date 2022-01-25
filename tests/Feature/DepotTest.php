@@ -28,7 +28,7 @@ class DepotTest extends TestCase
                 'depotCode' => $depot->code,
                 'depotEPRALicenceNo' => $depot->EPRA_licence_no,
                 'depotLocation' => $depot->location,
-                'brandIds' => [$brand->id]
+                'canisterBrandIds' => [$brand->id]
             ]);
         $response->assertCreated();
         $response->assertJsonStructure([

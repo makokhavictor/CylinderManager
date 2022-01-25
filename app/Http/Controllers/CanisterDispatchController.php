@@ -36,8 +36,6 @@ class CanisterDispatchController extends Controller
         // TODO add check for order against number of items
 
         $order = Order::find($request->get('orderId'));
-        logger($order->canisterSizes->toArray());
-        logger($request->get('canisters'));
         $toableId = $request->get('toDepotId');
         $toableType = Depot::class;
         $fromableId = $request->get('fromDealerId');

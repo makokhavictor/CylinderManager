@@ -44,7 +44,7 @@ class DepotController extends Controller
             'EPRA_licence_no' => $request->get('depotEPRALicenceNo'),
             'location' => $request->get('depotLocation'),
         ]);
-        $depot->brands()->attach($request->get('brandIds'));
+        $depot->brands()->attach($request->get('canisterBrandIds'));
         DepotCreatedEvent::dispatch($depot);
 
         return response()->json(

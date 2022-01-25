@@ -22,7 +22,7 @@ class DepotResource extends JsonResource
             'depotEPRALicenceNo' =>$this->EPRA_licence_no,
             'depotLocation' =>$this->location,
             'brands' => BrandResource::collection($this->brands),
-            'brandIds' => $this->brands->pluck('id'),
+            'canisterBrandIds' => $this->brands->pluck('id'),
             'depotRoles' => RoleResource::collection(Role::find($this->stationRoles->pluck('role_id')))
         ];
     }

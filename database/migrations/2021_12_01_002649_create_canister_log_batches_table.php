@@ -21,6 +21,8 @@ class CreateCanisterLogBatchesTable extends Migration
             $table->string('fromable_type');
             $table->string('transporter_id');
             $table->boolean('received')->default(false);
+            $table->foreignId('order_id')->nullable();
+            $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();
         });
     }

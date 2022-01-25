@@ -187,10 +187,12 @@ class CreatePermissionTables extends Migration
             ['name' => 'admin: create refill order', 'guard_name' => 'api'],
             ['name' => 'admin: update refill order', 'guard_name' => 'api'],
             ['name' => 'admin: delete refill order', 'guard_name' => 'api'],
+            ['name' => 'admin: accept refill order', 'guard_name' => 'api'],
 
             ['name' => 'create refill order', 'guard_name' => 'api'],
             ['name' => 'update refill order', 'guard_name' => 'api'],
             ['name' => 'delete refill order', 'guard_name' => 'api'],
+            ['name' => 'accept refill order', 'guard_name' => 'api'],
 
             ['name' => 'create brand', 'guard_name' => 'api'],
             ['name' => 'update brand', 'guard_name' => 'api'],
@@ -250,6 +252,7 @@ class CreatePermissionTables extends Migration
             'admin: create refill order',
             'admin: update refill order',
             'admin: delete refill order',
+            'admin: accept refill order',
 
             'create brand',
             'update brand',
@@ -288,7 +291,8 @@ class CreatePermissionTables extends Migration
         ]);
         Role::where('name', 'Depot User')->first()->givePermissionTo([
             'dispatch canister',
-            'receive dispatched canister'
+            'receive dispatched canister',
+            'accept refill order'
         ]);
 
         Role::where('name', 'Dealer User')->first()->givePermissionTo([

@@ -17,7 +17,7 @@ class OrderFactory extends Factory
     {
         return [
             'depot_id' => Depot::factory()->create()->id,
-            'dealer_id' => Dealer::factory()->create()->id,
+            'dealer_id' => Dealer::factory()->create()->id
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreOrderStatusRequest extends FormRequest
+class StoreOrderDispatchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,11 +14,7 @@ class StoreOrderStatusRequest extends FormRequest
      */
     public function authorize()
     {
-        $authUser = User::find(auth()->id());
-        return $authUser->can('admin: assign order')
-            || $authUser->can('assign order')
-            || $authUser->can('admin: accept refill order')
-            || $authUser->can('accept refill order');
+        return User::find(auth()->id())->can('dispatch canister');
     }
 
     /**
@@ -29,7 +25,8 @@ class StoreOrderStatusRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'canisters' => 'required|array|min:1',
+            'canisters.*.canisterId' => 'required|exists:canisters,id'
         ];
     }
 }
