@@ -25,8 +25,11 @@ class StoreOrderDispatchRequest extends FormRequest
     public function rules()
     {
         return [
+            'from' => 'required',
             'canisters' => 'required|array|min:1',
-            'canisters.*.canisterId' => 'required|exists:canisters,id'
+            'canisters.*.canisterId' => 'exists:canisters,id',
+            'canisters.*.canisterSizeId' => 'exists:canister_sizes,id',
+            'canisters.*.canisterBrandId' => 'exists:brands,id'
         ];
     }
 }

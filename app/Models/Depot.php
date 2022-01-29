@@ -25,4 +25,8 @@ class Depot extends Model
         return $this->belongsToMany(Brand::class);
     }
 
+    public function transporter() {
+        return $this->belongsToMany(Transporter::class)->withPivot('expires_at');
+    }
+
 }
