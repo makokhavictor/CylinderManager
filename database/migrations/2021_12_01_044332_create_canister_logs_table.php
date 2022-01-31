@@ -31,6 +31,7 @@ class CreateCanisterLogsTable extends Migration
             $table->integer('releasable_id')->nullable(); // ID of station the canister has been transfered to
             $table->string('releasable_type')->nullable();
             $table->boolean('defective')->default(false);
+//            $table->timestamp('confirmed_at')->nullable();
             $table->timestamps();
         });
     }

@@ -18,7 +18,8 @@ class CreateDepotsTable extends Migration
             $table->string('name');
             $table->string('code');
             $table->string('EPRA_licence_no');
-            $table->string('location');
+            $table->string('EPRA_licence_date');
+            $table->string('location')->nullable();
             $table->timestamps();
         });
     }

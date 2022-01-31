@@ -17,9 +17,11 @@ class CreateDealersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code');
-            $table->string('EPRA_licence_no');
-            $table->string('location');
-            $table->string('GPS');
+            $table->string('EPRA_licence_no')->unique();
+            $table->date('EPRA_licence_expiry_date')->nullable();
+            $table->string('location')->nullable();
+            $table->string('GPS')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

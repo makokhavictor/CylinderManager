@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderStatusRequest;
 use App\Http\Resources\OrderResource;
+use App\Models\Depot;
 use App\Models\Order;
 use Carbon\Carbon;
 
@@ -36,6 +37,7 @@ class OrderStatusController extends Controller
         }
 
         if ($request->get('depotToTransporterOk') !== null) {
+            logger($order->canisterLogs->where('fromable_type', Depot::class)->toArray());
             $order->depot_transporter_ok = $request->boolean('depotToTransporterOk');
             $order->depot_transporter_ok_at = Carbon::now();
             $order->save();
