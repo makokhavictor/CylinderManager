@@ -16,7 +16,10 @@ class CreateTransportersTable extends Migration
         Schema::create('transporters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code');
+            $table->string('EPRA_licence_no')->nullable()->unique();
+            $table->date('EPRA_licence_expiry_date')->nullable();
+            $table->string('code')->nullable();
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }
