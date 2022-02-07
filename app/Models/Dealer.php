@@ -15,7 +15,13 @@ class Dealer extends Model
         'name', 'code', 'EPRA_licence_no', 'location', 'GPS'
     ];
 
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany(User::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }
