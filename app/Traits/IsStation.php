@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\CanisterLog;
 use App\Models\Depot;
+use App\Models\Order;
 use App\Models\StationPermission;
 use App\Models\StationRole;
 
@@ -28,6 +29,11 @@ trait IsStation
 
     public function receivedCanisterLogs() {
         return $this->morphMany(CanisterLog::class, 'toable');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
 }

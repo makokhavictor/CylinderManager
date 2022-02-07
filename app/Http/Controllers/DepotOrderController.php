@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderResource;
 use App\Models\Dealer;
+use App\Models\Depot;
+use Illuminate\Http\Request;
 
-class DealerOrderController extends Controller
+class DepotOrderController extends Controller
 {
-    public function index(Dealer $dealer)
+    public function index(Depot $dealer)
     {
         return OrderResource::collection($dealer->orders()->paginate());
     }

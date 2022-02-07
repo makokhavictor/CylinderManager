@@ -53,8 +53,9 @@ Route::middleware(['auth:api', 'activity-time-logger'])->group(function () {
     Route::get('roles', [RoleController::class, 'index']);
     Route::get('depots/{depot}/canisters', [DepotCanisterController::class, 'index']);
     Route::get('depots/{depot}/statistics', [CanisterStatisticsController::class, 'depots']);
-    Route::get('dealers/{dealer}/orders', [DealerOrderController::class, 'index']);
+    Route::get('depots/{depot}/orders', [DepotOrderController::class, 'index']);
     Route::get('dealers/{dealer}/statistics', [CanisterStatisticsController::class, 'dealers']);
+    Route::get('dealers/{dealer}/orders', [DealerOrderController::class, 'index']);
     Route::get('transporters/{transporter}/statistics', [CanisterStatisticsController::class, 'transporters']);
     Route::get('statistics/dashboard-summary', [StatisticsController::class, 'dashboardSummary']);
 
