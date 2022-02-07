@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Dealer;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +15,7 @@ class DealerSeeder extends Seeder
      */
     public function run()
     {
-        $depots = [
+        $dealers = [
             ['code'=>'1','EPRA_licence_no'=>'EPRA/LPG/6932','name'=>'2M ENTERPRISES','EPRA_licence_expiry_date'=>'2021-03-22'],
             ['code'=>'2','EPRA_licence_no'=>'EPRA/LPG/3918','name'=>'2NK INVESTMENT CO-OPERATIVE SOCIETY LTD','EPRA_licence_expiry_date'=>'2021-10-01'],
             ['code'=>'3','EPRA_licence_no'=>'EPRA/LPG/6958','name'=>'3 SISTERS','EPRA_licence_expiry_date'=>'2021-03-22'],
@@ -6200,6 +6201,9 @@ class DealerSeeder extends Seeder
             ['code'=>'6183','EPRA_licence_no'=>'EPRA/LPG/7587','name'=>'ZYTUS LIMITED','EPRA_licence_expiry_date'=>'2021-11-04'],
 
         ];
-        DB::table('dealers')->insert($depots);
+        DB::table('dealers')->insert($dealers);
+        foreach(Dealer::all() as $dealer) {
+            $dealer->assignDefaultUserRoles();
+        }
     }
 }
