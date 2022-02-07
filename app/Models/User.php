@@ -88,6 +88,8 @@ class User extends Authenticatable
         $this->permissibleRoles()->detach();
         if ($roles) {
             foreach ($roles as $key => $allocation) {
+                $role = Role::find($allocation['roleId']);
+                $this->assignRole($role->name);
                 if (key_exists('transporterId', $allocation)) {
                     $this->permissibleRoles()->save(Role::find($allocation['roleId']),
                         ['permissible_id' => $allocation['transporterId'], 'permissible_type' => Transporter::class]
