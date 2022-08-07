@@ -14,6 +14,7 @@ use App\Http\Requests\UpdateDepotRequest;
 use App\Models\StationRole;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class DepotController extends Controller
@@ -23,9 +24,32 @@ class DepotController extends Controller
      *
      * @return DepotCollection
      */
-    public function index()
+    public function index(Request $request)
     {
         $depots = new Depot();
+
+        if ($request->get('searchTerm')) {
+            $depots = $depots->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                ->orWhere('location', 'LIKE', '%' . $request->get('searchTerm') . '%');
+        }
+
+        $orderBys = [
+            ['name' => 'depotId', 'value' => 'id'],
+            ['name' => 'depotCode', 'value' => 'code'],
+            ['name' => 'depotName', 'value' => 'name'],
+            ['name' => 'depotEPRALicenceNo', 'value' => 'EPRA_licence_no'],
+            ['name' => 'depotLocation', 'value' => 'location'],
+        ];
+        foreach ($orderBys as $orderBy) {
+            if ($request->get('orderBy') === $orderBy['name']) {
+                $depots = $depots->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc': 'asc');
+                break;
+            }
+        }
+
         return DepotCollection::make($depots->paginate());
     }
 
