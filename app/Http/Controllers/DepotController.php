@@ -31,7 +31,6 @@ class DepotController extends Controller
         if ($request->get('searchTerm')) {
             $depots = $depots->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
                 ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
                 ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%')
                 ->orWhere('location', 'LIKE', '%' . $request->get('searchTerm') . '%');
         }

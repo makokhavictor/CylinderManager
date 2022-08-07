@@ -11,9 +11,8 @@ use App\Http\Resources\TransporterCollection;
 use App\Http\Resources\TransporterResource;
 use App\Http\Resources\UpdatedTransporterResource;
 use App\Models\Transporter;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Request;
 
 class TransporterController extends Controller
 {
@@ -22,9 +21,29 @@ class TransporterController extends Controller
      *
      * @return TransporterCollection
      */
-    public function index()
+    public function index(Request $request)
     {
         $transporters = new Transporter();
+
+
+        if ($request->get('searchTerm')) {
+            $transporters = $transporters->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%');
+        }
+
+        $orderBys = [
+            ['name' => 'transporterId', 'value' => 'id'],
+            ['name' => 'transporterName', 'value' => 'name'],
+            ['name' => 'transporterCode', 'value' => 'code']
+        ];
+        foreach ($orderBys as $orderBy) {
+            if ($request->get('orderBy') === $orderBy['name']) {
+                $transporters = $transporters->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc' : 'asc');
+                break;
+            }
+        }
+
         return TransporterCollection::make($transporters->paginate());
     }
 
