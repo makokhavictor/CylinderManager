@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Role;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DealerResource extends JsonResource
@@ -20,7 +21,8 @@ class DealerResource extends JsonResource
             'dealerCode' => $this->code,
             'dealerEPRALicenceNo' => $this->EPRA_licence_no,
             'dealerLocation' => $this->location,
-            'dealerGPS' => $this->GPS
+            'dealerGPS' => $this->GPS,
+            'dealerRoles' => RoleResource::collection(Role::find($this->stationRoles->pluck('role_id')))
         ];
     }
 }

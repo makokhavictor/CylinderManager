@@ -11,6 +11,7 @@ use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use App\Http\Requests\DeleteBrandRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
@@ -19,9 +20,27 @@ class BrandController extends Controller
      *
      * @return BrandCollection
      */
-    public function index()
+    public function index(Request $request)
     {
         $brand = new Brand();
+
+        if ($request->get('searchTerm')) {
+            $brand = $brand->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                ->orWhere('company_name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+        }
+
+        $orderBys = [
+            ['name' => 'canisterBrandId', 'value' => 'id'],
+            ['name' => 'canisterBrandName', 'value' => 'name'],
+            ['name' => 'canisterBrandCompanyName', 'value' => 'company_name'],
+        ];
+        foreach ($orderBys as $orderBy) {
+            if ($request->get('orderBy') === $orderBy['name']) {
+                $brand = $brand->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc': 'asc');
+                break;
+            }
+        }
+
         return BrandCollection::make($brand->paginate());
     }
 

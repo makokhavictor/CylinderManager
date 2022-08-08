@@ -13,6 +13,7 @@ use App\Http\Resources\UpdatedDealerResource;
 use App\Models\Dealer;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class DealerController extends Controller
@@ -22,10 +23,32 @@ class DealerController extends Controller
      *
      * @return DealerCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        $depots = new Dealer();
-        return DealerCollection::make($depots->paginate());
+        $dealers = new Dealer();
+
+        if ($request->get('searchTerm')) {
+            $dealers = $dealers->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                ->orWhere('location', 'LIKE', '%' . $request->get('searchTerm') . '%');
+        }
+
+        $orderBys = [
+            ['name' => 'dealerId', 'value' => 'id'],
+            ['name' => 'dealerCode', 'value' => 'code'],
+            ['name' => 'dealerName', 'value' => 'name'],
+            ['name' => 'dealerEPRALicenceNo', 'value' => 'EPRA_licence_no'],
+            ['name' => 'dealerLocation', 'value' => 'location'],
+        ];
+        foreach ($orderBys as $orderBy) {
+            if ($request->get('orderBy') === $orderBy['name']) {
+                $dealers = $dealers->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc': 'asc');
+                break;
+            }
+        }
+
+        return DealerCollection::make($dealers->paginate());
     }
 
     /**
