@@ -68,7 +68,9 @@ class DealerController extends Controller
             'GPS' => $request->get('dealerGPS')
         ]);
 
-        DealerCreatedEvent::dispatch($dealer);
+        if($request->boolean('userLoginEnabled') ) {
+            DealerCreatedEvent::dispatch($dealer);
+        }
 
         return response()
             ->json(CreatedDealerResource::make($dealer))
@@ -104,6 +106,12 @@ class DealerController extends Controller
             'location' => $request->get('dealerLocation'),
             'GPS' => $request->get('dealerGPS'),
         ]);
+
+        if($request->get('userLoginEnabled') && $dealer->stationRoles->count() < 1) {
+            DealerCreatedEvent::dispatch($dealer);
+        } else {
+            $dealer->stationRoles()->delete();
+        }
 
         return response()->json(UpdatedDealerResource::make($dealer));
     }

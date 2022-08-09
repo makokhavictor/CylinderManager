@@ -28,8 +28,7 @@ class TransporterController extends Controller
 
         if ($request->get('searchTerm')) {
             $transporters = $transporters->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%');
+                ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%');
         }
 
         $orderBys = [

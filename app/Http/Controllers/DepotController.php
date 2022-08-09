@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DealerCreatedEvent;
 use App\Events\DepotCreatedEvent;
 use App\Http\Requests\DeleteDepotRequest;
 use App\Http\Resources\CreatedDepotResource;
@@ -33,6 +34,12 @@ class DepotController extends Controller
                 ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
                 ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%')
                 ->orWhere('location', 'LIKE', '%' . $request->get('searchTerm') . '%');
+        }
+
+        if ($request->get('canisterBrandId')) {
+            $depots = $depots->whereHas('brands', function ($q) use ($request) {
+                $q->where('brand_id', $request->get('canisterBrandId'));
+            });
         }
 
         $orderBys = [
@@ -68,7 +75,10 @@ class DepotController extends Controller
             'location' => $request->get('depotLocation'),
         ]);
         $depot->brands()->attach($request->get('canisterBrandIds'));
-        DepotCreatedEvent::dispatch($depot);
+
+        if($request->get('userLoginEnabled')) {
+            DepotCreatedEvent::dispatch($depot);
+        }
 
         return response()->json(
             CreatedDepotResource::make($depot)
@@ -101,6 +111,15 @@ class DepotController extends Controller
             'EPRA_licence_no' => $request->get('depotEPRALicenceNo'),
             'location' => $request->get('depotLocation'),
         ]);
+
+        $depot->brands()->detach();
+        $depot->brands()->attach($request->get('canisterBrandIds'));
+
+        if($request->get('userLoginEnabled') && $depot->stationRoles->count() < 1) {
+            DepotCreatedEvent::dispatch($depot);
+        } else {
+            $depot->stationRoles()->delete();
+        }
 
         return UpdatedDepotResource::make($depot);
 
