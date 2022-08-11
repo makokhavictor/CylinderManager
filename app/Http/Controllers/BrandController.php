@@ -36,7 +36,7 @@ class BrandController extends Controller
         ];
         foreach ($orderBys as $orderBy) {
             if ($request->get('orderBy') === $orderBy['name']) {
-                $brand = $brand->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc': 'asc');
+                $brand = $brand->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc' : 'asc');
                 break;
             }
         }
@@ -57,6 +57,8 @@ class BrandController extends Controller
             'name' => $request->get('canisterBrandName'),
             'company_name' => $request->get('canisterBrandCompanyName'),
         ]);
+
+        $brand->sizes()->attach($request->get('canisterSizeIds'));
 
         return response()->json(CreatedBrandResource::make($brand));
     }
@@ -89,6 +91,9 @@ class BrandController extends Controller
             'name' => $request->get('canisterBrandName'),
             'company_name' => $request->get('canisterBrandCompanyName')
         ]);
+
+        $brand->sizes()->sync($request->get('canisterSizeIds'));
+
         return response()->json(UpdatedBrandResource::make($brand));
     }
 

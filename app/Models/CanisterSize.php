@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class CanisterSize extends Model
 {
     use HasFactory, Paginatable;
+
+    public function brands() {
+        return $this->belongsToMany(Brand::class);
+    }
 }

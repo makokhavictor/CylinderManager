@@ -18,6 +18,8 @@ class BrandResource extends JsonResource
             'canisterBrandId' => $this->id,
             'canisterBrandName' => $this->name,
             'canisterBrandCompanyName' => $this->company_name,
+            'canisterSizeIds' => $this->sizes->pluck('id'),
+            'canisterSizes' => CanisterSizeResource::collection($this->sizes)
         ];
     }
 }

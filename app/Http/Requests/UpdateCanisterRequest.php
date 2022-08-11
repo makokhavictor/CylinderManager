@@ -25,7 +25,6 @@ class UpdateCanisterRequest extends FormRequest
     public function rules()
     {
         return [
-
             'canisterCode' => 'required',
             'canisterManuf' => 'required',
             'canisterManufDate' => 'required|date',

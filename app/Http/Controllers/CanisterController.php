@@ -118,7 +118,8 @@ class CanisterController extends Controller
             'manuf_date' => $request->canisterManufDate,
             'brand_id' => $request->canisterBrandId,
             'RFID' => $request->canisterRFID,
-            'recertification' => $request->canisterRecertification
+            'recertification' => $request->canisterRecertification,
+            'canister_size_id' => $request->get('canisterSizeId')
         ]);
 
         return response()->json(UpdatedCanisterResource::make($canister));

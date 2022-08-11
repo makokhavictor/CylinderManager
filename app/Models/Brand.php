@@ -12,4 +12,8 @@ class Brand extends Model
     use HasFactory, SoftDeletes, Paginatable;
 
     protected $fillable = ['name', 'company_name'];
+
+    public function sizes() {
+        return $this->belongsToMany(CanisterSize::class);
+    }
 }
