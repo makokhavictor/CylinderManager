@@ -18,7 +18,7 @@ class UpdatedDepotResource extends JsonResource
         return [
             'data' => DepotResource::make($this),
             'headers' => [
-                'message' => 'Depot created successfully'
+                'message' => 'Depot updated successfully'
             ]
         ];
     }

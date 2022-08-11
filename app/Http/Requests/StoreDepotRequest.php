@@ -27,7 +27,7 @@ class StoreDepotRequest extends FormRequest
         return [
             'depotName' => 'required',
             'depotCode' => 'required',
-            'depotEPRALicenceNo' => 'required',
+            'depotEPRALicenceNo' => 'required|unique:depots,EPRA_licence_no',
             'depotLocation' => 'required',
             'canisterBrandIds' => 'required|array|min:1',
             "canisterBrandIds.*"  => "required|distinct|exists:brands,id",

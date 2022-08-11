@@ -36,7 +36,7 @@ class CanisterResource extends JsonResource
             'canisterManufDate' => $this->manuf_date,
             'canisterRFID' => $this->RFID,
             'canisterBrandId' => $this->brand_id,
-            'canisterBrandName' => $this->brand->name,
+            'canisterBrandName' => $this->brand?->name,
             'canisterSizeId' => $this->canister_size_id,
             'canisterSizeName' => $this->canisterSize->name,
         ];

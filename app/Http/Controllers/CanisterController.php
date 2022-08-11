@@ -17,6 +17,7 @@ use App\Models\Depot;
 use App\Models\Transporter;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class CanisterController extends Controller
 {
@@ -25,9 +26,29 @@ class CanisterController extends Controller
      *
      * @return CanisterCollection
      */
-    public function index()
+    public function index(Request $request)
     {
         $canisters = new Canister();
+
+        if ($request->get('searchTerm')) {
+            $canisters = $canisters->whereHas('brand',function ($q) use ($request) {
+               $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            });
+        }
+
+        if ($request->get('canisterBrandId')) {
+            $canisters = $canisters->where('brand_id', $request->get('canisterBrandId'));
+        }
+
+        $orderBys = [
+            ['name' => 'canisterId', 'value' => 'id']
+        ];
+        foreach ($orderBys as $orderBy) {
+            if ($request->get('orderBy') === $orderBy['name']) {
+                $canisters = $canisters->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc': 'asc');
+                break;
+            }
+        }
 
         return CanisterCollection::make($canisters->paginate());
     }

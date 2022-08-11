@@ -27,7 +27,7 @@ class UpdateDepotRequest extends FormRequest
         return [
             'depotName' => 'required',
             'depotCode' => 'required',
-            'depotEPRALicenceNo' => 'required',
+            'depotEPRALicenceNo' => 'required|unique:depots,EPRA_licence_no,' . $this->depot->id,
             'depotLocation' => 'required',
         ];
     }
