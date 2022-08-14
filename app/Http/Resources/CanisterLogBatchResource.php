@@ -37,7 +37,8 @@ class CanisterLogBatchResource extends JsonResource
             'toDealerName' => $this->when($toDealer, $toDealer ? $toDealer->name : null),
             'transporterId' => $this->transporter_id,
             'transporterName' => $transporter->name,
-            'canisters' => CanisterLogResource::collection($this->canisterLogs)
+            'canisters' => CanisterLogResource::collection($this->canisterLogs),
+            'order' => OrderResource::make($this->order)
         ];
     }
 }

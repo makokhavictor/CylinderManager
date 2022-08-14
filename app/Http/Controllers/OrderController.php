@@ -13,6 +13,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\jsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,9 +24,28 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
         $orders = new Order();
+
+        if ($request->get('searchTerm')) {
+            $orders = $orders->whereHas('depot', function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            })->orWhereHas('dealer', function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            });
+        }
+
+        $orderBys = [
+            ['name' => 'orderId', 'value' => 'id']
+        ];
+        foreach ($orderBys as $orderBy) {
+            if ($request->get('orderBy') === $orderBy['name']) {
+                $orders = $orders->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc' : 'asc');
+                break;
+            }
+        }
+
         return OrderResource::collection($orders->paginate());
     }
 
@@ -39,7 +59,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        if(!User::find(\auth()->id())->can('admin: create order')) {
+        if (!User::find(\auth()->id())->can('admin: create order')) {
             $permissions = User::find(auth()->id())->permissibleRoles()
                 ->wherePivot('permissible_type', Dealer::class)
                 ->wherePivot('permissible_id', $request->get('toDealerId'))
@@ -59,7 +79,7 @@ class OrderController extends Controller
 
         foreach ($request->get('orderQuantities') as $orderQuantity) {
             $order->canisterSizes()->save(CanisterSize::find($orderQuantity['canisterSizeId']),
-                ['quantity' => $orderQuantity['quantity'], 'brand_id' =>  $orderQuantity['canisterBrandId']]);
+                ['quantity' => $orderQuantity['quantity'], 'brand_id' => $orderQuantity['canisterBrandId']]);
         }
         return response()->json([
             'data' => OrderResource::make($order),

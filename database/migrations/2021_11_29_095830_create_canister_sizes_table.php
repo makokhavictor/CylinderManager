@@ -17,6 +17,7 @@ class CreateCanisterSizesTable extends Migration
             $table->id();
             $table->double('value');
             $table->string('name');
+            $table->softDeletes();
             $table->timestamps();
         });
 

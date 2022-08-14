@@ -31,8 +31,8 @@ class CanisterController extends Controller
         $canisters = new Canister();
 
         if ($request->get('searchTerm')) {
-            $canisters = $canisters->whereHas('brand',function ($q) use ($request) {
-               $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            $canisters = $canisters->whereHas('brand', function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%');
             });
         }
 
@@ -40,12 +40,31 @@ class CanisterController extends Controller
             $canisters = $canisters->where('brand_id', $request->get('canisterBrandId'));
         }
 
+        if ($request->get('depotId')) {
+            $canisters = $canisters->whereHas('canisterDepotLogs', function ($q) use ($request) {
+                $q->where('toable_id', $request->get('depotId'));
+            });
+        }
+
+        if ($request->get('dealerId')) {
+            $canisters = $canisters->whereHas('canisterDealerLogs', function ($q) use ($request) {
+                $q->where('toable_id', $request->get('dealerId'));
+            });
+        }
+
+        if ($request->get('transporterId')) {
+            $canisters = $canisters->whereHas('canisterTransporterLogs', function ($q) use ($request) {
+                $q->where('toable_id', $request->get('transporterId'));
+            });
+        }
+
+
         $orderBys = [
             ['name' => 'canisterId', 'value' => 'id']
         ];
         foreach ($orderBys as $orderBy) {
             if ($request->get('orderBy') === $orderBy['name']) {
-                $canisters = $canisters->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc': 'asc');
+                $canisters = $canisters->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc' : 'asc');
                 break;
             }
         }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Paginatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     protected $fillable = ['depot_id', 'dealer_id'];
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Paginatable;
 
     public function depot()
     {

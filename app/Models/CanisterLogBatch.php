@@ -21,4 +21,8 @@ class CanisterLogBatch extends Model
     public function canisterLogs() {
         return $this->hasMany(CanisterLog::class);
     }
+
+    public function order() {
+        return $this->belongsTo(Order::class);
+    }
 }

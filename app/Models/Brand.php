@@ -16,4 +16,8 @@ class Brand extends Model
     public function sizes() {
         return $this->belongsToMany(CanisterSize::class);
     }
+
+    public function depots() {
+        return $this->belongsToMany(Depot::class);
+    }
 }

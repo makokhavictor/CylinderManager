@@ -29,6 +29,12 @@ class BrandController extends Controller
                 ->orWhere('company_name', 'LIKE', '%' . $request->get('searchTerm') . '%');
         }
 
+        if($request->get('depotId')) {
+            $brand = $brand->whereHas('depots', function ($q) use ($request) {
+                $q->where('depot_id', $request->get('depotId'));
+            });
+        }
+
         $orderBys = [
             ['name' => 'canisterBrandId', 'value' => 'id'],
             ['name' => 'canisterBrandName', 'value' => 'name'],

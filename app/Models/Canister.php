@@ -32,4 +32,19 @@ class Canister extends Model
     public function canisterLogs() {
         return $this->hasMany(CanisterLog::class);
     }
+
+    public function canisterDepotLogs() {
+        return $this->canisterLogs()->where('toable_type', Depot::class)
+            ->whereNull('released_at');
+    }
+
+    public function canisterDealerLogs() {
+        return $this->canisterLogs()->where('toable_type', Dealer::class)
+            ->whereNull('released_at');
+    }
+
+    public function canisterTransporterLogs() {
+        return $this->canisterLogs()->where('toable_type', Transporter::class)
+            ->whereNull('released_at');
+    }
 }

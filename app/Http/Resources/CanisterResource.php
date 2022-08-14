@@ -21,14 +21,25 @@ class CanisterResource extends JsonResource
         $toDepot = $lastLog ? Depot::find($lastLog->toable_id) : null;
         $toDealer = $lastLog ? Dealer::find($lastLog->toable_id) : null;
         $toTransporter = $lastLog ? Transporter::find($lastLog->toable_id) : null;
-        $toDepotId = $toDepot ? $toDepot->id : null;
-        $toDealerId = $toDealer ? $toDealer->id : null;
-        $toTransporterId = $toTransporter ? $toTransporter->id : null;
+        $toDepotId = $toDepot?->id;
+        $toDealerId = $toDealer?->id;
+        $toTransporterId = $toTransporter?->id;
+        $toDepotName = $toDepot?->name;
+        $toDealerName = $toDealer?->id;
+        $toTransporterName = $toTransporter?->id;
+        $currentStation = $toDepotId ? 'Depot' : ($toDealerId ? 'Dealer' : ($toTransporterId ? 'Transporter' : null));
+        $currentStationName = $toDepotName ?? $toDealerName ?? $toTransporterName;
         return [
             'currentlyAtDepotId' => $this->when($lastLog && $lastLog->toable_type === Depot::class, $toDepotId),
             'currentlyAtDealerId' => $this->when($lastLog && $lastLog->toable_type === Dealer::class, $toDealerId),
             'currentlyAtTransporterId' => $this->when($lastLog && $lastLog->toable_type === Transporter::class, $toTransporterId),
-            'currentlyFilled' => !!$this->when($lastLog, $lastLog ? $lastLog->filled : null),
+            'currentlyAtDepotName' => $this->when($lastLog && $lastLog->toable_type === Depot::class, $toDepotName),
+            'currentlyAtDealerName' => $this->when($lastLog && $lastLog->toable_type === Dealer::class, $toDealerName),
+            'currentlyAtTransporterName' => $this->when($lastLog && $lastLog->toable_type === Transporter::class, $toTransporterName),
+            'canisterCurrentStation' => $currentStation,
+            'canisterCurrentStationName' => $currentStationName,
+
+            'currentlyFilled' => !!$this->when($lastLog, $lastLog?->filled),
             'canisterId' => $this->id,
             'canisterCode' => $this->code,
             'canisterRecertification' => $this->recertification,

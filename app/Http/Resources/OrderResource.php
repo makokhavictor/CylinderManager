@@ -64,9 +64,6 @@ class OrderResource extends JsonResource
             'dealerToTransporterConfirmedAt' => $this->dealer_transporter_ok_at,
             'transporterToDepotConfirmedAt' => $this->transporter_depot_ok_at,
 
-
-
-
             'orderQuantities' => OrderQuantityResource::collection($this->canisterSizes)
         ];
     }
