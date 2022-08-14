@@ -20,4 +20,7 @@ class Brand extends Model
     public function depots() {
         return $this->belongsToMany(Depot::class);
     }
+    public function orders() {
+        return $this->belongsToMany(Order::class, 'canister_size_order');
+    }
 }

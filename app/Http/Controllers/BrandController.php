@@ -29,9 +29,15 @@ class BrandController extends Controller
                 ->orWhere('company_name', 'LIKE', '%' . $request->get('searchTerm') . '%');
         }
 
-        if($request->get('depotId')) {
+        if ($request->get('depotId')) {
             $brand = $brand->whereHas('depots', function ($q) use ($request) {
                 $q->where('depot_id', $request->get('depotId'));
+            });
+        }
+
+        if ($request->get('orderId')) {
+            $brand = $brand->whereHas('orders', function ($q) use ($request) {
+                $q->where('order_id', $request->get('orderId'));
             });
         }
 
