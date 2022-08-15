@@ -26,6 +26,10 @@ class CanisterLog extends Model
         return $this->belongsTo(Canister::class);
     }
 
+    public function canisterLogBatch() {
+        return $this->belongsTo(CanisterLogBatch::class);
+    }
+
     public function toable()
     {
         return $this->morphTo();

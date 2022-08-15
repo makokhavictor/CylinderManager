@@ -30,6 +30,18 @@ class CanisterController extends Controller
     {
         $canisters = new Canister();
 
+        if ($request->get('orderId') && $request->get('fromDepot') !== null) {
+            $canisters = $canisters->whereHas('canisterLogs', function ($q) use ($request) {
+                $q->whereHas('canisterLogBatch', function ($r) use ($request) {
+                    $r->whereHas('order', function ($s) use ($request) {
+                        $s->where('id', $request->get('orderId'));
+                    });
+                })->where('fromable_type', $request->boolean('fromDepot') ? Depot::class : Dealer::class);
+            });
+        } elseif($request->get('orderId')) {
+            abort(400, 'fromDepot field is required when orderId is provided');
+        }
+
         if ($request->get('searchTerm')) {
             $canisters = $canisters->whereHas('brand', function ($q) use ($request) {
                 $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%');
