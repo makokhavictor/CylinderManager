@@ -10,6 +10,7 @@ use App\Http\Resources\CanisterCollection;
 use App\Http\Resources\CanisterResource;
 use App\Http\Resources\CreatedCanisterResource;
 use App\Http\Resources\UpdatedCanisterResource;
+use App\Models\Brand;
 use App\Models\Canister;
 use App\Models\CanisterLog;
 use App\Models\Dealer;
@@ -28,7 +29,8 @@ class CanisterController extends Controller
      */
     public function index(Request $request)
     {
-        $canisters = new Canister();
+        $canisters = Canister::select(['canisters.*', 'brands.name as brand_name' ])
+            ->join('brands', 'canisters.brand_id', '=', 'brands.id');
 
         if ($request->get('orderId') && $request->get('fromDepot') !== null) {
             $canisters = $canisters->whereHas('canisterLogs', function ($q) use ($request) {
@@ -72,7 +74,8 @@ class CanisterController extends Controller
 
 
         $orderBys = [
-            ['name' => 'canisterId', 'value' => 'id']
+            ['name' => 'canisterId', 'value' => 'id'],
+            ['name' => 'canisterBrandName', 'value' => 'brand_name'],
         ];
         foreach ($orderBys as $orderBy) {
             if ($request->get('orderBy') === $orderBy['name']) {

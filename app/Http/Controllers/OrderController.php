@@ -36,6 +36,20 @@ class OrderController extends Controller
             });
         }
 
+        if ($request->get('toDealerIds')) {
+            $orders = $orders->whereIn('dealer_id', $request->get('toDealerIds'));
+        }
+        if ($request->get('fromDepotIds')) {
+            $orders = $orders->whereIn('depot_id', $request->get('fromDepotIds'));
+        }
+
+        if ($request->get('toDealerId')) {
+            $orders = $orders->where('dealer_id', $request->get('toDealerId'));
+        }
+        if ($request->get('fromDepotId')) {
+            $orders = $orders->whereIn('depot_id', $request->get('fromDepotId'));
+        }
+
         $orderBys = [
             ['name' => 'orderId', 'value' => 'id']
         ];
@@ -93,11 +107,11 @@ class OrderController extends Controller
      * Display the specified resource.
      *
      * @param Order $order
-     * @return Response
+     * @return OrderResource|Response
      */
     public function show(Order $order)
     {
-        //
+        return OrderResource::make($order);
     }
 
 

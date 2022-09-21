@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrderStatusRequest extends FormRequest
@@ -31,5 +32,10 @@ class StoreOrderStatusRequest extends FormRequest
         return [
             //
         ];
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new AuthorizationException( 'You are not authorised to assign order');
     }
 }

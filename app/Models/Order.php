@@ -36,4 +36,7 @@ class Order extends Model
         return $this->hasManyThrough(CanisterLog::class, CanisterLogBatch::class);
     }
 
+    public function transporter() {
+        return $this->belongsTo(Dealer::class, 'assigned_to');
+    }
 }

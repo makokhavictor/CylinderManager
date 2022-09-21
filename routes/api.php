@@ -11,6 +11,7 @@ use App\Http\Controllers\DealerController;
 use App\Http\Controllers\DealerOrderController;
 use App\Http\Controllers\DepotCanisterController;
 use App\Http\Controllers\DepotController;
+use App\Http\Controllers\DepotOrderController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDispatchController;
 use App\Http\Controllers\OrderStatusController;

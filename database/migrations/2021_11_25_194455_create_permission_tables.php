@@ -278,7 +278,13 @@ class CreatePermissionTables extends Migration
 
         ]);
         Role::where('name', 'Depot Admin User')->first()->givePermissionTo([
-            'create depot user', 'update depot user', 'delete depot user', 'create canister', 'update canister'
+            'create depot user',
+            'update depot user',
+            'delete depot user',
+            'create canister',
+            'update canister',
+            'assign order',
+            'accept refill order'
         ]);
         Role::where('name', 'Dealer Admin User')->first()->givePermissionTo([
             'create dealer user',
