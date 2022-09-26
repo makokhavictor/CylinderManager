@@ -208,10 +208,13 @@ class CreatePermissionTables extends Migration
 
             ['name' => 'dispatch canister', 'guard_name' => 'api'],
             ['name' => 'receive dispatched canister', 'guard_name' => 'api'],
-            ['name' => 'confirm dispatch', 'guard_name' => 'api'],
 
             ['name' => 'admin: assign order', 'guard_name' => 'api'],
             ['name' => 'assign order', 'guard_name' => 'api'],
+            ['name' => 'confirm dispatch from depot', 'guard_name' => 'api'],
+            ['name' => 'confirm dispatch from dealer', 'guard_name' => 'api'],
+            ['name' => 'admin: confirm dispatch from depot', 'guard_name' => 'api'],
+            ['name' => 'admin: confirm dispatch from dealer', 'guard_name' => 'api'],
 
             ['name' => 'scan qr code', 'guard_name' => 'api'],
         ]);
@@ -264,7 +267,8 @@ class CreatePermissionTables extends Migration
 
             'admin: dispatch canister',
             'admin: receive dispatched canister',
-            'admin: confirm dispatch',
+            'admin: confirm dispatch from dealer',
+            'admin: confirm dispatch from depot',
 
             'admin: assign order',
             'assign order'
@@ -276,6 +280,9 @@ class CreatePermissionTables extends Migration
             'update transporter user',
             'delete transporter user',
 
+            'confirm dispatch from depot',
+            'confirm dispatch from dealer'
+
         ]);
         Role::where('name', 'Depot Admin User')->first()->givePermissionTo([
             'create depot user',
@@ -284,7 +291,8 @@ class CreatePermissionTables extends Migration
             'create canister',
             'update canister',
             'assign order',
-            'accept refill order'
+            'accept refill order',
+            'dispatch canister'
         ]);
         Role::where('name', 'Dealer Admin User')->first()->givePermissionTo([
             'create dealer user',
@@ -309,7 +317,8 @@ class CreatePermissionTables extends Migration
         ]);
 
         Role::where('name', 'Transporter User')->first()->givePermissionTo([
-            'confirm dispatch'
+            'confirm dispatch from depot',
+            'confirm dispatch from dealer'
         ]);
     }
 

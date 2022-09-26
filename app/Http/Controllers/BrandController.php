@@ -24,16 +24,20 @@ class BrandController extends Controller
     {
         $brand = new Brand();
 
-        if ($request->get('searchTerm')) {
-            $brand = $brand->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('company_name', 'LIKE', '%' . $request->get('searchTerm') . '%');
-        }
-
         if ($request->get('depotId')) {
             $brand = $brand->whereHas('depots', function ($q) use ($request) {
                 $q->where('depot_id', $request->get('depotId'));
             });
         }
+
+        if ($request->get('searchTerm')) {
+            $brand = $brand->where(function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                    ->orWhere('company_name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            });
+
+        }
+
 
         if ($request->get('orderId')) {
             $brand = $brand->whereHas('orders', function ($q) use ($request) {

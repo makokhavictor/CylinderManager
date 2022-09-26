@@ -19,7 +19,10 @@ class StoreOrderStatusRequest extends FormRequest
         return $authUser->can('admin: assign order')
             || $authUser->can('assign order')
             || $authUser->can('admin: accept refill order')
-            || $authUser->can('accept refill order');
+            || $authUser->can('accept refill order')
+
+            || $authUser->can('confirm dispatch from depot')
+            || $authUser->can('admin: confirm dispatch from depot');
     }
 
     /**
@@ -36,6 +39,6 @@ class StoreOrderStatusRequest extends FormRequest
 
     protected function failedAuthorization()
     {
-        throw new AuthorizationException( 'You are not authorised to assign order');
+        throw new AuthorizationException( 'You are not authorised to perform this action on an order');
     }
 }

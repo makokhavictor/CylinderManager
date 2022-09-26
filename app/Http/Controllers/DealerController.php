@@ -28,10 +28,12 @@ class DealerController extends Controller
         $dealers = new Dealer();
 
         if ($request->get('searchTerm')) {
-            $dealers = $dealers->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('location', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            $dealers = $dealers->where(function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                    ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                    ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                    ->orWhere('location', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            });
         }
 
         $orderBys = [
@@ -43,7 +45,7 @@ class DealerController extends Controller
         ];
         foreach ($orderBys as $orderBy) {
             if ($request->get('orderBy') === $orderBy['name']) {
-                $dealers = $dealers->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc': 'asc');
+                $dealers = $dealers->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc' : 'asc');
                 break;
             }
         }
@@ -68,7 +70,7 @@ class DealerController extends Controller
             'GPS' => $request->get('dealerGPS')
         ]);
 
-        if($request->boolean('userLoginEnabled') ) {
+        if ($request->boolean('userLoginEnabled')) {
             DealerCreatedEvent::dispatch($dealer);
         }
 
@@ -107,7 +109,7 @@ class DealerController extends Controller
             'GPS' => $request->get('dealerGPS'),
         ]);
 
-        if($request->get('userLoginEnabled') && $dealer->stationRoles->count() < 1) {
+        if ($request->get('userLoginEnabled') && $dealer->stationRoles->count() < 1) {
             DealerCreatedEvent::dispatch($dealer);
         } else {
             $dealer->stationRoles()->delete();

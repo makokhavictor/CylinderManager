@@ -37,6 +37,6 @@ class Order extends Model
     }
 
     public function transporter() {
-        return $this->belongsTo(Dealer::class, 'assigned_to');
+        return $this->belongsTo(Transporter::class, 'assigned_to');
     }
 }

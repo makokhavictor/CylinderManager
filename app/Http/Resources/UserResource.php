@@ -34,6 +34,7 @@ class UserResource extends JsonResource
             'roles' => $this->roles->pluck('name'),
             'permissions' => $this->getAllPermissions()->pluck('name'),
             'stationSpecificRoles' => RoleResource::collection($this->permissibleRoles)
+
         ];
     }
 }

@@ -50,6 +50,10 @@ class OrderController extends Controller
             $orders = $orders->whereIn('depot_id', $request->get('fromDepotId'));
         }
 
+        if ($request->get('assignedToTransporterIds')) {
+            $orders = $orders->whereIn('assigned_to', $request->get('assignedToTransporterIds'));
+        }
+
         $orderBys = [
             ['name' => 'orderId', 'value' => 'id']
         ];

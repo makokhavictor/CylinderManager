@@ -38,6 +38,7 @@ class CreateCanisterSizesTable extends Migration
             ['value' => 18, 'name' => '18Kg Cylinder'],
             ['value' => 23.2, 'name' => '23.2Kg Cylinder'],
             ['value' => 45, 'name' => '45Kg Cylinder'],
+            ['value' => 50, 'name' => '50Kg Cylinder'],
             ['value' => 46.5, 'name' => '46.5Kg Cylinder'],
             ['value' => 90, 'name' => '90Kg Cylinder'],
         ]);

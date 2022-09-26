@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrderDispatchRequest extends FormRequest
@@ -31,5 +32,9 @@ class StoreOrderDispatchRequest extends FormRequest
             'canisters.*.canisterSizeId' => 'exists:canister_sizes,id',
             'canisters.*.canisterBrandId' => 'exists:brands,id'
         ];
+    }
+    protected function failedAuthorization()
+    {
+        throw new AuthorizationException( 'You are not authorised to dispatch cylinders');
     }
 }

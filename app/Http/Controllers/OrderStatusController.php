@@ -10,10 +10,15 @@ use App\Models\Dealer;
 use App\Models\Depot;
 use App\Models\Order;
 use App\Models\Transporter;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class OrderStatusController extends Controller
 {
+    /**
+     * @throws AuthorizationException
+     */
     public function store(StoreOrderStatusRequest $request, Order $order)
     {
         if ($request->boolean('acceptOrder')) {
@@ -41,6 +46,11 @@ class OrderStatusController extends Controller
         }
 
         if ($request->get('depotToTransporterOk') !== null) {
+
+            if(!User::find(auth()->id())->can('confirm dispatch from depot')){
+                throw new AuthorizationException( 'You are not authorised to confirm dispatch from depot');
+            }
+
             $order->depot_transporter_ok = $request->boolean('depotToTransporterOk');
             $order->depot_transporter_ok_at = Carbon::now();
             $order->save();

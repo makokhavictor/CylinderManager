@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DepotCreatedEvent;
 use App\Events\TransporterCreatedEvent;
 use App\Http\Requests\DeleteTransporterRequest;
 use App\Http\Requests\StoreTransporterRequest;
@@ -61,7 +62,9 @@ class TransporterController extends Controller
             'code' => $request->get('transporterCode'),
         ]);
 
-        TransporterCreatedEvent::dispatch($transporter);
+        if($request->get('userLoginEnabled')) {
+            TransporterCreatedEvent::dispatch($transporter);
+        }
 
         return response()->json(
             CreatedTransporterResource::make($transporter)
@@ -92,6 +95,12 @@ class TransporterController extends Controller
             'name' => $request->get('transporterName'),
             'code' => $request->get('transporterCode'),
         ]);
+
+        if($request->get('userLoginEnabled') && $transporter->stationRoles->count() < 1) {
+            TransporterCreatedEvent::dispatch($transporter);
+        } else {
+            $transporter->stationRoles()->delete();
+        }
 
         return UpdatedTransporterResource::make($transporter);
 

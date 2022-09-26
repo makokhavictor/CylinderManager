@@ -43,8 +43,8 @@ class RoleResource extends JsonResource
             'depotName' => $this->when($depot, $depot?->name),
             'dealerId' => $this->when($dealer, $dealer?->id),
             'dealerName' => $this->when($dealer, $dealer?->name),
-            '$transporterId' => $this->when($transporter, $transporter?->id),
-            '$transporterName' => $this->when($transporter, $transporter?->name),
+            'transporterId' => $this->when($transporter, $transporter?->id),
+            'transporterName' => $this->when($transporter, $transporter?->name),
         ];
     }
 }
