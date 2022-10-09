@@ -24,9 +24,9 @@ class BrandController extends Controller
     {
         $brand = new Brand();
 
-        if ($request->get('depotId')) {
+        if (intval($request->get('depotId')) > 0) {
             $brand = $brand->whereHas('depots', function ($q) use ($request) {
-                $q->where('depot_id', $request->get('depotId'));
+                $q->where('depot_id', intval($request->get('depotId')));
             });
         }
 
