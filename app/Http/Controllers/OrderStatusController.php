@@ -22,6 +22,11 @@ class OrderStatusController extends Controller
     public function store(StoreOrderStatusRequest $request, Order $order)
     {
         if ($request->boolean('acceptOrder')) {
+
+            if(!User::find(auth()->id())->can('accept refill order') && !User::find(auth()->id())->can('admin: accept refill order')){
+                throw new AuthorizationException( 'You are not authorised to accept order');
+            }
+
             $order->accepted_at = Carbon::now();
             $order->save();
             return response()->json([
@@ -33,6 +38,11 @@ class OrderStatusController extends Controller
         }
 
         if ($request->get('transporterId')) {
+
+            if(!User::find(auth()->id())->can('assign order') && !User::find(auth()->id())->can('admin: assign order')){
+                throw new AuthorizationException( 'You are not authorised to assign order');
+            }
+
             $order->assigned_at = Carbon::now();
             $order->assigned_to = $request->get('transporterId');
             $order->save();
@@ -47,7 +57,7 @@ class OrderStatusController extends Controller
 
         if ($request->get('depotToTransporterOk') !== null) {
 
-            if(!User::find(auth()->id())->can('confirm dispatch from depot')){
+            if(!User::find(auth()->id())->can('confirm dispatch from depot') && !User::find(auth()->id())->can('admin: confirm dispatch from depot')){
                 throw new AuthorizationException( 'You are not authorised to confirm dispatch from depot');
             }
 
@@ -63,6 +73,10 @@ class OrderStatusController extends Controller
         }
 
         if ($request->get('transporterToDepotOk') !== null) {
+
+            if(!User::find(auth()->id())->can('confirm delivery by depot from transporter') && !User::find(auth()->id())->can('admin: confirm delivery by depot from transporter')){
+                throw new AuthorizationException( 'You are not authorised to confirm delivery to depot');
+            }
 
             $canisterLogs = $order->canisterLogs->where('fromable_type', Dealer::class)
                 ->where('toable_type', Transporter::class);
@@ -88,11 +102,6 @@ class OrderStatusController extends Controller
 
             }
 
-
-
-
-
-
             $order->transporter_depot_ok = $request->boolean('transporterToDepotOk');
             $order->transporter_depot_ok_at = Carbon::now();
             $order->save();
@@ -105,6 +114,11 @@ class OrderStatusController extends Controller
         }
 
         if ($request->get('dealerToTransporterOk') !== null) {
+
+//            if(!User::find(auth()->id())->can('confirm delivery by depot from transporter') && !User::find(auth()->id())->can('admin: confirm delivery by depot from transporter')){
+//                throw new AuthorizationException( 'You are not authorised to confirm delivery to depot');
+//            }
+
             $order->dealer_transporter_ok = $request->boolean('dealerToTransporterOk');
             $order->dealer_transporter_ok_at = Carbon::now();
             $order->save();
@@ -117,6 +131,10 @@ class OrderStatusController extends Controller
         }
 
         if ($request->get('transporterToDealerOk') !== null) {
+
+            if(!User::find(auth()->id())->can('confirm delivery by dealer from transporter') && !User::find(auth()->id())->can('admin: confirm delivery by dealer from transporter')){
+                throw new AuthorizationException( 'You are not authorised to confirm delivery to depot');
+            }
 
             $canisterLogs = $order->canisterLogs->where('fromable_type', Depot::class)
                 ->where('toable_type', Transporter::class);

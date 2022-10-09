@@ -20,9 +20,9 @@ class CanisterSizeController extends Controller
             $canisterSizes = $canisterSizes->whereIn('id', $request->get('ids'));
         }
 
-        if ($request->get('canisterBrandId')) {
+        if (intval($request->get('canisterBrandId')) > 0) {
             $canisterSizes = $canisterSizes->whereHas('brands', function ($q) use ($request) {
-                $q->where('brand_id', $request->get('canisterBrandId'));
+                $q->where('brand_id', intval($request->get('canisterBrandId')));
             });
         }
 

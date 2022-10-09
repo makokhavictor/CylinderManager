@@ -216,6 +216,12 @@ class CreatePermissionTables extends Migration
             ['name' => 'admin: confirm dispatch from depot', 'guard_name' => 'api'],
             ['name' => 'admin: confirm dispatch from dealer', 'guard_name' => 'api'],
 
+            ['name' => 'confirm delivery by dealer from transporter', 'guard_name' => 'api'],
+            ['name' => 'admin: confirm delivery by dealer from transporter', 'guard_name' => 'api'],
+
+            ['name' => 'confirm delivery by depot from transporter', 'guard_name' => 'api'],
+            ['name' => 'admin: confirm delivery by depot from transporter', 'guard_name' => 'api'],
+
             ['name' => 'scan qr code', 'guard_name' => 'api'],
         ]);
 
@@ -270,6 +276,9 @@ class CreatePermissionTables extends Migration
             'admin: confirm dispatch from dealer',
             'admin: confirm dispatch from depot',
 
+            'admin: confirm delivery by depot from transporter',
+            'admin: confirm delivery by dealer from transporter',
+
             'admin: assign order',
             'assign order'
 
@@ -292,7 +301,8 @@ class CreatePermissionTables extends Migration
             'update canister',
             'assign order',
             'accept refill order',
-            'dispatch canister'
+            'dispatch canister',
+            'confirm delivery by depot from transporter'
         ]);
         Role::where('name', 'Dealer Admin User')->first()->givePermissionTo([
             'create dealer user',
@@ -302,18 +312,21 @@ class CreatePermissionTables extends Migration
             'create refill order',
             'update refill order',
             'delete refill order',
+            'confirm delivery by dealer from transporter'
         ]);
         Role::where('name', 'Depot User')->first()->givePermissionTo([
             'dispatch canister',
             'receive dispatched canister',
-            'accept refill order'
+            'accept refill order',
+            'confirm delivery by depot from transporter'
         ]);
 
         Role::where('name', 'Dealer User')->first()->givePermissionTo([
             'dispatch canister',
             'receive dispatched canister',
             'create refill order',
-            'update refill order'
+            'update refill order',
+            'confirm delivery by dealer from transporter'
         ]);
 
         Role::where('name', 'Transporter User')->first()->givePermissionTo([

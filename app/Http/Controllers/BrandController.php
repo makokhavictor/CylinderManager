@@ -39,9 +39,9 @@ class BrandController extends Controller
         }
 
 
-        if ($request->get('orderId')) {
+        if (intval($request->get('orderId')) > 0) {
             $brand = $brand->whereHas('orders', function ($q) use ($request) {
-                $q->where('order_id', $request->get('orderId'));
+                $q->where('order_id', intval($request->get('orderId')));
             });
         }
 

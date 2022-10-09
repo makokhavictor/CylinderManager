@@ -22,7 +22,13 @@ class StoreOrderStatusRequest extends FormRequest
             || $authUser->can('accept refill order')
 
             || $authUser->can('confirm dispatch from depot')
-            || $authUser->can('admin: confirm dispatch from depot');
+            || $authUser->can('admin: confirm dispatch from depot')
+
+            || $authUser->can('confirm delivery by dealer from transporter')
+            || $authUser->can('admin: confirm delivery by dealer from transporter')
+
+            || $authUser->can('confirm delivery by depot from transporter')
+            || $authUser->can('admin: confirm delivery by depot from transporter');
     }
 
     /**
@@ -39,6 +45,6 @@ class StoreOrderStatusRequest extends FormRequest
 
     protected function failedAuthorization()
     {
-        throw new AuthorizationException( 'You are not authorised to perform this action on an order');
+        throw new AuthorizationException('You are not authorised to perform this action on an order');
     }
 }
