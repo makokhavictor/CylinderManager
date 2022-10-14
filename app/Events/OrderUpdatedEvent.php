@@ -17,6 +17,7 @@ class OrderUpdatedEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public Order $order;
+
     /**
      * Create a new event instance.
      *
@@ -35,9 +36,7 @@ class OrderUpdatedEvent implements ShouldBroadcast
     public function broadcastOn()
     {
         return [
-            new Channel('order.depot.'.$this->order->depot_id),
-            new Channel('order.'.$this->order->id),
-            new Channel('order.dealer.'.$this->order->dealer_id),
+            new Channel('order.' . $this->order->id),
         ];
 //        return new PrivateChannel('channel-name');
     }

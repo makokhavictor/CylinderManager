@@ -3,9 +3,15 @@
 namespace App\Providers;
 
 use App\Events\CanisterLogCreatedEvent;
+use App\Events\CanistersDispatchedFromDealerEvent;
+use App\Events\CanistersDispatchedFromDepotEvent;
+use App\Events\CanistersFromDealerAcceptedByDepotEvent;
+use App\Events\CanistersFromDealerAcceptedEvent;
+use App\Events\CanistersFromDepotAcceptedByDealerEvent;
 use App\Events\DealerCreatedEvent;
 use App\Events\DepotCreatedEvent;
 use App\Events\OrderAcceptedEvent;
+use App\Events\OrderAssignedEvent;
 use App\Events\OrderCreatedEvent;
 use App\Events\OrderUpdatedEvent;
 use App\Events\PasswordResetEvent;
@@ -16,8 +22,9 @@ use App\Listeners\AssignDealerDefaultRoles;
 use App\Listeners\AssignDepotDefaultRoles;
 use App\Listeners\AssignTransporterDefaultRoles;
 use App\Listeners\MarkCanisterAsReleasedFromPreviousLocation;
-use App\Listeners\DealerOrderCreatedNotification;
-use App\Listeners\DepotOrderCreatedNotification;
+use App\Listeners\SendCanisterDispatchFromDepotNotifications;
+use App\Listeners\SendCreatedOrderNotifications;
+use App\Listeners\SendOrderAcceptedNotification;
 use App\Listeners\SendPasswordResetTokenSms;
 use App\Listeners\UpdateLastActivityTime;
 use Illuminate\Auth\Events\Registered;
@@ -61,11 +68,23 @@ class EventServiceProvider extends ServiceProvider
             UpdateLastActivityTime::class
         ],
         OrderCreatedEvent::class => [
-            DealerOrderCreatedNotification::class,
-            DepotOrderCreatedNotification::class
+            SendCreatedOrderNotifications::class,
         ],
         OrderUpdatedEvent::class => [],
-        OrderAcceptedEvent::class => []
+        OrderAcceptedEvent::class => [
+            SendOrderAcceptedNotification::class
+        ],
+        OrderAssignedEvent::class => [
+//            SendOrderAcceptedNotification::class
+            'App\\Listeners\\SendOrderAssignedNotification'
+        ],
+        CanistersDispatchedFromDealerEvent::class => [],
+        CanistersDispatchedFromDepotEvent::class => [
+            SendCanisterDispatchFromDepotNotifications::class
+        ],
+        CanistersFromDealerAcceptedByDepotEvent::class => [],
+        CanistersFromDepotAcceptedByDealerEvent::class => [],
+        CanistersFromDealerAcceptedEvent::class => [],
     ];
 
     /**

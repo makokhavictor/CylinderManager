@@ -35,13 +35,15 @@ class CanistersDispatchedFromDealerEvent implements ShouldBroadcast
     public function broadcastOn()
     {
         return [
-            new Channel('order.transporter.'.$this->order->transporter_id)
+            new Channel('order.transporter.'.$this->order->assigned_to),
+            new Channel('order.depot.'.$this->order->depot_id),
+            new Channel('order.dealer.'.$this->order->dealer_id),
         ];
     }
 
     public function broadcastAs()
     {
-        return 'order.accepted';
+        return 'order.updated';
     }
 
     public function broadcastWith()

@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderAcceptedEvent implements ShouldBroadcast
+class CanistersFromDealerAcceptedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -35,7 +35,9 @@ class OrderAcceptedEvent implements ShouldBroadcast
     public function broadcastOn()
     {
         return [
-            new Channel('order.transporter.'.$this->order->transporter_id)
+            new Channel('order.transporter.'.$this->order->assigned_to),
+            new Channel('order.depot.'.$this->order->depot_id),
+            new Channel('order.dealer.'.$this->order->dealer_id),
         ];
     }
 

@@ -4,12 +4,11 @@ namespace App\Listeners;
 
 use App\Events\OrderCreatedEvent;
 use App\Models\User;
-use App\Notifications\OrderCreatedNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Notifications\DealerOrderCreatedNotification;
+use App\Notifications\DepotOrderCreatedNotification;
 use Illuminate\Support\Facades\Notification;
 
-class DepotOrderCreatedNotification
+class SendCreatedOrderNotifications
 {
     /**
      * Create the event listener.
@@ -24,17 +23,21 @@ class DepotOrderCreatedNotification
     /**
      * Handle the event.
      *
-     * @param  \App\Events\OrderCreatedEvent  $event
+     * @param \App\Events\OrderCreatedEvent $event
      * @return void
      */
     public function handle(OrderCreatedEvent $event)
     {
+        $dealers = User::whereHas('dealers', function ($query) use ($event) {
+            $query->where('permissible_id', $event->order->dealer_id);
+        })->get();
+
         $depots = User::whereHas('depots', function ($query) use ($event) {
             $query->where('permissible_id', $event->order->depot_id);
         })->get();
 
-        logger($depots);
 
-        Notification::send($depots, new OrderCreatedNotification($event->order));
+        Notification::send($depots, new DepotOrderCreatedNotification($event->order));
+        Notification::send($dealers, new DealerOrderCreatedNotification($event->order));
     }
 }

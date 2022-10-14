@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CanistersDispatchedFromDealerEvent;
+use App\Events\CanistersDispatchedFromDepotEvent;
+use App\Events\CanistersFromDealerAcceptedByDepotEvent;
 use App\Events\OrderAcceptedEvent;
+use App\Events\OrderAssignedEvent;
 use App\Events\OrderUpdatedEvent;
 use App\Http\Requests\StoreOrderStatusRequest;
 use App\Http\Resources\OrderResource;
@@ -34,6 +38,8 @@ class OrderStatusController extends Controller
             $order->save();
 
             $responseMessage = 'Order Successfully acknowledged';
+
+            OrderAcceptedEvent::dispatch($order);
         }
 
         if ($request->get('transporterId')) {
@@ -48,7 +54,7 @@ class OrderStatusController extends Controller
 
             $responseMessage = 'Order Successfully assigned';
 
-            OrderAcceptedEvent::dispatch($order);
+            OrderAssignedEvent::dispatch($order);
 
         }
 
@@ -62,6 +68,8 @@ class OrderStatusController extends Controller
             $order->depot_transporter_ok_at = Carbon::now();
             $order->save();
             $responseMessage = 'Order from depot confirmed';
+
+            CanistersDispatchedFromDepotEvent::dispatch($order);
         }
 
         if ($request->get('transporterToDepotOk') !== null) {
@@ -98,6 +106,8 @@ class OrderStatusController extends Controller
             $order->transporter_depot_ok_at = Carbon::now();
             $order->save();
             $responseMessage = 'Order from depot transporter';
+
+            CanistersFromDealerAcceptedByDepotEvent::dispatch();
         }
 
         if ($request->get('dealerToTransporterOk') !== null) {
@@ -110,6 +120,8 @@ class OrderStatusController extends Controller
             $order->dealer_transporter_ok_at = Carbon::now();
             $order->save();
             $responseMessage = 'Order from dealer confirmed';
+
+            CanistersDispatchedFromDealerEvent::dispatch($order);
         }
 
         if ($request->get('transporterToDealerOk') !== null) {
@@ -146,6 +158,7 @@ class OrderStatusController extends Controller
             $order->save();
 
             $responseMessage = 'Order from transporter confirmed';
+            CanistersFromDealerAcceptedByDepotEvent::dispatch($order);
         }
         OrderUpdatedEvent::dispatch($order);
         return response()->json([

@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class OrderCreatedNotification extends Notification
+class DepotOrderDispatchedFromDepotNotification extends Notification
 {
     use Queueable;
 
@@ -61,8 +61,8 @@ class OrderCreatedNotification extends Notification
     {
         return [
             'orderId' => $this->order->id,
-            'title' => 'New Order',
-            'message' => "New order created ID:#{$this->order->id}",
+            'title' => 'Order Dispatch Update',
+            'message' => "Your order ID:#{$this->order->id} has been dispatched",
             'type' => 'info',
             'time' => $this->order->created_at
         ];
@@ -80,7 +80,7 @@ class OrderCreatedNotification extends Notification
         return new BroadcastMessage([
             'orderId' => $this->order->id,
             'title' => 'New Order',
-            'message' => "New order created ID:#{$this->order->id}",
+            'message' => "Your order ID:#{$this->order->id} has been dispatched",
             'type' => 'info',
             'time' => $this->order->created_at
         ]);

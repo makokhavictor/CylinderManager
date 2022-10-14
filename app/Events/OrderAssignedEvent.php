@@ -6,13 +6,11 @@ use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderAcceptedEvent implements ShouldBroadcast
+class OrderAssignedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -35,13 +33,16 @@ class OrderAcceptedEvent implements ShouldBroadcast
     public function broadcastOn()
     {
         return [
-            new Channel('order.transporter.'.$this->order->transporter_id)
+            new Channel('order.transporter.'.$this->order->assigned_to),
+            new Channel('order.depot.'.$this->order->depot_id),
+            new Channel('order.dealer.'.$this->order->dealer_id),
         ];
+//        return new PrivateChannel('channel-name');
     }
 
     public function broadcastAs()
     {
-        return 'order.accepted';
+        return 'order.assigned';
     }
 
     public function broadcastWith()
