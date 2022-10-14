@@ -5,6 +5,9 @@ namespace App\Providers;
 use App\Events\CanisterLogCreatedEvent;
 use App\Events\DealerCreatedEvent;
 use App\Events\DepotCreatedEvent;
+use App\Events\OrderAcceptedEvent;
+use App\Events\OrderCreatedEvent;
+use App\Events\OrderUpdatedEvent;
 use App\Events\PasswordResetEvent;
 use App\Events\TransporterCreatedEvent;
 use App\Events\UserActivityEvent;
@@ -13,6 +16,8 @@ use App\Listeners\AssignDealerDefaultRoles;
 use App\Listeners\AssignDepotDefaultRoles;
 use App\Listeners\AssignTransporterDefaultRoles;
 use App\Listeners\MarkCanisterAsReleasedFromPreviousLocation;
+use App\Listeners\DealerOrderCreatedNotification;
+use App\Listeners\DepotOrderCreatedNotification;
 use App\Listeners\SendPasswordResetTokenSms;
 use App\Listeners\UpdateLastActivityTime;
 use Illuminate\Auth\Events\Registered;
@@ -54,7 +59,13 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserActivityEvent::class => [
             UpdateLastActivityTime::class
-        ]
+        ],
+        OrderCreatedEvent::class => [
+            DealerOrderCreatedNotification::class,
+            DepotOrderCreatedNotification::class
+        ],
+        OrderUpdatedEvent::class => [],
+        OrderAcceptedEvent::class => []
     ];
 
     /**

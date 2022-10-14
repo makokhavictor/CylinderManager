@@ -312,7 +312,8 @@ class CreatePermissionTables extends Migration
             'create refill order',
             'update refill order',
             'delete refill order',
-            'confirm delivery by dealer from transporter'
+            'confirm delivery by dealer from transporter',
+            'dispatch canister',
         ]);
         Role::where('name', 'Depot User')->first()->givePermissionTo([
             'dispatch canister',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderCreatedEvent;
 use App\Http\Requests\DeleteOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -99,6 +100,9 @@ class OrderController extends Controller
             $order->canisterSizes()->save(CanisterSize::find($orderQuantity['canisterSizeId']),
                 ['quantity' => $orderQuantity['quantity'], 'brand_id' => $orderQuantity['canisterBrandId']]);
         }
+
+        OrderCreatedEvent::dispatch($order);
+
         return response()->json([
             'data' => OrderResource::make($order),
             'headers' => [
