@@ -64,7 +64,7 @@ class DealerCanisterDispatchedFromDepotConfirmedByTransporterNotification extend
             'title' => "Order #{$this->order->id} update",
             'message' => "Filled canisters confirmed by transporter",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => $this->order->depot_transporter_ok_at
         ];
     }
 
@@ -82,7 +82,7 @@ class DealerCanisterDispatchedFromDepotConfirmedByTransporterNotification extend
             'title' => "Order #{$this->order->id} update",
             'message' => "Filled canisters confirmed by transporter",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => $this->order->depot_transporter_ok_at
         ]);
     }
 

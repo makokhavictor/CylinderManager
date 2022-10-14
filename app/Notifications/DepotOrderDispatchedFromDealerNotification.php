@@ -64,7 +64,7 @@ class DepotOrderDispatchedFromDealerNotification extends Notification
             'title' => "Order #{$this->order->id} Update",
             'message' => "Empty canisters dispatched",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => now()
         ];
     }
 
@@ -82,7 +82,7 @@ class DepotOrderDispatchedFromDealerNotification extends Notification
             'title' => "Order #{$this->order->id} Update",
             'message' => "Empty canisters dispatched",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => now()
         ]);
     }
 

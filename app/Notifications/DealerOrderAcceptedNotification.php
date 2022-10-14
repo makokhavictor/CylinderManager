@@ -64,7 +64,7 @@ class DealerOrderAcceptedNotification extends Notification
             'title' => 'Order ID:#{$this->order->id} update',
             'message' => "Your order has been accepted",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => $this->order->accepted_at
         ];
     }
 
@@ -82,7 +82,7 @@ class DealerOrderAcceptedNotification extends Notification
             'title' => "Order ID:#{$this->order->id} update",
             'message' => "Your order has been accepted",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => $this->order->accepted_at
         ]);
     }
 

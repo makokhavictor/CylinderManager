@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Models\Order;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -64,7 +65,7 @@ class DealerOrderDispatchedFromDealerNotification extends Notification
             'title' => "Order ID #{$this->order->id} update",
             'message' => "Successfully dispatched empty canisters",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => now()
         ];
     }
 
@@ -82,7 +83,7 @@ class DealerOrderDispatchedFromDealerNotification extends Notification
             'title' => "Order ID #{$this->order->id} update",
             'message' => "Successfully dispatched empty canisters",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => now()
         ]);
     }
 

@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class TransporterCanisterDispatchedFromDepotConfirmedByTransporterNotification extends Notification
+class DealerCanistersFromTransporterConfirmedByDealerNotification extends Notification
 {
     use Queueable;
 
@@ -64,7 +64,7 @@ class TransporterCanisterDispatchedFromDepotConfirmedByTransporterNotification e
             'title' => "Order #{$this->order->id} update",
             'message' => "Filled canisters confirmed",
             'type' => 'info',
-            'time' => $this->order->depot_transporter_ok_at
+            'time' => $this->order->transporter_dealer_ok_at
         ];
     }
 
@@ -82,7 +82,7 @@ class TransporterCanisterDispatchedFromDepotConfirmedByTransporterNotification e
             'title' => "Order #{$this->order->id} update",
             'message' => "Filled canisters confirmed",
             'type' => 'info',
-            'time' => $this->order->depot_transporter_ok_at
+            'time' => $this->order->transporter_dealer_ok_at
         ]);
     }
 

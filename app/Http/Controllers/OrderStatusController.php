@@ -84,7 +84,6 @@ class OrderStatusController extends Controller
 
             $canisterLogs = $order->canisterLogs->where('fromable_type', Dealer::class)
                 ->where('toable_type', Transporter::class);
-            logger($canisterLogs->toArray());
 
             foreach ($canisterLogs as $canisterLog) {
                 CanisterLog::create([
@@ -111,7 +110,7 @@ class OrderStatusController extends Controller
             $order->save();
             $responseMessage = 'Order from depot transporter';
 
-            CanistersFromTransporterConfirmedByDepotEvent::dispatch();
+            CanistersFromTransporterConfirmedByDepotEvent::dispatch($order);
         }
 
         if ($request->get('dealerToTransporterOk') !== null) {

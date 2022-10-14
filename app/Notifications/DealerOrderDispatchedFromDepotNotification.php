@@ -61,10 +61,10 @@ class DealerOrderDispatchedFromDepotNotification extends Notification
     {
         return [
             'orderId' => $this->order->id,
-            'title' => "Order ID #{$this->order->id}",
+            'title' => "Order ID #{$this->order->id} update",
             'message' => "Filled canisters dispatched",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => now()
         ];
     }
 
@@ -79,10 +79,10 @@ class DealerOrderDispatchedFromDepotNotification extends Notification
     {
         return new BroadcastMessage([
             'orderId' => $this->order->id,
-            'title' => "Order ID #{$this->order->id}",
+            'title' => "Order ID #{$this->order->id} update",
             'message' => "Filled canisters dispatched",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => now()
         ]);
     }
 

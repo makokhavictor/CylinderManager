@@ -64,7 +64,7 @@ class DepotOrderDispatchedFromDepotNotification extends Notification
             'title' => 'Order Dispatch Update',
             'message' => "order ID:#{$this->order->id} has dispatched",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => now()
         ];
     }
 
@@ -82,7 +82,7 @@ class DepotOrderDispatchedFromDepotNotification extends Notification
             'title' => 'New Order',
             'message' => "Your order ID:#{$this->order->id} has been dispatched",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => now()
         ]);
     }
 

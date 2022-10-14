@@ -64,7 +64,7 @@ class TransporterOrderDispatchedFromDepotNotification extends Notification
             'title' => 'Order Dispatch Update',
             'message' => "Canisters for order ID:#{$this->order->id} scanned for your confirmation",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => now()
         ];
     }
 
@@ -82,7 +82,7 @@ class TransporterOrderDispatchedFromDepotNotification extends Notification
             'title' => 'Order Dispatch Update',
             'message' => "Canisters for order ID:#{$this->order->id} dispatched for your confirmation",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => now()
         ]);
     }
 

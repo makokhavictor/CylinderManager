@@ -2,18 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Events\CanistersFromDealerConfirmedByTransporterEvent;
 use App\Events\CanistersFromTransporterConfirmedByDealerEvent;
 use App\Models\User;
-use App\Notifications\DealerCanistersFromDealerConfirmedByTransporterNotification;
 use App\Notifications\DealerCanistersFromTransporterConfirmedByDealerNotification;
-use App\Notifications\DepotCanistersFromDealerConfirmedByTransporterNotification;
 use App\Notifications\DepotCanistersFromTransporterConfirmedByDealerNotification;
-use App\Notifications\TransporterCanistersFromDealerConfirmedByTransporterNotification;
 use App\Notifications\TransporterCanistersFromTransporterConfirmedByDealerNotification;
 use Illuminate\Support\Facades\Notification;
 
-class SendCanistersFromDealerConfirmedByTransporterNotifications
+class SendCanistersFromTransporterConfirmedByDealerNotifications
 {
     /**
      * Create the event listener.
@@ -31,7 +27,7 @@ class SendCanistersFromDealerConfirmedByTransporterNotifications
      * @param \App\Events\OrderCreatedEvent $event
      * @return void
      */
-    public function handle(CanistersFromDealerConfirmedByTransporterEvent $event)
+    public function handle(CanistersFromTransporterConfirmedByDealerEvent $event)
     {
         $dealers = User::whereHas('dealers', function ($query) use ($event) {
             $query->where('permissible_id', $event->order->dealer_id);
@@ -45,8 +41,8 @@ class SendCanistersFromDealerConfirmedByTransporterNotifications
             $query->where('permissible_id', $event->order->assigned_to);
         })->get();
 
-        Notification::send($dealers, new DealerCanistersFromDealerConfirmedByTransporterNotification($event->order));
-        Notification::send($depots, new DepotCanistersFromDealerConfirmedByTransporterNotification($event->order));
-        Notification::send($transporters, new TransporterCanistersFromDealerConfirmedByTransporterNotification($event->order));
+        Notification::send($dealers, new DealerCanistersFromTransporterConfirmedByDealerNotification($event->order));
+        Notification::send($depots, new DepotCanistersFromTransporterConfirmedByDealerNotification($event->order));
+        Notification::send($transporters, new TransporterCanistersFromTransporterConfirmedByDealerNotification($event->order));
     }
 }

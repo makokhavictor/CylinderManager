@@ -7,6 +7,8 @@ use App\Events\CanistersDispatchedFromDealerEvent;
 use App\Events\CanistersDispatchedFromDepotEvent;
 use App\Events\CanistersFromDealerConfirmedByTransporterEvent;
 use App\Events\CanistersFromDepotConfirmedByTransporterEvent;
+use App\Events\CanistersFromTransporterConfirmedByDealerEvent;
+use App\Events\CanistersFromTransporterConfirmedByDepotEvent;
 use App\Events\DealerCreatedEvent;
 use App\Events\DepotCreatedEvent;
 use App\Events\OrderAcceptedEvent;
@@ -23,6 +25,9 @@ use App\Listeners\AssignTransporterDefaultRoles;
 use App\Listeners\MarkCanisterAsReleasedFromPreviousLocation;
 use App\Listeners\SendCanisterDispatchFromDealerNotifications;
 use App\Listeners\SendCanisterDispatchFromDepotNotifications;
+use App\Listeners\SendCanistersFromDealerConfirmedByTransporterNotifications;
+use App\Listeners\SendCanistersFromTransporterConfirmedByDealerNotifications;
+use App\Listeners\SendCanistersFromTransporterConfirmedByDepotNotifications;
 use App\Listeners\SendCreatedOrderNotifications;
 use App\Listeners\SendOrderAcceptedNotification;
 use App\Listeners\SendOrderAssignedNotification;
@@ -84,14 +89,14 @@ class EventServiceProvider extends ServiceProvider
         CanistersDispatchedFromDepotEvent::class => [
             SendCanisterDispatchFromDepotNotifications::class
         ],
-        'App\\Events\\CanistersFromTransporterConfirmedByDepotEvent' => [
-            'App\\Listeners\\SendCanistersFromTransporterConfirmedNotifications'
+        CanistersFromTransporterConfirmedByDepotEvent::class => [
+            SendCanistersFromTransporterConfirmedByDepotNotifications::class
         ],
-        'App\\Events\\CanistersFromTransporterConfirmedByDealerEvent' => [
-            'App\\Listeners\\CanistersFromTransporterConfirmedByDealerNotifications'
+        CanistersFromTransporterConfirmedByDealerEvent::class => [
+            SendCanistersFromTransporterConfirmedByDealerNotifications::class
         ],
         CanistersFromDealerConfirmedByTransporterEvent::class => [
-            'App\\Listeners\\SendCanistersFromDealerConfirmedByTransporterNotifications'
+            SendCanistersFromDealerConfirmedByTransporterNotifications::class
         ],
         CanistersFromDepotConfirmedByTransporterEvent::class => [
             'App\\Listeners\\SendCanistersFromDepotConfirmedByTransporterNotifications'

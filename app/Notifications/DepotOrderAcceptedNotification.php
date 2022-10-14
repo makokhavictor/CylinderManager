@@ -62,7 +62,7 @@ class DepotOrderAcceptedNotification extends Notification
             'title' => 'Order ID:#{$this->order->id} update',
             'message' => "Order has been successfully accepted",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => $this->order->accepted_at
         ];
     }
 
@@ -80,7 +80,7 @@ class DepotOrderAcceptedNotification extends Notification
             'title' => 'Order ID:#{$this->order->id} update',
             'message' => "Order has been successfully accepted",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => $this->order->accepted_at
         ]);
     }
 
