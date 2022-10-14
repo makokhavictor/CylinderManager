@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Traits\CanBeADealerUser;
+use App\Traits\CanBeADepotUser;
+use App\Traits\CanBeAStationUser;
+use App\Traits\CanBeATransporterUser;
 use App\Traits\Paginatable;
 use App\Traits\Permissible;
 use Carbon\Carbon;
@@ -15,7 +19,8 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, Permissible, Paginatable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, Permissible, Paginatable,
+        CanBeAStationUser;
 
     protected $guard_name = 'api';
     /**

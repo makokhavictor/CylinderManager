@@ -102,13 +102,13 @@ class OrderController extends Controller
         }
 
         OrderCreatedEvent::dispatch($order);
-
-        return response()->json([
-            'data' => OrderResource::make($order),
-            'headers' => [
-                'message' => 'Order successfully created'
-            ]
-        ])->setStatusCode(201);
+//
+//        return response()->json([
+//            'data' => OrderResource::make($order),
+//            'headers' => [
+//                'message' => 'Order successfully created'
+//            ]
+//        ])->setStatusCode(201);
     }
 
     /**
