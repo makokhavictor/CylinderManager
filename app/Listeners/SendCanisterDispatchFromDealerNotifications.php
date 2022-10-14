@@ -2,15 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Events\CanistersDispatchedFromDepotEvent;
-use App\Events\OrderCreatedEvent;
+use App\Events\CanistersDispatchedFromDealerEvent;
 use App\Models\User;
-use App\Notifications\DealerOrderDispatchedFromDepotNotification;
-use App\Notifications\DepotOrderDispatchedFromDepotNotification;
-use App\Notifications\TransporterOrderDispatchedFromDepotNotification;
+use App\Notifications\DealerOrderDispatchedFromDealerNotification;
+use App\Notifications\DepotOrderDispatchedFromDealerNotification;
+use App\Notifications\TransporterOrderDispatchedFromDealerNotification;
 use Illuminate\Support\Facades\Notification;
 
-class SendCanisterDispatchFromDepotNotifications
+class SendCanisterDispatchFromDealerNotifications
 {
     /**
      * Create the event listener.
@@ -25,10 +24,10 @@ class SendCanisterDispatchFromDepotNotifications
     /**
      * Handle the event.
      *
-     * @param  \App\Events\OrderCreatedEvent  $event
+     * @param \App\Events\OrderCreatedEvent $event
      * @return void
      */
-    public function handle(CanistersDispatchedFromDepotEvent $event)
+    public function handle(CanistersDispatchedFromDealerEvent $event)
     {
         $dealers = User::whereHas('dealers', function ($query) use ($event) {
             $query->where('permissible_id', $event->order->dealer_id);
@@ -42,8 +41,8 @@ class SendCanisterDispatchFromDepotNotifications
             $query->where('permissible_id', $event->order->assigned_to);
         })->get();
 
-        Notification::send($dealers, new DealerOrderDispatchedFromDepotNotification($event->order));
-        Notification::send($depots, new DepotOrderDispatchedFromDepotNotification($event->order));
-        Notification::send($transporters, new TransporterOrderDispatchedFromDepotNotification($event->order));
+        Notification::send($dealers, new DealerOrderDispatchedFromDealerNotification($event->order));
+        Notification::send($depots, new DepotOrderDispatchedFromDealerNotification($event->order));
+        Notification::send($transporters, new TransporterOrderDispatchedFromDealerNotification($event->order));
     }
 }

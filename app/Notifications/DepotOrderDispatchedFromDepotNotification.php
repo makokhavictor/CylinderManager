@@ -62,7 +62,7 @@ class DepotOrderDispatchedFromDepotNotification extends Notification
         return [
             'orderId' => $this->order->id,
             'title' => 'Order Dispatch Update',
-            'message' => "Your order ID:#{$this->order->id} has been dispatched",
+            'message' => "order ID:#{$this->order->id} has dispatched",
             'type' => 'info',
             'time' => $this->order->created_at
         ];

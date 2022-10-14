@@ -2,8 +2,6 @@
 
 namespace App\Events;
 
-use App\Http\Resources\OrderResource;
-use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,19 +10,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CanistersFromDealerAcceptedEvent implements ShouldBroadcast
+class CanistersFromTransporterConfirmedByDealerEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public Order $order;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct()
     {
-        $this->order = $order;
+        //
     }
 
     /**
@@ -34,20 +31,6 @@ class CanistersFromDealerAcceptedEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return [
-            new Channel('order.transporter.'.$this->order->assigned_to),
-            new Channel('order.depot.'.$this->order->depot_id),
-            new Channel('order.dealer.'.$this->order->dealer_id),
-        ];
-    }
-
-    public function broadcastAs()
-    {
-        return 'order.accepted';
-    }
-
-    public function broadcastWith()
-    {
-        return collect(json_decode(OrderResource::make($this->order)->toJson()))->toArray();
+        return new PrivateChannel('channel-name');
     }
 }

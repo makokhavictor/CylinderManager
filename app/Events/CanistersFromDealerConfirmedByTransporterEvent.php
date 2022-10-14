@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CanistersFromDepotAcceptedByDealerEvent implements ShouldBroadcast
+class CanistersFromDealerConfirmedByTransporterEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -43,7 +43,7 @@ class CanistersFromDepotAcceptedByDealerEvent implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'order.updated';
+        return 'order.accepted';
     }
 
     public function broadcastWith()

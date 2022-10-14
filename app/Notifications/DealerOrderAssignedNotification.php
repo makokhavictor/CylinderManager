@@ -90,6 +90,4 @@ class DealerOrderAssignedNotification extends Notification
     {
         return 'info';
     }
-
-
 }

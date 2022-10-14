@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\CanisterLogCreatedEvent;
+use App\Events\CanistersDispatchedFromDealerEvent;
+use App\Events\CanistersDispatchedFromDepotEvent;
 use App\Events\OrderUpdatedEvent;
 use App\Http\Requests\StoreOrderDispatchRequest;
 use App\Http\Resources\CreatedCanisterLogResource;
@@ -117,6 +119,12 @@ class OrderDispatchController extends Controller
         }
 
         OrderUpdatedEvent::dispatch(Order::find($order->id));
+
+        if  ($request->get('from') === 'depot') {
+            CanistersDispatchedFromDepotEvent::dispatch(Order::find($order->id));
+        } elseif ( $request->get('from') === 'dealer') {
+            CanistersDispatchedFromDealerEvent::dispatch(Order::find($order->id));
+        }
 
         return response()->json(CreatedCanisterLogResource::make($batch));
 

@@ -5,9 +5,8 @@ namespace App\Providers;
 use App\Events\CanisterLogCreatedEvent;
 use App\Events\CanistersDispatchedFromDealerEvent;
 use App\Events\CanistersDispatchedFromDepotEvent;
-use App\Events\CanistersFromDealerAcceptedByDepotEvent;
-use App\Events\CanistersFromDealerAcceptedEvent;
-use App\Events\CanistersFromDepotAcceptedByDealerEvent;
+use App\Events\CanistersFromDealerConfirmedByTransporterEvent;
+use App\Events\CanistersFromDepotConfirmedByTransporterEvent;
 use App\Events\DealerCreatedEvent;
 use App\Events\DepotCreatedEvent;
 use App\Events\OrderAcceptedEvent;
@@ -22,9 +21,11 @@ use App\Listeners\AssignDealerDefaultRoles;
 use App\Listeners\AssignDepotDefaultRoles;
 use App\Listeners\AssignTransporterDefaultRoles;
 use App\Listeners\MarkCanisterAsReleasedFromPreviousLocation;
+use App\Listeners\SendCanisterDispatchFromDealerNotifications;
 use App\Listeners\SendCanisterDispatchFromDepotNotifications;
 use App\Listeners\SendCreatedOrderNotifications;
 use App\Listeners\SendOrderAcceptedNotification;
+use App\Listeners\SendOrderAssignedNotification;
 use App\Listeners\SendPasswordResetTokenSms;
 use App\Listeners\UpdateLastActivityTime;
 use Illuminate\Auth\Events\Registered;
@@ -75,16 +76,26 @@ class EventServiceProvider extends ServiceProvider
             SendOrderAcceptedNotification::class
         ],
         OrderAssignedEvent::class => [
-//            SendOrderAcceptedNotification::class
-            'App\\Listeners\\SendOrderAssignedNotification'
+            SendOrderAssignedNotification::class
         ],
-        CanistersDispatchedFromDealerEvent::class => [],
+        CanistersDispatchedFromDealerEvent::class => [
+            SendCanisterDispatchFromDealerNotifications::class
+        ],
         CanistersDispatchedFromDepotEvent::class => [
             SendCanisterDispatchFromDepotNotifications::class
         ],
-        CanistersFromDealerAcceptedByDepotEvent::class => [],
-        CanistersFromDepotAcceptedByDealerEvent::class => [],
-        CanistersFromDealerAcceptedEvent::class => [],
+        'App\\Events\\CanistersFromTransporterConfirmedByDepotEvent' => [
+            'App\\Listeners\\SendCanistersFromTransporterConfirmedNotifications'
+        ],
+        'App\\Events\\CanistersFromTransporterConfirmedByDealerEvent' => [
+            'App\\Listeners\\CanistersFromTransporterConfirmedByDealerNotifications'
+        ],
+        CanistersFromDealerConfirmedByTransporterEvent::class => [
+            'App\\Listeners\\SendCanistersFromDealerConfirmedByTransporterNotifications'
+        ],
+        CanistersFromDepotConfirmedByTransporterEvent::class => [
+            'App\\Listeners\\SendCanistersFromDepotConfirmedByTransporterNotifications'
+        ],
     ];
 
     /**
