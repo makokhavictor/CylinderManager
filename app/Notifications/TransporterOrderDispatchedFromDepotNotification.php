@@ -61,10 +61,11 @@ class TransporterOrderDispatchedFromDepotNotification extends Notification
     {
         return [
             'orderId' => $this->order->id,
-            'title' => 'Order Dispatch Update',
-            'message' => "Canisters for order ID:#{$this->order->id} scanned for your confirmation",
+            'title' => "Order #{$this->order->id} update",
+            'message' => "Canisters at depot scanned for your confirmation",
             'type' => 'info',
-            'time' => now()
+            'time' => now(),
+            'stationType' => 'transporter'
         ];
     }
 
@@ -79,10 +80,11 @@ class TransporterOrderDispatchedFromDepotNotification extends Notification
     {
         return new BroadcastMessage([
             'orderId' => $this->order->id,
-            'title' => 'Order Dispatch Update',
-            'message' => "Canisters for order ID:#{$this->order->id} dispatched for your confirmation",
+            'title' => "Order ID:#{$this->order->id} update",
+            'message' => "Canisters at depot scanned for your confirmation",
             'type' => 'info',
-            'time' => now()
+            'time' => now(),
+            'stationType' => 'transporter'
         ]);
     }
 

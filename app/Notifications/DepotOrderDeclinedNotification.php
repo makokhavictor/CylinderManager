@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class DealerOrderAcceptedNotification extends Notification
+class DepotOrderDeclinedNotification extends Notification
 {
     use Queueable;
 
@@ -62,10 +62,10 @@ class DealerOrderAcceptedNotification extends Notification
         return [
             'orderId' => $this->order->id,
             'title' => "Order ID:#{$this->order->id} update",
-            'message' => "Your order has been accepted",
-            'type' => 'info',
-            'time' => $this->order->accepted_at,
-            'stationType' => 'dealer'
+            'message' => "Your have declined order",
+            'type' => 'danger',
+            'time' => $this->order->declined_at,
+            'stationType' => 'depot'
         ];
     }
 
@@ -81,9 +81,9 @@ class DealerOrderAcceptedNotification extends Notification
         return new BroadcastMessage([
             'orderId' => $this->order->id,
             'title' => "Order ID:#{$this->order->id} update",
-            'message' => "Your order has been accepted",
-            'type' => 'info',
-            'time' => $this->order->accepted_at,
+            'message' => "Your have declined order",
+            'type' => 'danger',
+            'time' => $this->order->declined_at,
             'stationType' => 'dealer'
         ]);
     }

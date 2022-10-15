@@ -64,7 +64,8 @@ class DealerOrderDispatchedFromDepotNotification extends Notification
             'title' => "Order ID #{$this->order->id} update",
             'message' => "Filled canisters dispatched",
             'type' => 'info',
-            'time' => now()
+            'time' => now(),
+            'stationType' => 'dealer'
         ];
     }
 
@@ -82,7 +83,8 @@ class DealerOrderDispatchedFromDepotNotification extends Notification
             'title' => "Order ID #{$this->order->id} update",
             'message' => "Filled canisters dispatched",
             'type' => 'info',
-            'time' => now()
+            'time' => now(),
+            'stationType' => 'dealer'
         ]);
     }
 

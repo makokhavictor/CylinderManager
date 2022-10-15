@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\CanistersDispatchedFromDealerEvent;
-use App\Events\CanistersDispatchedFromDepotEvent;
-use App\Events\CanistersFromDealerAcceptedByDepotEvent;
 use App\Events\CanistersFromDealerConfirmedByTransporterEvent;
 use App\Events\CanistersFromDepotConfirmedByTransporterEvent;
 use App\Events\CanistersFromTransporterConfirmedByDealerEvent;
 use App\Events\CanistersFromTransporterConfirmedByDepotEvent;
 use App\Events\OrderAcceptedEvent;
 use App\Events\OrderAssignedEvent;
+use App\Events\OrderDeclinedEvent;
 use App\Events\OrderUpdatedEvent;
 use App\Http\Requests\StoreOrderStatusRequest;
 use App\Http\Resources\OrderResource;
-use App\Models\Canister;
 use App\Models\CanisterLog;
 use App\Models\Dealer;
 use App\Models\Depot;
@@ -32,6 +29,20 @@ class OrderStatusController extends Controller
     public function store(StoreOrderStatusRequest $request, Order $order)
     {
         $responseMessage = '';
+        if ($request->boolean('acceptOrder')) {
+
+            if(!User::find(auth()->id())->can('accept refill order') && !User::find(auth()->id())->can('admin: accept refill order')){
+                throw new AuthorizationException( 'You are not authorised to decline order');
+            }
+
+            $order->declined_at = Carbon::now();
+            $order->save();
+
+            $responseMessage = 'Order declined successfully';
+
+            OrderDeclinedEvent::dispatch($order);
+        }
+
         if ($request->boolean('acceptOrder')) {
 
             if(!User::find(auth()->id())->can('accept refill order') && !User::find(auth()->id())->can('admin: accept refill order')){
@@ -115,9 +126,9 @@ class OrderStatusController extends Controller
 
         if ($request->get('dealerToTransporterOk') !== null) {
 
-//            if(!User::find(auth()->id())->can('confirm delivery by depot from transporter') && !User::find(auth()->id())->can('admin: confirm delivery by depot from transporter')){
-//                throw new AuthorizationException( 'You are not authorised to confirm delivery to depot');
-//            }
+            if(!User::find(auth()->id())->can('confirm dispatch from dealer') && !User::find(auth()->id())->can('admin: confirm delivery by dealer from transporter')){
+                throw new AuthorizationException( 'You are not authorised to confirm delivery to depot');
+            }
 
             $order->dealer_transporter_ok = $request->boolean('dealerToTransporterOk');
             $order->dealer_transporter_ok_at = Carbon::now();

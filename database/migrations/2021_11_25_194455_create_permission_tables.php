@@ -303,7 +303,7 @@ class CreatePermissionTables extends Migration
             'accept refill order',
             'dispatch canister',
             'confirm delivery by depot from transporter'
-        ]);
+            ]);
         Role::where('name', 'Dealer Admin User')->first()->givePermissionTo([
             'create dealer user',
             'update dealer user',

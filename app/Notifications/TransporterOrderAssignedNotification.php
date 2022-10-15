@@ -61,10 +61,11 @@ class TransporterOrderAssignedNotification extends Notification
     {
         return [
             'orderId' => $this->order->id,
-            'title' => 'Order ID:#{$this->order->id} update',
+            'title' => "Order ID:#{$this->order->id} update",
             'message' => "Order assignment to transporter successful",
             'type' => 'info',
-            'time' => $this->order->assigned_at
+            'time' => $this->order->assigned_at,
+            'stationType' => 'transporter'
         ];
     }
 
@@ -82,7 +83,8 @@ class TransporterOrderAssignedNotification extends Notification
             'title' => 'New Order',
             'message' => "You have a new order for delivery ID#{$this->order->id}",
             'type' => 'info',
-            'time' => $this->order->assigned_at
+            'time' => $this->order->assigned_at,
+            'stationType' => 'transporter'
         ]);
     }
 

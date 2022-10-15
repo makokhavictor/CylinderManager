@@ -64,7 +64,8 @@ class DepotCanistersFromTransporterConfirmedByDepotNotification extends Notifica
             'title' => "Order #{$this->order->id} update",
             'message' => "Successfully confirmed empty canisters",
             'type' => 'info',
-            'time' => $this->order->transporter_depot_ok_at
+            'time' => $this->order->transporter_depot_ok_at,
+            'stationType' => 'depot'
         ];
     }
 
@@ -82,7 +83,8 @@ class DepotCanistersFromTransporterConfirmedByDepotNotification extends Notifica
             'title' => "Order #{$this->order->id} update",
             'message' => "Successfully confirmed empty canisters",
             'type' => 'info',
-            'time' => $this->order->transporter_depot_ok_at
+            'time' => $this->order->transporter_depot_ok_at,
+            'stationType' => 'depot'
         ]);
     }
 

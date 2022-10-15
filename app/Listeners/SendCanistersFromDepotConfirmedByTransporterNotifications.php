@@ -43,6 +43,6 @@ class SendCanistersFromDepotConfirmedByTransporterNotifications
 
         Notification::send($dealers, new DepotCanisterDispatchedFromDepotConfirmedByTransporterNotification($event->order));
         Notification::send($depots, new DealerCanisterDispatchedFromDepotConfirmedByTransporterNotification($event->order));
-        Notification::send($depots, new TransporterCanisterDispatchedFromDepotConfirmedByTransporterNotification($event->order));
+        Notification::send($transporters, new TransporterCanisterDispatchedFromDepotConfirmedByTransporterNotification($event->order));
     }
 }

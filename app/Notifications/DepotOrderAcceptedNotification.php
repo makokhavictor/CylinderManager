@@ -59,10 +59,11 @@ class DepotOrderAcceptedNotification extends Notification
     {
         return [
             'orderId' => $this->order->id,
-            'title' => 'Order ID:#{$this->order->id} update',
+            'title' => "Order ID:#{$this->order->id} update",
             'message' => "Order has been successfully accepted",
             'type' => 'info',
-            'time' => $this->order->accepted_at
+            'time' => $this->order->accepted_at,
+            'stationType' => 'depot'
         ];
     }
 
@@ -77,10 +78,11 @@ class DepotOrderAcceptedNotification extends Notification
     {
         return new BroadcastMessage([
             'orderId' => $this->order->id,
-            'title' => 'Order ID:#{$this->order->id} update',
+            'title' => "Order ID:#{$this->order->id} update",
             'message' => "Order has been successfully accepted",
             'type' => 'info',
-            'time' => $this->order->accepted_at
+            'time' => $this->order->accepted_at,
+            'stationType' => 'depot'
         ]);
     }
 

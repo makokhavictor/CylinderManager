@@ -36,6 +36,10 @@ class CreateOrdersTable extends Migration
             $table->dateTime('dealer_transporter_ok_at')->nullable();
             $table->dateTime('transporter_depot_ok_at')->nullable();
 
+            $table->dateTime('declined_at')->nullable();
+            $table->foreignId('declined_by')->nullable();
+            $table->foreign('declined_by')->references('id')->on('users');
+
             $table->softDeletes();
             $table->timestamps();
         });

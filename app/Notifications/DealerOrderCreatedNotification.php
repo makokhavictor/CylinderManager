@@ -64,7 +64,8 @@ class DealerOrderCreatedNotification extends Notification
             'title' => 'New Order',
             'message' => "Your order has been successfully placed ID:#{$this->order->id}",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => $this->order->created_at,
+            'stationType' => 'dealer'
         ];
     }
 
@@ -82,7 +83,8 @@ class DealerOrderCreatedNotification extends Notification
             'title' => 'New Order',
             'message' => "Your order has been successfully placed ID:#{$this->order->id}",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => $this->order->created_at,
+            'stationType' => 'dealer'
         ]);
     }
 

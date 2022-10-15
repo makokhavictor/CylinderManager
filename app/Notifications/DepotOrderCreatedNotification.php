@@ -64,7 +64,8 @@ class DepotOrderCreatedNotification extends Notification
             'title' => 'New Order',
             'message' => "Your have received a new order request ID:#{$this->order->id}",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => $this->order->created_at,
+            'stationType' => 'depot'
         ];
     }
 
@@ -82,7 +83,8 @@ class DepotOrderCreatedNotification extends Notification
             'title' => 'New Order',
             'message' => "Your have received a new order request ID:#{$this->order->id}",
             'type' => 'info',
-            'time' => $this->order->created_at
+            'time' => $this->order->created_at,
+            'stationType' => 'depot'
         ]);
     }
 

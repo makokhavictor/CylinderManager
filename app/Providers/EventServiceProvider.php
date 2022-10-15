@@ -14,6 +14,7 @@ use App\Events\DepotCreatedEvent;
 use App\Events\OrderAcceptedEvent;
 use App\Events\OrderAssignedEvent;
 use App\Events\OrderCreatedEvent;
+use App\Events\OrderDeclinedEvent;
 use App\Events\OrderUpdatedEvent;
 use App\Events\PasswordResetEvent;
 use App\Events\TransporterCreatedEvent;
@@ -26,10 +27,12 @@ use App\Listeners\MarkCanisterAsReleasedFromPreviousLocation;
 use App\Listeners\SendCanisterDispatchFromDealerNotifications;
 use App\Listeners\SendCanisterDispatchFromDepotNotifications;
 use App\Listeners\SendCanistersFromDealerConfirmedByTransporterNotifications;
+use App\Listeners\SendCanistersFromDepotConfirmedByTransporterNotifications;
 use App\Listeners\SendCanistersFromTransporterConfirmedByDealerNotifications;
 use App\Listeners\SendCanistersFromTransporterConfirmedByDepotNotifications;
 use App\Listeners\SendCreatedOrderNotifications;
 use App\Listeners\SendOrderAcceptedNotification;
+use App\Listeners\SendOrderDeclinedNotification;
 use App\Listeners\SendOrderAssignedNotification;
 use App\Listeners\SendPasswordResetTokenSms;
 use App\Listeners\UpdateLastActivityTime;
@@ -80,6 +83,9 @@ class EventServiceProvider extends ServiceProvider
         OrderAcceptedEvent::class => [
             SendOrderAcceptedNotification::class
         ],
+        OrderDeclinedEvent::class => [
+            SendOrderDeclinedNotification::class
+        ],
         OrderAssignedEvent::class => [
             SendOrderAssignedNotification::class
         ],
@@ -99,7 +105,7 @@ class EventServiceProvider extends ServiceProvider
             SendCanistersFromDealerConfirmedByTransporterNotifications::class
         ],
         CanistersFromDepotConfirmedByTransporterEvent::class => [
-            'App\\Listeners\\SendCanistersFromDepotConfirmedByTransporterNotifications'
+            SendCanistersFromDepotConfirmedByTransporterNotifications::class
         ],
     ];
 

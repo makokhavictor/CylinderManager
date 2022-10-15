@@ -64,7 +64,8 @@ class DealerOrderAssignedNotification extends Notification
             'title' => "Order ID:#{$this->order->id} update",
             'message' => 'Your order has been assigned',
             'type' => 'info',
-            'time' => $this->order->assigned_at
+            'time' => $this->order->assigned_at,
+            'stationType' => 'dealer'
         ];
     }
 
@@ -82,7 +83,8 @@ class DealerOrderAssignedNotification extends Notification
             'title' => "Order ID:#{$this->order->id} update",
             'message' => 'Your order has been assigned',
             'type' => 'info',
-            'time' => $this->order->assigned_at
+            'time' => $this->order->assigned_at,
+            'stationType' => 'dealer'
         ]);
     }
 

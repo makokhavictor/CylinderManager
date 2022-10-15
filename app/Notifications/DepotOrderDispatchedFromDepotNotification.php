@@ -61,10 +61,11 @@ class DepotOrderDispatchedFromDepotNotification extends Notification
     {
         return [
             'orderId' => $this->order->id,
-            'title' => 'Order Dispatch Update',
+            'title' => "Order #{$this->order->id} update",
             'message' => "order ID:#{$this->order->id} has dispatched",
             'type' => 'info',
-            'time' => now()
+            'time' => now(),
+            'stationType' => 'depot'
         ];
     }
 
@@ -79,10 +80,11 @@ class DepotOrderDispatchedFromDepotNotification extends Notification
     {
         return new BroadcastMessage([
             'orderId' => $this->order->id,
-            'title' => 'New Order',
+            'title' => "Order #{$this->order->id} update",
             'message' => "Your order ID:#{$this->order->id} has been dispatched",
             'type' => 'info',
-            'time' => now()
+            'time' => now(),
+            'stationType' => 'depot'
         ]);
     }
 

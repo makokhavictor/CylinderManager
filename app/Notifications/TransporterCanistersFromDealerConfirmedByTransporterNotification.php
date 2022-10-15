@@ -64,7 +64,8 @@ class TransporterCanistersFromDealerConfirmedByTransporterNotification extends N
             'title' => "Order #{$this->order->id} update",
             'message' => "Empty canisters confirmed",
             'type' => 'info',
-            'time' => $this->order->dealer_transporter_ok_at
+            'time' => $this->order->dealer_transporter_ok_at,
+            'stationType' => 'transporter'
         ];
     }
 
@@ -82,7 +83,8 @@ class TransporterCanistersFromDealerConfirmedByTransporterNotification extends N
             'title' => "Order #{$this->order->id} update",
             'message' => "Empty canisters confirmed",
             'type' => 'info',
-            'time' => $this->order->dealer_transporter_ok_at
+            'time' => $this->order->dealer_transporter_ok_at,
+            'stationType' => 'transporter'
         ]);
     }
 

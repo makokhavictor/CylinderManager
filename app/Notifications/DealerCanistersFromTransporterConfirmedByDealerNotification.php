@@ -64,7 +64,8 @@ class DealerCanistersFromTransporterConfirmedByDealerNotification extends Notifi
             'title' => "Order #{$this->order->id} update",
             'message' => "Filled canisters confirmed",
             'type' => 'info',
-            'time' => $this->order->transporter_dealer_ok_at
+            'time' => $this->order->transporter_dealer_ok_at,
+            'stationType' => 'dealer'
         ];
     }
 
@@ -82,7 +83,8 @@ class DealerCanistersFromTransporterConfirmedByDealerNotification extends Notifi
             'title' => "Order #{$this->order->id} update",
             'message' => "Filled canisters confirmed",
             'type' => 'info',
-            'time' => $this->order->transporter_dealer_ok_at
+            'time' => $this->order->transporter_dealer_ok_at,
+            'stationType' => 'dealer'
         ]);
     }
 

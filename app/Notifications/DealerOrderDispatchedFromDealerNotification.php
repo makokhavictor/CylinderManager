@@ -65,7 +65,8 @@ class DealerOrderDispatchedFromDealerNotification extends Notification
             'title' => "Order ID #{$this->order->id} update",
             'message' => "Successfully dispatched empty canisters",
             'type' => 'info',
-            'time' => now()
+            'time' => now(),
+            'stationType' => 'dealer'
         ];
     }
 
@@ -83,7 +84,8 @@ class DealerOrderDispatchedFromDealerNotification extends Notification
             'title' => "Order ID #{$this->order->id} update",
             'message' => "Successfully dispatched empty canisters",
             'type' => 'info',
-            'time' => now()
+            'time' => now(),
+            'stationType' => 'dealer'
         ]);
     }
 
