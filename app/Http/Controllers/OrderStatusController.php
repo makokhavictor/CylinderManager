@@ -29,13 +29,16 @@ class OrderStatusController extends Controller
     public function store(StoreOrderStatusRequest $request, Order $order)
     {
         $responseMessage = '';
-        if ($request->boolean('acceptOrder')) {
+        if ($request->boolean('declineOrder')) {
 
             if(!User::find(auth()->id())->can('accept refill order') && !User::find(auth()->id())->can('admin: accept refill order')){
                 throw new AuthorizationException( 'You are not authorised to decline order');
             }
 
+            abort(404,'functionality under construction');
+
             $order->declined_at = Carbon::now();
+            $order->declined_by = auth()->id();
             $order->save();
 
             $responseMessage = 'Order declined successfully';

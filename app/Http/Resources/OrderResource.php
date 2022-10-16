@@ -48,6 +48,8 @@ class OrderResource extends JsonResource
             'isAccepted' => !!$this->accepted_at,
             'acceptedAt' => $this->accepted_at,
             'assignedAt' => $this->assigned_at,
+            'isDeclined' => !!$this->declined_at,
+            'declinedAt' => !!$this->declined_at,
 
             'depotToTransporter' => $depotToTransporter,
             'transporterToDealer' => $transporterToDealer,
