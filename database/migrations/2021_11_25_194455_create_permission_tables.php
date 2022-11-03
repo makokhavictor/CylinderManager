@@ -302,7 +302,10 @@ class CreatePermissionTables extends Migration
             'assign order',
             'accept refill order',
             'dispatch canister',
-            'confirm delivery by depot from transporter'
+            'confirm delivery by depot from transporter',
+            'create refill order',
+            'update dealer user',
+            'delete dealer user'
             ]);
         Role::where('name', 'Dealer Admin User')->first()->givePermissionTo([
             'create dealer user',
@@ -319,7 +322,11 @@ class CreatePermissionTables extends Migration
             'dispatch canister',
             'receive dispatched canister',
             'accept refill order',
-            'confirm delivery by depot from transporter'
+            'confirm delivery by depot from transporter',
+
+            'create refill order',
+            'update dealer user',
+            'delete dealer user'
         ]);
 
         Role::where('name', 'Dealer User')->first()->givePermissionTo([

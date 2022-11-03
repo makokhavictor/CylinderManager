@@ -45,6 +45,10 @@ class BrandController extends Controller
             });
         }
 
+        if ($request->get('ids')) {
+            $brand = $brand->whereIn('id', $request->get('ids'));
+        }
+
         $orderBys = [
             ['name' => 'canisterBrandId', 'value' => 'id'],
             ['name' => 'canisterBrandName', 'value' => 'name'],

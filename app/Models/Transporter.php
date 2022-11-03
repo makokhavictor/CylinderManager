@@ -13,8 +13,9 @@ class Transporter extends Model
 
     protected $fillable = ['name', 'code'];
 
-    public function users() {
-        return $this->hasMany(User::class);
+    public function contractedDealers()
+    {
+        return $this->belongsToMany(Depot::class)->withPivot('expires_at');
     }
 
 }

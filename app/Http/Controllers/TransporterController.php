@@ -12,6 +12,7 @@ use App\Http\Resources\TransporterCollection;
 use App\Http\Resources\TransporterResource;
 use App\Http\Resources\UpdatedTransporterResource;
 use App\Models\Transporter;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -26,10 +27,25 @@ class TransporterController extends Controller
     {
         $transporters = new Transporter();
 
-
         if ($request->get('searchTerm')) {
-            $transporters = $transporters->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            $transporters = $transporters->where(function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                    ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            });
+        }
+
+        if ($request->get('ids')) {
+            $transporters = $transporters->whereIn('id', $request->get('ids'));
+        }
+
+        if ($request->get('depotIds')) {
+            $transporters = $transporters->whereHas('contractedDealers', function ($q) use ($request) {
+                $q->whereIn('depot_id', $request->get('depotIds'));
+            });
+        }
+
+        if ($request->boolean('userEnabledOnly')) {
+            $transporters = $transporters->userEnabled();
         }
 
         $orderBys = [
@@ -62,7 +78,7 @@ class TransporterController extends Controller
             'code' => $request->get('transporterCode'),
         ]);
 
-        if($request->get('userLoginEnabled')) {
+        if ($request->get('userLoginEnabled')) {
             TransporterCreatedEvent::dispatch($transporter);
         }
 
@@ -96,7 +112,7 @@ class TransporterController extends Controller
             'code' => $request->get('transporterCode'),
         ]);
 
-        if($request->get('userLoginEnabled') && $transporter->stationRoles->count() < 1) {
+        if ($request->get('userLoginEnabled') && $transporter->stationRoles->count() < 1) {
             TransporterCreatedEvent::dispatch($transporter);
         } else {
             $transporter->stationRoles()->delete();

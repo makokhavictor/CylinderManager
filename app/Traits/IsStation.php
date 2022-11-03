@@ -7,9 +7,17 @@ use App\Models\Depot;
 use App\Models\Order;
 use App\Models\StationPermission;
 use App\Models\StationRole;
+use App\Models\User;
 
 trait IsStation
 {
+    public static function scopeUserEnabled($q) {
+        return $q->whereHas('stationPermissions');
+    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
     public function stationPermissions()
     {
         return $this->morphMany(StationPermission::class, 'permissible');

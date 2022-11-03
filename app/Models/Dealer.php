@@ -15,9 +15,6 @@ class Dealer extends Model
         'name', 'code', 'EPRA_licence_no', 'location', 'GPS'
     ];
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
+
 
 }

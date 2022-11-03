@@ -14,9 +14,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
-        // return User::find(auth()->id())->can('create refill order');
-        // TODO check why logged in dealer cannot create an order
+        return User::find(auth()->id())->can('create refill order');
     }
 
     /**

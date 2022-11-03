@@ -23,7 +23,9 @@ class DepotResource extends JsonResource
             'depotLocation' =>$this->location,
             'brands' => BrandResource::collection($this->brands),
             'canisterBrandIds' => $this->brands->pluck('id'),
-            'depotRoles' => RoleResource::collection(Role::find($this->stationRoles->pluck('role_id')))
+            'depotRoles' => RoleResource::collection(Role::find($this->stationRoles->pluck('role_id'))),
+            'transporters' => ContractedTransporterResource::collection($this->contractedTransporters)
+//                contractExpiryDate
         ];
     }
 }

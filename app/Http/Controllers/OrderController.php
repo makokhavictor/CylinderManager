@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderAssignedEvent;
 use App\Events\OrderCreatedEvent;
 use App\Http\Requests\DeleteOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
@@ -9,9 +10,11 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\CanisterSize;
 use App\Models\Dealer;
+use App\Models\Depot;
 use App\Models\Order;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\jsonResponse;
 use Illuminate\Http\Request;
@@ -79,14 +82,23 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request)
     {
         if (!User::find(\auth()->id())->can('admin: create order')) {
-            $permissions = User::find(auth()->id())->permissibleRoles()
+            $depotPermissions = User::find(auth()->id())->permissibleRoles()
+                ->wherePivot('permissible_type', Depot::class)
+                ->wherePivot('permissible_id', $request->get('fromDepotId'))
+                ->get()
+                ->map(function ($role) {
+                    return $role->permissions->pluck('name');
+                })->toArray();
+
+            $dealerPermissions = User::find(auth()->id())->permissibleRoles()
                 ->wherePivot('permissible_type', Dealer::class)
                 ->wherePivot('permissible_id', $request->get('toDealerId'))
                 ->get()
                 ->map(function ($role) {
                     return $role->permissions->pluck('name');
                 })->toArray();
-            if (!in_array('create refill order', array_merge(...$permissions))) {
+
+            if (!in_array('create refill order', array_merge(...$depotPermissions, ...$dealerPermissions))) {
                 throw new AuthorizationException('You are not authorised to make a refill order for this dealer');
             }
         }
@@ -102,6 +114,12 @@ class OrderController extends Controller
         }
 
         OrderCreatedEvent::dispatch($order);
+
+        if (in_array($request->get('fromDepotId'), User::find(\auth()->id())->depots->pluck('id')->toArray())) {
+            $order->accepted_at = Carbon::now();
+            $order->save();
+            OrderAssignedEvent::dispatch($order);
+        }
 
         return response()->json([
             'data' => OrderResource::make($order),

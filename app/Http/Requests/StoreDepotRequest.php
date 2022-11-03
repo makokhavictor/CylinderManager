@@ -30,7 +30,9 @@ class StoreDepotRequest extends FormRequest
             'depotEPRALicenceNo' => 'required|unique:depots,EPRA_licence_no',
             'depotLocation' => 'required',
             'canisterBrandIds' => 'required|array|min:1',
+            'transportersIds' => 'array',
             "canisterBrandIds.*"  => "required|distinct|exists:brands,id",
+            "transporters.*.transporterId"  => "exists:transporters,id"
         ];
     }
 }

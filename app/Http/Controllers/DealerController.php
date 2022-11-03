@@ -27,6 +27,10 @@ class DealerController extends Controller
     {
         $dealers = new Dealer();
 
+        if ($request->get('ids')) {
+            $dealers = $dealers->whereIn('id', $request->get('ids'));
+        }
+
         if ($request->get('searchTerm')) {
             $dealers = $dealers->where(function ($q) use ($request) {
                 $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
@@ -34,6 +38,10 @@ class DealerController extends Controller
                     ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%')
                     ->orWhere('location', 'LIKE', '%' . $request->get('searchTerm') . '%');
             });
+        }
+
+        if ($request->boolean('userEnabledOnly')) {
+            $dealers = $dealers->userEnabled();
         }
 
         $orderBys = [

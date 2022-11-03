@@ -13,7 +13,9 @@ use App\Models\Depot;
 use App\Http\Requests\StoreDepotRequest;
 use App\Http\Requests\UpdateDepotRequest;
 use App\Models\StationRole;
+use App\Models\Transporter;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -29,17 +31,27 @@ class DepotController extends Controller
     {
         $depots = new Depot();
 
+        if ($request->get('ids')) {
+            $depots = $depots->whereIn('id', $request->get('ids'));
+        }
+
         if ($request->get('searchTerm')) {
-            $depots = $depots->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                ->orWhere('location', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            $depots = $depots->where(function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                    ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                    ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%')
+                    ->orWhere('location', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            });
         }
 
         if ($request->get('canisterBrandId')) {
             $depots = $depots->whereHas('brands', function ($q) use ($request) {
                 $q->where('brand_id', $request->get('canisterBrandId'));
             });
+        }
+
+        if ($request->boolean('userEnabledOnly')) {
+            $depots = $depots->userEnabled();
         }
 
         $orderBys = [
@@ -51,7 +63,7 @@ class DepotController extends Controller
         ];
         foreach ($orderBys as $orderBy) {
             if ($request->get('orderBy') === $orderBy['name']) {
-                $depots = $depots->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc': 'asc');
+                $depots = $depots->orderBy($orderBy['value'], $request->boolean('orderByDesc') ? 'desc' : 'asc');
                 break;
             }
         }
@@ -76,9 +88,21 @@ class DepotController extends Controller
         ]);
         $depot->brands()->attach($request->get('canisterBrandIds'));
 
-        if($request->get('userLoginEnabled')) {
+        if ($request->get('transporters')) {
+            foreach ($request->get('transporters') as $transporter) {
+                $depot->contractedTransporters()->save(
+                    Transporter::find($transporter['transporterId']),
+                    [
+                        'expires_at' => key_exists('contractExpiryDate', $transporter) ? new Carbon($transporter['contractExpiryDate']) : null
+                    ]
+                );
+            }
+        }
+
+        if ($request->get('userLoginEnabled')) {
             DepotCreatedEvent::dispatch($depot);
         }
+
 
         return response()->json(
             CreatedDepotResource::make($depot)
@@ -115,9 +139,21 @@ class DepotController extends Controller
         $depot->brands()->detach();
         $depot->brands()->attach($request->get('canisterBrandIds'));
 
-        if($request->get('userLoginEnabled') && $depot->stationRoles->count() < 1) {
+        $depot->contractedTransporters()->detach();
+        if ($request->get('transporters')) {
+            foreach ($request->get('transporters') as $transporter) {
+                $depot->contractedTransporters()->save(
+                    Transporter::find($transporter['transporterId']),
+                    [
+                        'expires_at' => key_exists('contractExpiryDate', $transporter) ? new Carbon($transporter['contractExpiryDate']) : null
+                    ]
+                );
+            }
+        }
+
+        if ($request->boolean('userLoginEnabled') && $depot->stationRoles->count() < 1) {
             DepotCreatedEvent::dispatch($depot);
-        } else {
+        } elseif (!$request->boolean('userLoginEnabled') && $depot->stationRoles->count() > 1) {
             $depot->stationRoles()->delete();
         }
 

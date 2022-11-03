@@ -15,17 +15,13 @@ class Depot extends Model
         'name', 'code', 'EPRA_licence_no', 'location'
     ];
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
-
     public function brands()
     {
         return $this->belongsToMany(Brand::class);
     }
 
-    public function transporter() {
+    public function contractedTransporters()
+    {
         return $this->belongsToMany(Transporter::class)->withPivot('expires_at');
     }
 
