@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateBrandRequest;
 use App\Http\Requests\DeleteBrandRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BrandController extends Controller
 {
@@ -32,8 +33,8 @@ class BrandController extends Controller
 
         if ($request->get('searchTerm')) {
             $brand = $brand->where(function ($q) use ($request) {
-                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                    ->orWhere('company_name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+                $q->where(DB::raw('lower(name)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%')
+                    ->orWhere(DB::raw('lower(company_name)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%');
             });
 
         }

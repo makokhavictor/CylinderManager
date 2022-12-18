@@ -15,6 +15,7 @@ use App\Models\Transporter;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransporterController extends Controller
 {
@@ -29,8 +30,8 @@ class TransporterController extends Controller
 
         if ($request->get('searchTerm')) {
             $transporters = $transporters->where(function ($q) use ($request) {
-                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                    ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%');
+                $q->where(DB::raw('lower(name)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%')
+                    ->orWhere(DB::raw('lower(code)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%');
             });
         }
 

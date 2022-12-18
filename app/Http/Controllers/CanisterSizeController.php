@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CanisterSizeResource;
 use App\Models\CanisterSize;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CanisterSizeController extends Controller
 {
@@ -13,7 +14,7 @@ class CanisterSizeController extends Controller
         $canisterSizes = new CanisterSize();
 
         if ($request->get('searchTerm')) {
-            $canisterSizes = $canisterSizes->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+            $canisterSizes = $canisterSizes->where(DB::raw('lower(name)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%');
         }
 
         if ($request->get('ids')) {

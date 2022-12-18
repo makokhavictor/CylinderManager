@@ -19,6 +19,7 @@ use App\Models\Transporter;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CanisterController extends Controller
 {
@@ -46,7 +47,7 @@ class CanisterController extends Controller
 
         if ($request->get('searchTerm')) {
             $canisters = $canisters->whereHas('brand', function ($q) use ($request) {
-                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+                $q->where(DB::raw('lower(name)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%');
             });
         }
 

@@ -20,6 +20,7 @@ use Illuminate\Http\jsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -34,9 +35,9 @@ class OrderController extends Controller
 
         if ($request->get('searchTerm')) {
             $orders = $orders->whereHas('depot', function ($q) use ($request) {
-                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+                $q->where(DB::raw('lower(name)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%');
             })->orWhereHas('dealer', function ($q) use ($request) {
-                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%');
+                $q->where(DB::raw('lower(name)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%');
             });
         }
 

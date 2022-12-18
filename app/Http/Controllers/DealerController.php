@@ -14,6 +14,7 @@ use App\Models\Dealer;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class DealerController extends Controller
@@ -33,10 +34,10 @@ class DealerController extends Controller
 
         if ($request->get('searchTerm')) {
             $dealers = $dealers->where(function ($q) use ($request) {
-                $q->where('name', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                    ->orWhere('code', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                    ->orWhere('EPRA_licence_no', 'LIKE', '%' . $request->get('searchTerm') . '%')
-                    ->orWhere('location', 'LIKE', '%' . $request->get('searchTerm') . '%');
+                $q->where(DB::raw('lower(name)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%')
+                    ->orWhere(DB::raw('lower(code)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%')
+                    ->orWhere(DB::raw('lower(EPRA_licence_no)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%')
+                    ->orWhere(DB::raw('lower(location)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%');
             });
         }
 
