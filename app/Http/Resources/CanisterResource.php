@@ -42,7 +42,7 @@ class CanisterResource extends JsonResource
             'currentlyFilled' => !!$this->when($lastLog, $lastLog?->filled),
             'canisterId' => $this->id,
             'canisterCode' => $this->code,
-            'canisterRecertification' => $this->recertification,
+            'canisterRecertificationDate' => $this->recertification_date,
             'canisterManuf' => $this->manuf,
             'canisterManufDate' => $this->manuf_date,
             'canisterRFID' => $this->RFID,

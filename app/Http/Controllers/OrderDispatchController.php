@@ -99,7 +99,7 @@ class OrderDispatchController extends Controller
                 $canisterId = Canister::create([
                     'RFID' => Str::random(16),
                     'code' => '-',
-                    'recertification' => '-',
+                    'recertification_date' => '',
                     'manuf' => '-',
                     'manuf_date' => Carbon::now(),
                     'brand_id' => $canister['canisterBrandId'],

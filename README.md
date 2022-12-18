@@ -233,7 +233,7 @@ Sample Request Object
     "canisterManufDate": "2020-09-06",
     "brandId": 191,
     "canisterRFID": 5355341,
-    "canisterRecertification": "1986-08-07"
+    "canisterRecertificationDate": "1986-08-07"
 }
 ```
 
@@ -245,7 +245,7 @@ Sample Response
     "data": {
         "id": 143,
         "canisterCode": 3319956,
-        "canisterRecertification": "2009-01-20",
+        "canisterRecertificationDate": "2009-01-20",
         "canisterManuf": "Dickens, Walter and Gulgowski",
         "canisterManufDate": "1978-06-28",
         "canisterRFID": 8478401,

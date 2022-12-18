@@ -21,7 +21,7 @@ class CanisterFactory extends Factory
             'manuf_date' => $this->faker->date(),
             'brand_id' => Brand::factory()->create()->id,
             'RFID' => $this->faker->randomNumber(7),
-            'recertification' => $this->faker->date(),
+            'recertification_date' => $this->faker->date(),
             'canister_size_id' => CanisterSize::factory()->create()->id
         ];
     }

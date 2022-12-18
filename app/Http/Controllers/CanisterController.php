@@ -103,7 +103,7 @@ class CanisterController extends Controller
                 'manuf' => $request->canisterManuf,
                 'manuf_date' => new Carbon($request->canisterManufDate),
                 'brand_id' => $request->canisterBrandId,
-                'recertification' => $request->canisterRecertification,
+                'recertification_date' => new Carbon($request->canisterRecertificationDate),
                 'canister_size_id' => $request->get('canisterSizeId')
             ]);
         if ($request->get('currentlyAtDepotId')) {
@@ -152,7 +152,7 @@ class CanisterController extends Controller
             'manuf_date' => $request->canisterManufDate,
             'brand_id' => $request->canisterBrandId,
             'RFID' => $request->canisterRFID,
-            'recertification' => $request->canisterRecertification,
+            'recertification_date' => $request->canisterRecertificationDate,
             'canister_size_id' => $request->get('canisterSizeId')
         ]);
 

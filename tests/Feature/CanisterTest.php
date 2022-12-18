@@ -36,7 +36,7 @@ class CanisterTest extends TestCase
                 'canisterManufDate' => $canister->manuf_date,
                 'canisterBrandId' => $canister->brand_id,
                 'canisterRFID' => $canister->RFID,
-                'canisterRecertification' => $canister->recertification,
+                'canisterRecertificationDate' => $canister->recertification,
                 'currentlyAtDepotId' => Depot::factory()->create()->id,
                 'currentlyFilled' => true,
             ]);
@@ -44,7 +44,7 @@ class CanisterTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'canisterId',
-                'canisterRecertification',
+                'canisterRecertificationDate',
                 'canisterManuf',
                 'canisterBrandId',
                 'canisterBrandName',
@@ -73,7 +73,7 @@ class CanisterTest extends TestCase
         $response->assertJsonStructure([
             'data' => [[
                 'canisterId',
-                'canisterRecertification',
+                'canisterRecertificationDate',
                 'canisterManuf',
                 'canisterBrandId',
                 'canisterBrandName',
@@ -99,7 +99,7 @@ class CanisterTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'canisterId',
-                'canisterRecertification',
+                'canisterRecertificationDate',
                 'canisterManuf',
                 'canisterBrandId',
                 'canisterBrandName',
@@ -128,7 +128,7 @@ class CanisterTest extends TestCase
                 'canisterManufDate' => $updateCanister->manuf_date,
                 'canisterBrandId' => $updateCanister->brand_id,
                 'canisterRFID' => $updateCanister->RFID,
-                'canisterRecertification' => $updateCanister->recertification
+                'canisterRecertificationDate' => $updateCanister->recertification_date
             ]);
         $response->assertOk();
         $response->assertJsonStructure([
