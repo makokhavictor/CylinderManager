@@ -45,9 +45,9 @@ class TransporterController extends Controller
             });
         }
 
-        if ($request->boolean('userEnabledOnly')) {
-            $transporters = $transporters->userEnabled();
-        }
+//        if ($request->boolean('userEnabledOnly')) {
+//            $transporters = $transporters->userEnabled();
+//        }
 
         $orderBys = [
             ['name' => 'transporterId', 'value' => 'id'],

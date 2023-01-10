@@ -41,9 +41,9 @@ class DealerController extends Controller
             });
         }
 
-        if ($request->boolean('userEnabledOnly')) {
-            $dealers = $dealers->userEnabled();
-        }
+//        if ($request->boolean('userEnabledOnly')) {
+//            $dealers = $dealers->userEnabled();
+//        }
 
         $orderBys = [
             ['name' => 'dealerId', 'value' => 'id'],

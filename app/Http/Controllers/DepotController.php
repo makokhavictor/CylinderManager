@@ -51,9 +51,9 @@ class DepotController extends Controller
             });
         }
 
-        if ($request->boolean('userEnabledOnly')) {
-            $depots = $depots->userEnabled();
-        }
+//        if ($request->boolean('userEnabledOnly')) {
+//            $depots = $depots->userEnabled();
+//        }
 
         $orderBys = [
             ['name' => 'depotId', 'value' => 'id'],
