@@ -40,7 +40,7 @@ class DepotController extends Controller
             $depots = $depots->where(function ($q) use ($request) {
                 $q->where(DB::raw('lower(name)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%')
                     ->orWhere(DB::raw('lower(code)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%')
-                    ->orWhere(DB::raw('lower(EPRA_licence_no)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%')
+//                    ->orWhere(DB::raw('lower(EPRA_licence_no)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%')
                     ->orWhere(DB::raw('lower(location)'), 'LIKE', '%' . strtolower($request->get('searchTerm')) . '%');
             });
         }
